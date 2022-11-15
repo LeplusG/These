@@ -1,0 +1,121 @@
+\chapter{Introduction}
+
+La généralisation des processeurs pour les dispositifs IoT les amène à être utilisés dans des environnements dont la sécurité n'est pas connue. Ainsi, au-delà des exigences sur la consommation énergétique et du coût de ces dispositifs, de nouvelles contraintes de sécurité émergent avec ces usages. Ces composants peuvent être amenés à stocker, exécuter, collecter des données sensibles et les cas où des acteurs malveillants ont accès physiquement aux dispositifs sont de plus en plus probables. 
+Lorsque l'on parle de sécurité, les principaux objectifs à respecter sont les suivants~:
+
+\begin{itemize}
+\item[--] Confidentialité~: Le processeur doit maintenir les instructions et les données utilisées secrètes.
+\item[--]Intégrité~: Les instructions, les données manipulées ou l'état du processeur ne doivent pas avoir subi de modifications entre le stockage et leur manipulation, ces modifications peuvent être fortuites, illicites ou malveillantes. En clair, les éléments considérés doivent être exacts et sans altérations.
+\item[--]Authenticité~: Le processeur doit pouvoir s'assurer de l'origine des données. Le niveau de granularité de l'origine peut varier en fonction des cas d'applications.
+\end{itemize}
+
+Au-delà de ces notions de sécurités, il est essentiel que le système soit résilient c'est-à-dire qu'il soit capable de se rétablir après une perturbation extérieure.
+
+Les travaux réalisés durant cette thèse visent à assurer ces quatre propriétés face aux attaques par canaux auxiliaires et par injection de fautes dans le cadre d'un pipeline de l'unité centrale de traitement (CPU).
+
+\section{Cible de la thèse: Architecture des processeurs}
+La microarchitecture d'un CPU est généralement séparée en chemin de données qui s'occupe de les charger dans les registres et effectuer les opérations. Et le chemin de contrôle qui charge, décode les instructions et génère les signaux de contrôle.
+
+Des machines ayant des microarchitectures différentes peuvent avoir le même jeu d'instructions (ISA), et donc être capables d'exécuter le même code compilé. Les nouvelles microarchitectures et/ou optimisations, ainsi que les progrès réalisés dans la fabrication des semi-conducteurs permettent aux nouvelles générations de processeurs d'atteindre des performances plus élevées tout en utilisant la même ISA. Nous allons présenter dans un premier temps les principes fondamentaux de l'architecture des processeurs puis présenter les différentes optimisations architecturales les plus rependues pour augmenter les performances.
+
+\subsection{Fonctionnement général des processeurs}
+Un processeur consiste à exécuter un programme compilé selon un certain jeu d'instructions. Le programme compilé se situe dans la mémoire principale. Ainsi le processeur doit avoir un accès et pouvoir faire des requêtes a cette mémoire principale.
+Une fois l'instruction chargée celui-ci doit exécuter les instructions qu'il a appelées de la mémoire.
+
+\subsection{Principales fonctions réalisées}
+
+Le processeur de chaque ordinateur peut avoir des cycles différents basés sur des jeux d'instructions différents, mais les fonctions réalisées seront assimilables aux étapes suivantes~:
+
+\begin{itemize}
+\item[--] Phase de chargement de l'instruction~: L'instruction est extraite de l'adresse mémoire qui est actuellement stockée dans le compteur de programme (PC). À la fin de l'opération d'extraction, le PC pointe vers l'instruction suivante qui sera lue au cycle suivant.
+\item[--]Phase de décodage~: Au cours de cette étape, l'instruction est chargée depuis la mémoire principale, puis interprétée par le décodeur pour savoir quelle est l'opération à réaliser et les données à utiliser pour cette instruction.
+\item[--]Phase d'exécution~: L'unité de décodage transmet les informations décodées sous la forme d'une séquence de signaux de commande aux unités fonctionnelles pertinentes pour qu'elles effectuent les actions requises par l'instruction, comme la lecture de valeurs dans les registres, leur transmission à l'unité arithmétique et logique (ALU) et la réécriture du résultat dans un registre. Le résultat généré par l'opération peut aussi être stocké dans la mémoire principale ou envoyé à un dispositif de sortie. En fonction du retour de l'ALU, le PC peut être mis à jour à une adresse différente à partir de laquelle l'instruction suivante sera extraite. 
+\item[--]Répétition des étapes précédentes
+\end{itemize}
+
+\subsection{Caches}
+Un cache de processeur est une mémoire matérielle utilisée par le CPU d'un ordinateur pour réduire le coût moyen (temps et énergie) d'accès aux données de la mémoire principale. L'unité centrale comprend un contrôleur de cache qui automatise la lecture et l'écriture dans le cache. Si les données se trouvent déjà dans le cache, elles sont accessibles à partir de celui-ci, ce qui permet un gain de temps important, alors que si elles n'y sont pas, le processeur est «\,bloqué\,» pendant que le contrôleur de cache les lit. La plupart des processeurs possèdent une hiérarchie de plusieurs niveaux de cache (L1, L2, souvent L3, et même rarement L4), avec des caches spécifiques aux instructions et aux données au niveau~1.
+
+
+\subsection{Interruptions}
+En outre, sur la plupart des processeurs, des interruptions peuvent se produire. Dans ce cas, le processeur saute à une routine d'interruption, l'exécute et revient. Dans certains cas, une instruction peut être interrompue au milieu, l'instruction n'aura aucun effet, mais sera réexécutée après le retour de l'interruption.
+
+
+\subsection{Optimisation}
+Cette série d'étapes d'apparence simple est compliquée par le fait que la hiérarchie de la mémoire, qui comprend la mémoire cache, la mémoire principale et le stockage non volatile comme les disques durs (où résident les instructions du programme et les données), a toujours été plus lente que le processeur lui-même. Différentes solutions ont été apportées tout d'abord sur les superordinateurs jusque de nos jours dans des contrôleurs embarques les principales innovations seront ici présentées.
+
+\subsubsection{Pipeline}
+ La première optimisions était de découper de en plusieurs étages pour obtenir du parallélisme au niveau des instructions. Le pipeline tente de faire en sorte que chaque partie du processeur ainsi découpé soit occupée par une instruction différente et ainsi traiter plusieurs instructions en parallèle. Dans le cas le plus classique d'une architecture d'ordinateur à jeu d'instructions réduit (RISC) il y a 5~étages~:
+\begin{itemize}
+    \item[--] La récupération des instructions
+    \item[--]Décodage des instructions et récupération des registres
+    \item[--]Exécution
+    \item[--]Accès à la mémoire
+    \item[--]Réécriture du registre
+\end{itemize}
+Cependant malgré le gain en performance apporté, cela apporte de nouveaux problèmes dont notamment des risques structurels se produisent lorsque deux instructions peuvent tenter d'utiliser les mêmes ressources au même moment. Mais aussi des risques liés aux données se produisent lorsqu'une instruction tente d'utiliser des données avant que celles-ci ne soient disponibles dans le fichier de registre. Et enfin des risques de contrôle causés par les branchements conditionnels et inconditionnels.
+
+\subsubsection{Prédiction de branche}
+
+L'un des obstacles à l'obtention de performances plus élevées grâce au parallélisme au niveau des instructions provient des blocages et des vidages du pipeline dus aux branchements. Normalement, on ne sait pas si un branchement conditionnel sera effectué avant la fin du pipeline, car les branchements conditionnels dépendent des résultats provenant d'un registre. Entre le moment où le décodeur d'instructions du processeur décode une instruction de branchement conditionnel et le moment où il est possible de savoir si le branchement est pris ou non, le pipeline doit être bloqué pendant plusieurs cycles, ou s'il ne l'est pas et que le branchement est effectué, le pipeline doit être purgé. Plus la vitesse d'horloge augmente, plus la profondeur du pipeline augmente, et certains processeurs modernes peuvent avoir 20~étages ou plus. En moyenne, une instruction exécutée sur cinq est un branchement, ce qui, sans aucune intervention, représente une quantité élevée de blocage.
+
+Des techniques telles que la prédiction de branchement et l'exécution spéculative sont utilisées pour atténuer ces pénalités de branchement. La prédiction de branchement consiste pour le matériel à faire des suppositions sur l'opportunité d'un branchement particulier. En réalité, l'un ou l'autre côté de la branche sera appelé beaucoup plus souvent que l'autre. Les conceptions modernes ont des systèmes de prédiction statistique assez complexes, qui observent les résultats des branches passées pour prédire l'avenir avec une plus grande précision. Cette prédiction permet au matériel de préempter des instructions sans attendre la lecture du registre. L'exécution spéculative est une autre amélioration dans laquelle le code le long du chemin prédit n'est pas seulement préextrait, mais également exécutée avant que l'on sache si la branche doit être prise ou non. 
+
+\subsubsection{Superscalaire}
+Même avec toute la complexité ajoutée et les portes nécessaires pour supporter les concepts décrits ci-dessus, les améliorations dans la fabrication de semi-conducteurs ont bientôt permis d'utiliser encore plus de portes logiques.
+
+Le processeur traite des parties d'une seule instruction à la fois. Les programmes informatiques pourraient être exécutés plus rapidement si plusieurs instructions étaient traitées simultanément. C'est ce que réalisent les processeurs superscalaires, en répliquant des unités fonctionnelles telles que les ALU.
+
+Dans les conceptions modernes, il est courant de trouver deux unités de chargement, une unité de stockage (de nombreuses instructions n'ont pas de résultats à stocker), deux unités mathématiques entières ou plus, deux unités à virgule flottante ou plus, et souvent une unité SIMD. La logique d'émission des instructions devient de plus en plus complexe en lisant une énorme liste d'instructions dans la mémoire et en les transmettant aux différentes unités d'exécution qui sont inactives à ce moment-là. Les résultats sont ensuite collectés et réorganisés à la fin.
+
+\subsubsection{Exécution dans le désordre}
+L'ajout de caches réduit la fréquence ou la durée des blocages dus à l'attente de données à extraire de la hiérarchie de la mémoire, mais n'élimine pas complètement ces blocages. Dans les premières conceptions, un manque de cache obligeait le contrôleur de cache à bloquer le processeur et à attendre. Bien sûr, il peut y avoir une autre instruction dans le programme dont les données sont disponibles dans le cache à ce moment-là. L'exécution hors ordre permet à cette instruction près d'être traitée pendant qu'une instruction plus ancienne attend dans le cache, puis réorganise les résultats pour faire croire que tout s'est passé dans l'ordre programmé. Cette technique est également utilisée pour éviter d'autres blocages liés à la dépendance des opérandes, comme une instruction qui attend le résultat d'une opération en virgule flottante à longue latence ou d'autres opérations à cycles multiples.
+
+\subsubsection{Renommage de registre}
+
+Le renommage de registre fait référence à une technique utilisée pour éviter l'exécution sérielle inutile d'instructions de programme en raison de la réutilisation des mêmes registres par ces instructions. Supposons que nous ayons deux groupes d'instructions qui vont utiliser le même registre. Un groupe d'instructions est exécuté en premier pour laisser le registre à l'autre groupe, mais si l'autre groupe est affecté à un autre registre similaire, les deux groupes d'instructions peuvent être exécutés.
+
+\subsubsection{Multiprocessing et multithreading}
+
+Les architectes d'ordinateurs se sont retrouvés bloqués par le décalage croissant entre les fréquences de fonctionnement des CPU et les temps d'accès aux DRAM. Aucune des techniques qui exploitaient le parallélisme au niveau des instructions (ILP) dans un programme ne pouvait compenser les longs délais qui se produisaient lorsque les données devaient être extraites de la mémoire principale. Pour ces raisons, les nouvelles générations d'ordinateurs ont commencé à exploiter des niveaux plus élevés de parallélisme qui existent en dehors d'un seul programme ou d'un seul fil de programme.
+
+L'une des techniques permettant d'obtenir ce parallélisme est celle des systèmes multiprocesseurs, c'est-à-dire des systèmes informatiques dotés de plusieurs unités centrales. Conceptuellement, le multithreading est équivalent à un changement de contexte au niveau du système d'exploitation. La différence réside dans le fait qu'une unité centrale multithread peut effectuer un changement de thread en un seul cycle d'unité centrale au lieu des centaines ou milliers de cycles d'unité centrale qu'un changement de contexte nécessite normalement. Ceci est réalisé en répliquant le matériel d'état (tel que le fichier de registre et le compteur de programme) pour chaque thread actif.
+
+\section{Description du RISCV et de l'architecture~CV32e40p}
+Contrairement à la plupart des autres conceptions ISA, RISC-V est fourni sous des licences open source dont l'utilisation est gratuite.
+En tant qu'architecture RISC, l'ISA du RISC-V est une architecture load-store. 
+
+Le RISC-V a été lancé dans le but de créer une ISA pratique, en libre accès, utilisable dans le monde universitaire et pouvant être déployé dans n'importe quelle conception matérielle ou logicielle sans redevance. De plus, les justifications de chaque décision de conception du projet sont expliquées, au moins en termes généraux. Les auteurs du RISC-V sont des universitaires qui ont une grande expérience de la conception d'ordinateurs, et le RISC-V ISA est un développement direct d'une série de projets universitaires de conception d'ordinateurs.
+
+L'affirmation principale des concepteurs est que le jeu d'instructions est l'interface clé d'un ordinateur, car il se situe à l'interface entre le matériel et le logiciel. Si un bon jeu d'instructions était ouvert et disponible pour tous, il pourrait réduire considérablement le coût des logiciels en permettant une réutilisation beaucoup plus importante. Cela devrait également déclencher une concurrence accrue entre les fournisseurs de matériel, qui pourraient alors consacrer plus de ressources à la conception et moins au support logiciel. L'ISA à longueur variable permet d'étendre le jeu d'instructions, et le jeu d'instructions privilégiées séparé permet de faire des recherches sur le support du système d'exploitation sans avoir à reconcevoir les compilateurs. Le paradigme de propriété intellectuelle ouvert du RISC-V permet de publier, réutiliser et modifier les conceptions dérivées.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/CV32E40P_Block_Diagram.png}
+\caption{\label{fig:CV32E40P} Microarchitecture du CPU~CV32E40P.}
+\end{figure}
+
+\section{Menace et solutions proposées}
+Cette thèse se concentre sur les attaques par canaux auxiliaires et par injection de faute. 
+Une attaque par canal auxiliaire est une attaque basée sur des informations qui peuvent être recueillies en raison de l'implémentions physique d'un protocole ou d'un algorithme, plutôt que sur des failles dans leurs conceptions elle-même, par exemple, des failles trouvées par cryptanalyse d'un algorithme cryptographique ou sur des erreurs dans la conception. Les informations relatives au temps, à la consommation d'énergie, aux fuites électromagnétiques, sont des exemples d'informations qui peuvent être exploitées pour des attaques par canaux auxiliaires.
+L'attaque par injection de fautes consiste à stresser les transistors responsables des tâches de chiffrement, afin de générer une faute qui sera ensuite utilisée. L'élément perturbateur peut être une impulsion électromagnétique (impulsion EM ou impulsion laser) ou une modification de la tension d'alimentations, de la température ou de la fréquence d'horloge.
+Ces deux types d'attaques peuvent être menés de concert, l'utilisation de canaux auxiliaire pour trouver des points d'intérêt d'une injection de faute. Cependant leurs contremesures classiques sont assez antinomiques. Les canaux auxiliaires nécessitent de masquer les données. Le principe du masquage est d'éviter de manipuler directement une valeur sensible, mais plutôt un partage de celle-ci~: un ensemble de variables (appelées «\,share\,»). Un attaquant doit récupérer toutes les valeurs des shares pour obtenir des informations significatives. Cette division en share offre plus de possibilités d'attaque d'un point de vue de l'injection de faute, car on peut cibler n'importe quel share. 
+Les contremesures contre l'injection de faute, elle se base sur le principe de redondance que celle-ci soit temporelle, physique ou informationnelle. Cependant, cette redondance entraine de nouvelles fuites qui peuvent être exploitées par canaux auxiliaires.
+
+Des méthodes mixtes ont été proposées dans l'état de l'art, notamment M\&M qui utilise les propriétés spécifiques des opérations de l'AES pour créer de la redondance pouvant vérifier les calculs arithmétiques, mais étant aussi compatible avec le masquage.
+
+\section{Sécurité recherchée et organisation de la thèse}
+Les problématiques soulevées par cette thèse sont d'identifier les différentes attaques pouvant cibler le pipeline d'un processeur généraliste et ainsi les adresser en tirant parti des spécificités de la partie attaquée. La question essentielle était de savoir s'il était possible d'obtenir un résultat similaire à M\&M dans le cadre d'un processeur généraliste, mais aussi d'identifier les masquages les plus aptes à être implémentés dans ce type de composant. 
+Au-delà de la protection des données, les instructions sont une cible de la part des attaquants. Ainsi une recherche a été menée sur des mécanismes qui permettraient de protéger efficacement et a à moindre coût les instructions. Mais aussi de trouver des moyens de réponse à une attaque ainsi en assurant la sécurité et la fiabilité nous convergeons vers un design résilient aux attaques par canaux auxiliaires et injections de fautes.
+
+Le chapitre~2 sera un état de l'art sur les principales attaques par canaux auxiliaires et les attaques par injections et leurs contremesures. 
+Nous nous concentrerons dans le chapitre~3 au chemin de données avec les attaques et les contremesures proposées par l'état de l'art pour ensuite présenter les différentes contremesures proposées sur cette partie de l'architecture des processeurs
+Le chapitre~4 lui traitera le chemin d'instruction et du contrôle avec la aussi un état de l'art des attaques et des contremesures pour ensuite expliquer l'apport de cette thèse et des contremesures, développer pour sécuriser le chemin d'instruction et la logique de contrôle.
+Dans le chapitre~5, nous verrons le processeur dans qui est ensemble avec une contremesure impactant le fonctionnement général et empêchant les attaques au sens large, mais aussi l'interaction et l'intégration de toutes ces contremesures dans le même circuit.
+Le chapitre~6 est la conclusion générale de ce manuscrit et synthétise les différents travaux et leur apporte dans la sécurisation d'une architecture de processeur.
+
+\section{Contribution}
+Les travaux présentés dans le chapitre 3 font l'objet de deux brevets. Le premier sur le principe de la permutation dépendante d'une clé et l'autre sur la permutation choisie afin de facilité les opérations arithmétique et est en cours de soumission
+Le chapitre 4 avec la sécurisation des instructions avec la génération de masque à partir de l'instruction précédent a été publie a DSD2022 et est présente dans un brevet.
+L'insertion de cycle factice pour créer de la désynchronisation temporelle a aussi été brevetée et a été publiée à HOST2022.
+

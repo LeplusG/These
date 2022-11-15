@@ -1,0 +1,82 @@
+% Ce fichier main.tex est le fichier principal \`{a} partir duquel tout est g\'{e}n\'{e}r\'{e}
+% This file is the main file where the final document is generated
+\documentclass{these-dbl}
+
+% Remplir les metadonnees du pdf
+% Fill the pdf metadata
+\hypersetup{
+    pdfauthor   = {Gaetan Leplus},
+    pdftitle    = {Processeur résistant et résilient aux attaques de fautes et aux attaques par canaux, auxiliaires},
+    pdfkeywords = { Memory hierarchie,
+                    Cache memories,
+                    Cache-based Side-Channel Attacks (CSCAs),
+                    Hardware sharing },
+}
+
+\geometry{vmargin=3.0cm}
+
+% correct bad hyphenation here
+\hyphenation{micro-architectural micro-processor}
+
+% Spécifier vos fichiers de bibliographie
+% Specify you bibliography files here
+\addbibresource{./bibli.bib}
+
+\begin{document}
+% \slopy is used to avoid outside line text
+\sloppy
+
+% initialize minitoc without the content name
+\dominitoc[n]
+
+% Sélectionner la langue du contenu suivant cette ligne
+% Select the content language following this line
+\selectlanguage{french}
+       
+% utiliser les numeros de page romainx
+
+% Page de garde avec commande \maketitle
+% Front cover calling \maketitle
+% \includepdf[fitpaper= true, pages=-]{./Couverture-these/pagedegarde_eeats.pdf}
+
+% This command sets the page numbers to lowercase Roman numerals.
+\pagenumbering{roman}
+
+% Inclusion du chapitre remerciement
+% Input acknowledgement chapter
+% \clearemptypage %to switch off page numbering
+% \input{./Acknowledgement/acknowledgement}
+
+% \clearemptypage
+% \input{./Abstract/abstract}
+
+% \clearemptypage
+% \input{./foreword}
+
+% Ne pas oublier cette commande qui g\'{e}n\`{e}re la page de couverture avant
+% This command will generate the front cover
+% \clearemptypage
+
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents %sommaire %table of content
+\listoffigures
+\listoftables
+\mtcaddchapter
+
+\clearemptydoublepage
+\pagenumbering{arabic}
+
+\setcounter{mtc}{0}
+
+\input{./chapters/chapter_1.tex}
+\input{./chapters/chapter_2.tex}
+\input{./chapters/chapter_3.tex}
+\input{./chapters/chapter_4.tex}
+\input{./chapters/chapter_5.tex}
+\input{./chapters/chapter_6.tex}
+
+\clearemptypage
+\printbibliography
+
+
+\end{document}

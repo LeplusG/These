@@ -1,0 +1,1790 @@
+
+@phdthesis{korkikian_side-channel_2016,
+	type = {phdthesis},
+	title = {Side-channel and fault analysis in the presence of countermeasures : tools, theory, and practice},
+	shorttitle = {Side-channel and fault analysis in the presence of countermeasures},
+	url = {https://tel.archives-ouvertes.fr/tel-01762404},
+	abstract = {The goal of the thesis is to develop and improve methods for defeating protected cryptosystems. A new signal decompositionalgorithm, called Hilbert Huang Transform, was adapted to increase the efficiency of side-channel attacks. This technique attempts to overcome hiding countermeasures, such as operation shuffling or the adding of noise to the power consumption. The second contribution of this work is the application of specific Hamming weight distributions of block cipher algorithms, including AES, DES, and LED. These distributions are distinct for each subkey value, thus they serve as intrinsic templates. Hamming weight data can be revealed by side-channel and fault attacks without plaintext and ciphertext. Therefore these distributions can be applied against implementations where plaintext and ciphertext are inaccessible. This thesis shows that some countermeasures serve for attacks. Certain infective RSA countermeasures should protect against single fault injection. However, additional computations facilitate key discovery. Finally, several lightweight countermeasures are proposed. The proposed countermeasures are based on the antagonist masking, which is an operation occurring when targeting data processing, to intelligently mask the overall power consumption.},
+	language = {en},
+	school = {Université Paris sciences et lettres},
+	author = {Korkikian, Roman},
+	month = oct,
+	year = {2016},
+	file = {Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\AXDYYSDB\\tel-01762404.html:text/html;Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\S37M6WLZ\\Korkikian - 2016 - Side-channel and fault analysis in the presence of.pdf:application/pdf},
+}
+
+@article{bernstein_cache-timing_2005,
+	title = {Cache-timing attacks on {AES}},
+	url = {https://citeseerx.ist.psu.edu/viewdoc/versions?doi=10.1.1.140.2501},
+	abstract = {CiteSeerX - Document Details (Isaac Councill, Lee Giles): Abstract. This paper warns against the use of S-boxes in cryptography. In particular, this paper shows that a simple cache-timing attack against AES software reveals some key bits; this paper also discusses some of the obstacles to constant-time array access on modern CPUs.},
+	language = {en},
+	author = {Bernstein, Daniel J.},
+	year = {2005},
+	file = {Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\7KKS8I6S\\versions.html:text/html},
+}
+
+@inproceedings{kocher_timing_1996,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Timing {Attacks} on {Implementations} of {Diffie}-{Hellman}, {RSA}, {DSS}, and {Other} {Systems}},
+	isbn = {978-3-540-68697-2},
+	doi = {10.1007/3-540-68697-5_9},
+	abstract = {By carefully measuring the amount of time required to perform private key operations, attackers may be able to find fixed Diffie-Hellman exponents, factor RSA keys, and break other cryptosystems. Against a vulnerable system, the attack is computationally inexpensive and often requires only known ciphertext. Actual systems are potentially at risk, including cryptographic tokens, network-based cryptosystems, and other applications where attackers can make reasonably accurate timing measurements. Techniques for preventing the attack for RSA and Diffie-Hellman are presented. Some cryptosystems will need to be revised to protect against the attack, and new protocols and algorithms may need to incorporate measures to prevent timing attacks.},
+	language = {en},
+	booktitle = {Advances in {Cryptology} — {CRYPTO} ’96},
+	publisher = {Springer},
+	author = {Kocher, Paul C.},
+	editor = {Koblitz, Neal},
+	year = {1996},
+	keywords = {cryptanalysis, Diffie-Hellman, DSS, RSA, timing attack},
+	pages = {104--113},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\HFWGDUQN\\Kocher - 1996 - Timing Attacks on Implementations of Diffie-Hellma.pdf:application/pdf},
+}
+
+@inproceedings{gebotys_em_2005,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {{EM} {Analysis} of {Rijndael} and {ECC} on a {Wireless} {Java}-{Based} {PDA}},
+	isbn = {978-3-540-31940-5},
+	doi = {10.1007/11545262_19},
+	abstract = {Although many wireless portable devices offer more resistance to bus probing and power analysis due to their compact size, susceptibility to electromagnetic (EM) attacks must be analyzed. This paper demonstrates, for the first time, a real EM-based attack on a PDA running Rijndael and elliptic curve cryptography. A new frequency-based differential EM analysis, which computes the spectrogram, is presented. Additionally a low energy countermeasure for symmetric key cryptography is presented which avoids large overheads of table regeneration or excessive storage. Unlike previous research the new differential analysis does not require perfect alignment of EM traces, thus supporting attacks on real embedded systems. This research is important for future wireless embedded systems which will increasingly demand higher levels of security.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} – {CHES} 2005},
+	publisher = {Springer},
+	author = {Gebotys, Catherine H. and Ho, Simon and Tiu, C. C.},
+	editor = {Rao, Josyula R. and Sunar, Berk},
+	year = {2005},
+	keywords = {Cryptographic Algorithm, Differential Power Analysis, Elliptic Curve, Elliptic Curve Cryptography, Power Trace},
+	pages = {250--264},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\RMGK69ZR\\Gebotys et al. - 2005 - EM Analysis of Rijndael and ECC on a Wireless Java.pdf:application/pdf},
+}
+
+@inproceedings{hutter_temperature_2013,
+	title = {The {Temperature} {Side}-{Channel} and {Heating} {Fault} {Attacks}},
+	volume = {8419},
+	doi = {10.1007/978-3-319-08302-5_15},
+	abstract = {In this paper, we present practical results of data leakages of CMOS devices via the temperature side channel - a side channel that has been widely cited in literature but not well characterized yet. We investigate the leakage of processed data by passively measuring the dissipated heat of the devices. The temperature leakage is thereby linearly correlated with the power leakage model but is limited by the physical properties of thermal conductivity and capacitance. We further present heating faults by operating the devices beyond their specified temperature ratings. The efficiency of this kind of attack is shown by a practical attack on an RSA implementation. Finally, we introduce data remanence attacks on AVR microcontrollers that exploit the Negative Bias Temperature Instability (NBTI) property of internal SRAM cells. We show how to recover parts of the internal memory and present first results on an ATmega162. The work encourages the awareness of temperature-based attacks that are known for years now but not well described in literature. It also serves as a starting point for further research investigations.},
+	author = {Hutter, Michael and Schmidt, Jörn-Marc},
+	month = nov,
+	year = {2013},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\8T2YVCRY\\Hutter et Schmidt - 2013 - The Temperature Side-Channel and Heating Fault Att.pdf:application/pdf},
+}
+
+@article{genkin_acoustic_2017,
+	title = {Acoustic {Cryptanalysis}},
+	volume = {30},
+	issn = {1432-1378},
+	url = {https://doi.org/10.1007/s00145-015-9224-2},
+	doi = {10.1007/s00145-015-9224-2},
+	abstract = {Many computers emit a high-pitched noise during operation, due to vibration in some of their electronic components. These acoustic emanations are more than a nuisance: They can convey information about the software running on the computer and, in particular, leak sensitive information about security-related computations. In a preliminary presentation (Eurocrypt’04 rump session), we have shown that different RSA keys induce different sound patterns, but it was not clear how to extract individual key bits. The main problem was the very low bandwidth of the acoustic side channel (under 20  kHz using common microphones, and a few hundred kHz using ultrasound microphones), and several orders of magnitude below the GHz-scale clock rates of the attacked computers. In this paper, we describe a new acoustic cryptanalysis key extraction attack, applicable to GnuPG’s implementation of RSA. The attack can extract full 4096-bit RSA decryption keys from laptop computers (of various models), within an hour, using the sound generated by the computer during the decryption of some chosen ciphertexts. We experimentally demonstrate such attacks, using a plain mobile phone placed next to the computer, or a more sensitive microphone placed 10 meters away.},
+	language = {en},
+	number = {2},
+	journal = {J Cryptol},
+	author = {Genkin, Daniel and Shamir, Adi and Tromer, Eran},
+	month = apr,
+	year = {2017},
+	keywords = {Acoustic emanations, Cryptanalysis, RSA, Side channel attacks},
+	pages = {392--443},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\I3G65SY8\\Genkin et al. - 2017 - Acoustic Cryptanalysis.pdf:application/pdf},
+}
+
+@inproceedings{schindler_stochastic_2005,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {A {Stochastic} {Model} for {Differential} {Side} {Channel} {Cryptanalysis}},
+	isbn = {978-3-540-31940-5},
+	doi = {10.1007/11545262_3},
+	abstract = {This contribution presents a new approach to optimize the efficiency of differential side channel cryptanalysis against block ciphers by advanced stochastic methods. We approximate the real leakage function within a suitable vector subspace. Under appropriate conditions profiling requires only one test key. For the key extraction we present a ‘minimum principle’ that solely uses deterministic data dependencies and the ‘maximum likelihood principle’ that additionally incorporates the characterization of the noise revealed during profiling. The theoretical predictions are accompanied and confirmed by experiments. We demonstrate that the adaptation of probability densities is clearly advantageous regarding the correlation method, especially, if multiple leakage signals at different times can be jointly evaluated. Though our efficiency at key extraction is limited by template attacks profiling is much more efficient which is highly relevant if the designer of a cryptosystem is bounded by the number of measurements in the profiling step.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} – {CHES} 2005},
+	publisher = {Springer},
+	author = {Schindler, Werner and Lemke, Kerstin and Paar, Christof},
+	editor = {Rao, Josyula R. and Sunar, Berk},
+	year = {2005},
+	keywords = {DEMA, Differential Side Channel Cryptanalysis, DPA, Electromagnetic Analysis, Maximum Likelihood Principle, Minimum Principle, Power Analysis, Stochastic Model, Template Attack},
+	pages = {30--46},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\ED7DCADE\\Schindler et al. - 2005 - A Stochastic Model for Differential Side Channel C.pdf:application/pdf},
+}
+
+@inproceedings{heuser_revealing_2012,
+	title = {Revealing side-channel issues of complex circuits by enhanced leakage models},
+	doi = {10.1109/DATE.2012.6176672},
+	abstract = {In the light of implementation attacks a better understanding of complex circuits of security sensitive applications is an important issue. Appropriate evaluation tools and metrics are required to understand the origin of implementation flaws within the design process. The selected leakage model has significant influence on the reliability of evaluation results concerning the side-channel resistance of a cryptographic implementation. In this contribution we introduce methods, which determine the accuracy of the leakage characterization and allow to quantify the signal-to-noise ratio. This allows a quantitative assessment of the side-channel resistance of an implementation without launching an attack. We validate the conclusions drawn from our new methods by real attacks and obtain similar results. Compared to the commonly used Hamming Distance model in our experiments enhanced leakage models increased the attack efficiency by up to 500\%.},
+	booktitle = {2012 {Design}, {Automation} \& {Test} in {Europe} {Conference} \& {Exhibition} ({DATE})},
+	author = {Heuser, Annelie and Schindler, Werner and Stöttinger, Marc},
+	month = mar,
+	year = {2012},
+	note = {ISSN: 1558-1101},
+	keywords = {approximation error, Approximation error, constructive side-channel analysis, Integrated circuit modeling, Random variables, secure hardware design, Signal to noise ratio, signal-to-noise ratio, Stochastic processes, Vectors},
+	pages = {1179--1184},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\KIGGP4J5\\6176672.html:text/html},
+}
+
+@article{doget_univariate_2011,
+	title = {Univariate side channel attacks and leakage modeling},
+	volume = {1},
+	issn = {2190-8516},
+	url = {https://doi.org/10.1007/s13389-011-0010-2},
+	doi = {10.1007/s13389-011-0010-2},
+	abstract = {Differential power analysis is a powerful cryptanalytic technique that exploits information leaking from physical implementations of cryptographic algorithms. During the two last decades, numerous variations of the original principle have been published. In particular, the univariate case, where a single instantaneous leakage is exploited, has attracted much research effort. In this paper, we argue that several univariate attacks among the most frequently used by the community are not only asymptotically equivalent, but can also be rewritten one in function of the other, only by changing the leakage model used by the adversary. In particular, we prove that most univariate attacks proposed in the literature can be expressed as correlation power analyses with different leakage models. This result emphasizes the major role plays by the model choice on the attack efficiency. In a second point of this paper, we hence also discuss and evaluate side channel attacks that involve no leakage model but rely on some general assumptions about the leakage. Our experiments show that such attacks, named robust, are a valuable alternative to the univariate differential power analyses. They only loose bit of efficiency in case a perfect model is available to the adversary, and gain a lot in case such information is not available.},
+	language = {en},
+	number = {2},
+	journal = {J Cryptogr Eng},
+	author = {Doget, Julien and Prouff, Emmanuel and Rivain, Matthieu and Standaert, François-Xavier},
+	month = aug,
+	year = {2011},
+	keywords = {Correlation, Model, Regression, Side channel attack},
+	pages = {123},
+}
+
+@inproceedings{akkar_power_2000,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Power {Analysis}, {What} {Is} {Now} {Possible}...},
+	isbn = {978-3-540-44448-0},
+	doi = {10.1007/3-540-44448-3_38},
+	abstract = {Since Power Analysis on smart-cards was introduced by Paul Kocher [KJJ98], the validity of the model used for smart-cards has not been given much attention. In this paper, we first describe and analyze some different possible models. Then we apply these models to real components and clearly define what can be detected by power analysis (simple, differential, code reverse engineering...). We also study, from a statistical point of view, some new ideas to exploit these models to attack the card by power analysis. Finally we apply these ideas to set up real attacks on cryptographic algorithms or enhance existing ones.},
+	language = {en},
+	booktitle = {Advances in {Cryptology} — {ASIACRYPT} 2000},
+	publisher = {Springer},
+	author = {Akkar, Mehdi-Laurent and Bevan, Régis and Dischamp, Paul and Moyart, Didier},
+	editor = {Okamoto, Tatsuaki},
+	year = {2000},
+	keywords = {DPA, Power analysis, Smart-cards, SPA},
+	pages = {489--502},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\K6HAFZK9\\Akkar et al. - 2000 - Power Analysis, What Is Now Possible....pdf:application/pdf},
+}
+
+@article{tiran_model_2014,
+	title = {A model of the leakage in the frequency domain and its application to {CPA} and {DPA}},
+	volume = {4},
+	issn = {2190-8516},
+	url = {https://doi.org/10.1007/s13389-014-0074-x},
+	doi = {10.1007/s13389-014-0074-x},
+	abstract = {This paper introduces a leakage model in the frequency domain to enhance the efficiency of side channel attacks of CMOS circuits. While usual techniques are focused on noise removal around clock harmonics, we show that the actual leakage is not necessary located in those expected bandwidths as experimentally observed by Mateos and Gebotys (A new correlation frequency analysis of the side channel, p 4, 2010). We start by building a theoretical modeling of power consumption and electromagnetic emanations before deriving from it a criterion to guide standard attacks. This criterion is then validated on real experiments, both on FPGA and ASIC, showing an impressive increase of the yield of SCA.},
+	language = {en},
+	number = {3},
+	journal = {J Cryptogr Eng},
+	author = {Tiran, S. and Ordas, S. and Teglia, Y. and Agoyan, M. and Maurine, P.},
+	month = sep,
+	year = {2014},
+	keywords = {CPA, DPA, Frequency domain, Leakage model, SCA},
+	pages = {197--212},
+}
+
+@inproceedings{tang_power_2012,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Power {Analysis} {Based} {Reverse} {Engineering} on the {Secret} {Round} {Function} of {Block} {Ciphers}},
+	isbn = {978-3-642-34679-8},
+	doi = {10.1007/978-3-642-34679-8_17},
+	abstract = {Side Channel Analysis (SCA) has become a new threat to the hardware implementations of encryption algorithms. The reverse engineering has been adopted to explore the unknown part of the encryption algorithms. The existing SCAs for reverse engineering depend on the leakage models in a large extent and mainly focus on the single component of the algorithms while the other parts of the target algorithm are known. In this paper, we present a more general and feasible reverse analysis by combining the mathematical methods and the SCA methods. We use the strict avalanche criterion for the non-linear operations of block ciphers and apply the power analysis to reverse the structure parameters. We propose a new reverse analysis method to reduce the dependency on the leakage models, which can be combined with the structure cryptanalysis to reverse the internal parameters of the linear and non-linear operations. We finally achieve the reverse analysis on the unknown round function of block ciphers.},
+	language = {en},
+	booktitle = {Data and {Knowledge} {Engineering}},
+	publisher = {Springer},
+	author = {Tang, Ming and Qiu, Zhenlong and Li, Weijie and Liu, Shubo and Zhang, Huanguo},
+	editor = {Xiang, Yang and Pathan, Mukaddim and Tao, Xiaohui and Wang, Hua},
+	year = {2012},
+	keywords = {Block ciphers, Cryptanalysis, MIBS, Reverse engineering, SCA},
+	pages = {175--188},
+}
+
+@misc{goodwill_testing_2011,
+	title = {A testing methodology for side channel resistance},
+	abstract = {Many security standards require cryptographic devices and modules to resist side-channel attacks such as Timing Analysis as well as Simple and Differential Power/Electromagnetic Analysis but evaluation style testing approaches are not suitable for a conformance style testing program such as CMVP. Many security standards require cryptographic devices and modules to resist side-channel attacks such as Timing Analysis as well as Simple and Differential Power/Electromagnetic Analysis. These requirements have also been included in the draft FIPS 140-3 standard [1]. However, existing security certification standards mandating side-channel resistance, such as Common Criterion, require an evaluation style testing approach to verify compliance. Such evaluation style testing approaches are not suitable for a conformance style testing program such as CMVP, and effective, yet cost-efficient, conformance style testing for side-channel resistance has been seen as a challenge.},
+	language = {en},
+	author = {Goodwill, G. and Jun, Benjamin and Jaffe, J. and Rohatgi, P.},
+	year = {2011},
+	file = {Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\P79A9KNP\\60b993cb11fff28c9ea657b0e2882867b8f810e1.html:text/html},
+}
+
+@inproceedings{ishai_private_2003,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Private {Circuits}: {Securing} {Hardware} against {Probing} {Attacks}},
+	isbn = {978-3-540-45146-4},
+	shorttitle = {Private {Circuits}},
+	doi = {10.1007/978-3-540-45146-4_27},
+	abstract = {Can you guarantee secrecy even if an adversary can eavesdrop on your brain? We consider the problem of protecting privacy in circuits, when faced with an adversary that can access a bounded number of wires in the circuit. This question is motivated by side channel attacks, which allow an adversary to gain partial access to the inner workings of hardware. Recent work has shown that side channel attacks pose a serious threat to cryptosystems implemented in embedded devices. In this paper, we develop theoretical foundations for security against side channels. In particular, we propose several efficient techniques for building private circuits resisting this type of attacks. We initiate a systematic study of the complexity of such private circuits, and in contrast to most prior work in this area provide a formal threat model and give proofs of security for our constructions.},
+	language = {en},
+	booktitle = {Advances in {Cryptology} - {CRYPTO} 2003},
+	publisher = {Springer},
+	author = {Ishai, Yuval and Sahai, Amit and Wagner, David},
+	editor = {Boneh, Dan},
+	year = {2003},
+	keywords = {circuit complexity, Cryptanalysis, provable security, secure multi-party computation, side channel attacks},
+	pages = {463--481},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\INK62BSY\\Ishai et al. - 2003 - Private Circuits Securing Hardware against Probin.pdf:application/pdf},
+}
+
+@inproceedings{barthe_strong_2016,
+	address = {Vienne, Austria},
+	title = {Strong {Non}-{Interference} and {Type}-{Directed} {Higher}-{Order} {Masking}},
+	url = {https://hal.inria.fr/hal-01410216},
+	doi = {10.1145/2976749.2978427},
+	abstract = {Differential power analysis (DPA) is a side-channel attack in which an adversary retrieves cryptographic material by measuring and analyzing the power consumption of the device on which the cryptographic algorithm under attack executes. An effective countermeasure against DPA is to mask secrets by probabilistically encoding them over a set of shares, and to run masked algorithms that compute on these encodings. Masked algorithms are often expected to provide, at least, a certain level of probing security. Leveraging the deep connections between probabilistic information flow and probing security, we develop a precise, scalable, and fully automated methodology to verify the probing security of masked algorithms, and generate them from unprotected descriptions of the algorithm. Our methodology relies on several contributions of independent interest, including a stronger notion of probing security that supports compositional reasoning, and a type system for enforcing an expressive class of probing policies. Finally, we validate our methodology on examples that go significantly beyond the state-of-the-art.},
+	booktitle = {{CCS} 2016 - 23rd {ACM} {Conference} on {Computer} and {Communications} {Security}},
+	publisher = {ACM},
+	author = {Barthe, Gilles and Belaïd, Sonia and Dupressoir, François and Fouque, Pierre-Alain and Grégoire, Benjamin and Strub, Pierre-Yves and Zucchini, Rébecca},
+	month = oct,
+	year = {2016},
+	pages = {116 -- 129},
+	file = {HAL PDF Full Text:C\:\\Users\\Vincent\\Zotero\\storage\\3RD9NS97\\Barthe et al. - 2016 - Strong Non-Interference and Type-Directed Higher-O.pdf:application/pdf},
+}
+
+@article{barthe_improved_2020,
+	title = {Improved parallel mask refreshing algorithms: generic solutions with parametrized non-interference and automated optimizations},
+	volume = {10},
+	shorttitle = {Improved parallel mask refreshing algorithms},
+	url = {https://hal.inria.fr/hal-03133221},
+	doi = {10.1007/s13389-018-00202-2},
+	abstract = {Refreshing algorithms are a critical ingredient for secure masking. They are instrumental in enabling sound composability properties for complex circuits, and their randomness requirements dominate the performance overheads in (very) high-order masking. In this paper, we improve a proposal of mask refreshing algorithms from EUROCRYPT 2017, that has excellent implementation properties in software and hardware, in two main directions. First, we provide a generic proof that this algorithm is secure at arbitrary orders – a problem that was left open so far. We introduce Parametrized Non-Interference as a new technical ingredient for this purpose, that may be of independent interest. Second, we use automated tools to further explore the design space of such algorithms and provide the best known parallel mask refreshing gadgets for concretely relevant security orders. Incidentally, we also prove the security of a recent proposal of mask refreshing with improved resistance against horizontal attacks from CHES 2017.},
+	number = {1},
+	journal = {Journal of Cryptographic Engineering},
+	author = {Barthe, Gilles and Belaïd, Sonia and Dupressoir, François and Fouque, Pierre-Alain and Grégoire, Benjamin and Standaert, François-Xavier and Strub, Pierre-Yves},
+	month = apr,
+	year = {2020},
+	note = {Publisher: Springer},
+	keywords = {Composability, Masking Countermeasure, Refreshing algorithms, Side-Channel Attacks},
+	pages = {17--26},
+	file = {HAL PDF Full Text:C\:\\Users\\Vincent\\Zotero\\storage\\E8EQDVYY\\Barthe et al. - 2020 - Improved parallel mask refreshing algorithms gene.pdf:application/pdf},
+}
+
+@article{meyer_multiplicative_2018,
+	title = {Multiplicative {Masking} for {AES} in {Hardware}},
+	copyright = {Copyright (c) 2018 Lauren De Meyer, Oscar Reparaz, Begül Bilgin},
+	issn = {2569-2925},
+	url = {https://tches.iacr.org/index.php/TCHES/article/view/7282},
+	doi = {10.13154/tches.v2018.i3.431-468},
+	abstract = {Hardware masked AES designs usually rely on Boolean masking and perform the computation of the S-box using the tower-field decomposition. On the other hand, splitting sensitive variables in a multiplicative way is more amenable for the computation of the AES S-box, as noted by Akkar and Giraud. However, multiplicative masking needs to be implemented carefully not to be vulnerable to first-order DPA with a zero-value power model. Up to now, sound higher-order multiplicative masking schemes have been implemented only in software. In this work, we demonstrate the first hardware implementation of AES using multiplicative masks. The method is tailored to be secure even if the underlying gates are not ideal and glitches occur in the circuit. We detail the design process of first- and second-order secure AES-128 cores, which result in the smallest die area to date among previous state-of-the-art masked AES implementations with comparable randomness cost and latency. The first- and second-order masked implementations improve resp. 29\% and 18\% over these designs. We deploy our construction on a Spartan-6 FPGA and perform a side-channel evaluation. No leakage is detected with up to 50 million traces for both our first- and second-order implementation. For the latter, this holds both for univariate and bivariate analysis.},
+	language = {en},
+	journal = {IACR Transactions on Cryptographic Hardware and Embedded Systems},
+	author = {Meyer, Lauren De and Reparaz, Oscar and Bilgin, Begül},
+	month = aug,
+	year = {2018},
+	keywords = {Side-channel},
+	pages = {431--468},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\2RA6E5XL\\Meyer et al. - 2018 - Multiplicative Masking for AES in Hardware.pdf:application/pdf},
+}
+
+@article{meyer_consolidating_2019,
+	title = {Consolidating {Security} {Notions} in {Hardware} {Masking}},
+	copyright = {Copyright (c) 2019 Lauren De Meyer, Begül Bilgin, Oscar Reparaz},
+	issn = {2569-2925},
+	url = {https://tches.iacr.org/index.php/TCHES/article/view/8291},
+	doi = {10.13154/tches.v2019.i3.119-147},
+	abstract = {In this paper, we revisit the security conditions of masked hardware implementations. We describe a new, succinct, information-theoretic condition called d-glitch immunity which is both necessary and sufficient for security in the presence of glitches. We show that this single condition includes, but is not limited to, previous security notions such as those used in higher-order threshold implementations and in abstractions using ideal gates. As opposed to these previously known necessary conditions, our new condition is also sufficient. On the other hand, it excludes avoidable notions such as uniformity. We also treat the notion of (strong) noninterference from an information-theoretic point-of-view in order to unify the different security concepts and pave the way to the verification of composability in the presence of glitches. We conclude the paper by demonstrating how the condition can be used as an efficient and highly generic flaw detection mechanism for a variety of functions and schemes based on different operations.},
+	language = {en},
+	journal = {IACR Transactions on Cryptographic Hardware and Embedded Systems},
+	author = {Meyer, Lauren De and Bilgin, Begül and Reparaz, Oscar},
+	month = may,
+	year = {2019},
+	keywords = {Glitch Immunity},
+	pages = {119--147},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\E5R8URZ2\\Meyer et al. - 2019 - Consolidating Security Notions in Hardware Masking.pdf:application/pdf},
+}
+
+@inproceedings{kocher_differential_1999,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Differential {Power} {Analysis}},
+	isbn = {978-3-540-48405-9},
+	doi = {10.1007/3-540-48405-1_25},
+	abstract = {Cryptosystem designers frequently assume that secrets will be manipulated in closed, reliable computing environments. Unfortunately, actual computers and microchips leak information about the operations they process. This paper examines specific methods for analyzing power consumption measurements to find secret keys from tamper resistant devices. We also discuss approaches for building cryptosystems that can operate securely in existing hardware that leaks information.},
+	language = {en},
+	booktitle = {Advances in {Cryptology} — {CRYPTO}’ 99},
+	publisher = {Springer},
+	author = {Kocher, Paul and Jaffe, Joshua and Jun, Benjamin},
+	editor = {Wiener, Michael},
+	year = {1999},
+	keywords = {cryptanalysis, DES, differential power analysis, DPA, SPA},
+	pages = {388--397},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\8ESMJ6NW\\Kocher et al. - 1999 - Differential Power Analysis.pdf:application/pdf},
+}
+
+@inproceedings{chen_dual-rail_2006,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Dual-{Rail} {Random} {Switching} {Logic}: {A} {Countermeasure} to {Reduce} {Side} {Channel} {Leakage}},
+	isbn = {978-3-540-46561-4},
+	shorttitle = {Dual-{Rail} {Random} {Switching} {Logic}},
+	doi = {10.1007/11894063_20},
+	abstract = {Recent research has shown that cryptographers with glitches are vulnerable in front of Side Channel Attacks (SCA). Since then, several methods, such as Wave Dynamic Differential Logic (WDDL) and Masked Dual-Rail Pre-charge Logic (MDPL), have been presented to make circuits clean. In this paper, we propose a more accurate power model based on logic gates’ output transitions and divide it into pieces according to input signals’ transformations. Based on our model, we demonstrate that 1-bit masked logic gates with asynchronous inputs always leak side-channel information from their output transitions. Therefore, even those gates designed without glitches are still susceptible to be attacked. To solve this problem, Dual-Rail Random Switching Logic (DRSL) is presented. By introducing a local pre-charge signal, DRSL gates have their inputs synchronized. Experimental results indicate that DRSL eliminates most of the leakage.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} - {CHES} 2006},
+	publisher = {Springer},
+	author = {Chen, Zhimin and Zhou, Yujie},
+	editor = {Goubin, Louis and Matsui, Mitsuru},
+	year = {2006},
+	keywords = {DPA, DRSL, Dual-Rail, Gate Level Masking, Pre-charge, Side Channel Attacks},
+	pages = {242--254},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\4NX3SISS\\Chen et Zhou - 2006 - Dual-Rail Random Switching Logic A Countermeasure.pdf:application/pdf},
+}
+
+@inproceedings{popp_masked_2005,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Masked {Dual}-{Rail} {Pre}-charge {Logic}: {DPA}-{Resistance} {Without} {Routing} {Constraints}},
+	isbn = {978-3-540-31940-5},
+	shorttitle = {Masked {Dual}-{Rail} {Pre}-charge {Logic}},
+	doi = {10.1007/11545262_13},
+	abstract = {During the last years, several logic styles that counteract side-channel attacks have been proposed. They all have in common that their level of resistance heavily depends on implementation constraints that are costly to satisfy. For example, the capacitive load of complementary wires in an integrated circuit may need to be balanced. This article describes a novel side-channel analysis resistant logic style called MDPL that completely avoids such constraints. It is a masked and dual-rail pre-charge logic style and can be implemented using common CMOS standard cell libraries. This makes MDPL perfectly suitable for semi-custom designs.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} – {CHES} 2005},
+	publisher = {Springer},
+	author = {Popp, Thomas and Mangard, Stefan},
+	editor = {Rao, Josyula R. and Sunar, Berk},
+	year = {2005},
+	keywords = {DPA, Dual-Rail Pre-Charge Logic, Hardware Countermeasures, Masking Logic, MDPL, Side-Channel Analysis},
+	pages = {172--186},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\V95LEGTW\\Popp et Mangard - 2005 - Masked Dual-Rail Pre-charge Logic DPA-Resistance .pdf:application/pdf},
+}
+
+@inproceedings{bucci_three-phase_2006,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Three-{Phase} {Dual}-{Rail} {Pre}-charge {Logic}},
+	isbn = {978-3-540-46561-4},
+	doi = {10.1007/11894063_19},
+	abstract = {This paper investigates the design of a dual-rail pre-charge logic family whose power consumption is insensitive to unbalanced load conditions thus allowing adopting a semi-custom design flow (automatic place \& route) without any constraint on the routing of the complementary wires. The proposed logic is based on a three phase operation where, in order to obtain a constant energy consumption over the operating cycle, an additional discharge phase is performed after pre-charge and evaluation. In this work, the proposed concept has been implemented as an enhancement of the SABL logic with a limited increase in circuit complexity. Implementation details and simulation results are reported which show a power consumption independent of the sequence of processed data and load capacitances. An improvement in the energy consumption balancing up to 100 times with respect to SABL has been obtained.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} - {CHES} 2006},
+	publisher = {Springer},
+	author = {Bucci, Marco and Giancane, Luca and Luzzi, Raimondo and Trifiletti, Alessandro},
+	editor = {Goubin, Louis and Matsui, Mitsuru},
+	year = {2006},
+	keywords = {DPA, dual-rail logic, SABL, security},
+	pages = {232--241},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\MTBU6ALR\\Bucci et al. - 2006 - Three-Phase Dual-Rail Pre-charge Logic.pdf:application/pdf},
+}
+
+@article{suzuki_random_2004,
+	title = {Random {Switching} {Logic}: {A} {Countermeasure} against {DPA} based on {Transition} {Probability}.},
+	volume = {2004},
+	shorttitle = {Random {Switching} {Logic}},
+	abstract = {In this paper, we propose a new model for directly evaluating DPA leakage from logic information in CMOS circuits. This model is based on the transition probability for each gate, and is naturally applicable to various actual devices for simulating power analysis. We also report on our study of the effects of the previously known countermeasures on both our model and FPGA, and show the possibility of leaking information, which is caused by strict precondition for implementing a secure circuit. Furthermore, we present an efficient countermeasure,Random Switching Logic(RSL), for relaxing the precondition, and show that RSL makes a cryptographic circuit secure through evaluation on both our model and FPGA.},
+	journal = {IACR Cryptology ePrint Archive},
+	author = {Suzuki, Daisuke and Saeki, Minoru and Ichikawa, Tetsuya},
+	month = jan,
+	year = {2004},
+	pages = {346},
+}
+
+@inproceedings{rivain_provably_2010,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Provably {Secure} {Higher}-{Order} {Masking} of {AES}},
+	isbn = {978-3-642-15031-9},
+	doi = {10.1007/978-3-642-15031-9_28},
+	abstract = {Implementations of cryptographic algorithms are vulnerable to Side Channel Analysis (SCA). To counteract it, masking schemes are usually involved which randomize key-dependent data by the addition of one or several random value(s) (the masks). When dth-order masking is involved (i.e. when d masks are used per key-dependent variable), the complexity of performing an SCA grows exponentially with the order d. The design of generic dth-order masking schemes taking the order d as security parameter is therefore of great interest for the physical security of cryptographic implementations. This paper presents the first generic dth-order masking scheme for AES with a provable security and a reasonable software implementation overhead. Our scheme is based on the hardware-oriented masking scheme published by Ishai et al. at Crypto 2003. Compared to this scheme, our solution can be efficiently implemented in software on any general-purpose processor. This result is of importance considering the lack of solution for d ≥ 3.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems}, {CHES} 2010},
+	publisher = {Springer},
+	author = {Rivain, Matthieu and Prouff, Emmanuel},
+	editor = {Mangard, Stefan and Standaert, François-Xavier},
+	year = {2010},
+	keywords = {Block Cipher, Cryptographic Algorithm, Intermediate Variable, Security Proof, Sensitive Variable},
+	pages = {413--427},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\JAYNKUD2\\Rivain et Prouff - 2010 - Provably Secure Higher-Order Masking of AES.pdf:application/pdf},
+}
+
+@inproceedings{faust_protecting_2010,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Protecting {Circuits} from {Leakage}: the {Computationally}-{Bounded} and {Noisy} {Cases}},
+	isbn = {978-3-642-13190-5},
+	shorttitle = {Protecting {Circuits} from {Leakage}},
+	doi = {10.1007/978-3-642-13190-5_7},
+	abstract = {Physical computational devices leak side-channel information that may, and often does, reveal secret internal states. We present a general transformation that compiles any circuit into a new, functionally equivalent circuit which is resilient against well-defined classes of leakage. Our construction requires a small, stateless and computation-independent leak-proof component that draws random elements from a fixed distribution. In essence, we reduce the problem of shielding arbitrarily complex circuits to the problem of shielding a single, simple component.},
+	language = {en},
+	booktitle = {Advances in {Cryptology} – {EUROCRYPT} 2010},
+	publisher = {Springer},
+	author = {Faust, Sebastian and Rabin, Tal and Reyzin, Leonid and Tromer, Eran and Vaikuntanathan, Vinod},
+	editor = {Gilbert, Henri},
+	year = {2010},
+	keywords = {Boolean Circuit, Constant Depth Circuit, Output Length, Parity Gate, Security Parameter},
+	pages = {135--156},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\T2XFHN87\\Faust et al. - 2010 - Protecting Circuits from Leakage the Computationa.pdf:application/pdf},
+}
+
+@article{trichina_combinational_2003,
+	title = {Combinational {Logic} {Design} for {AES} {SubByte} {Transformation} on {Masked} {Data}},
+	url = {https://www.semanticscholar.org/paper/Small-Size%2C-Low-Power%2C-Side-Channel-Immune-AES-and-Trichina-Korkishko/c504e22f5ec98b535e4868c41796183cbb9bfd76},
+	abstract = {An AES coprocessor is described that provides complete protection against first-order differential power analysis by embedding a widely used software countermeasure that decorrelates data being processed from the leaked information, so-called data masking, at a hardware level. When cryptosystems are being used in real life, hardware and software implementations themselves present a fruitful field for attacks. Side channel attacks exploit information such as time measurements, power consumption, and electromagnetic emission that leaks from a device when it executes cryptographic applications. When leaked information is correlated to a secret key, an adversary may be able to recover the key by monitoring this information. This paper describes an AES coprocessor that provides complete protection against first-order differential power analysis by embedding a widely used software countermeasure that decorrelates data being processed from the leaked information, so-called data masking, at a hardware level.},
+	language = {en},
+	journal = {IACR Cryptol},
+	author = {Trichina, E.},
+	year = {2003},
+	file = {Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\S2KMPKUV\\c504e22f5ec98b535e4868c41796183cbb9bfd76.html:text/html},
+}
+
+@inproceedings{mangard_pinpointing_2006,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Pinpointing the {Side}-{Channel} {Leakage} of {Masked} {AES} {Hardware} {Implementations}},
+	isbn = {978-3-540-46561-4},
+	doi = {10.1007/11894063_7},
+	abstract = {This article starts with a discussion of three different attacks on masked AES hardware implementations. This discussion leads to the conclusion that glitches in masked circuits pose the biggest threat to masked hardware implementations in practice. Motivated by this fact, we pinpointed which parts of masked AES S-boxes cause the glitches that lead to side-channel leakage. The analysis reveals that these glitches are caused by the switching characteristics of XOR gates in masked multipliers. Masked multipliers are basic building blocks of most recent proposals for masked AES S-boxes. We subsequently show that the side-channel leakage of the masked multipliers can be prevented by fulfilling timing constraints for 3 \${\textbackslash}textperiodcentered\$n XOR gates in each GF(2n) multiplier of an AES S-box. We also briefly present two approaches on how these timing constraints can be fulfilled in practice.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} - {CHES} 2006},
+	publisher = {Springer},
+	author = {Mangard, Stefan and Schramm, Kai},
+	editor = {Goubin, Louis and Matsui, Mitsuru},
+	year = {2006},
+	keywords = {AES, Delay Chains, DPA, Glitches, Masking, Zero-Input DPA, Zero-Offset DPA},
+	pages = {76--90},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\F3CQVTAW\\Mangard et Schramm - 2006 - Pinpointing the Side-Channel Leakage of Masked AES.pdf:application/pdf},
+}
+
+@article{alam_effect_2009,
+	title = {Effect of glitches against masked {AES} {S}-box implementation and countermeasure},
+	volume = {3},
+	doi = {10.1049/iet-ifs:20080041},
+	abstract = {Masking of gates is one of the most popular techniques to prevent differential power analysis (DPA) of AES algorithm. It has been shown that the logic circuits used in the implementation of cryptographic algorithms leak side-channel information inspite of masking, which can be exploited, in differential power attacks. The phenomenon in CMOS circuits responsible for the leakage of masked circuits is known as glitching. Motivated by this fact, the authors analyse the effect of glitches in CMOS circuits against masked implementation of the AES S-box. The authors explicitly demonstrate that glitches do not affect always. There exists a relation between combinational path delay of the circuit and timing difference of input vectors to the circuit, which has a bearance on the amount of information leaked by the masked gates. A balanced masked S-box circuit is proposed where the inputs are synchronised by sequential components. Detailed SPICE results are shown to support the claim that the modifications indeed reduce the vulnerability of the masked AES S-box against DPA attacks.},
+	journal = {Information Security, IET},
+	author = {Alam, Monjur and Ghosh, Santosh and Mohan, M.J. and Mukhopadhyay, Debdeep and Chowdhury, D.R. and Gupta, I.S.},
+	month = apr,
+	year = {2009},
+	pages = {34--44},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\JUFHPJT7\\Alam et al. - 2009 - Effect of glitches against masked AES S-box implem.pdf:application/pdf},
+}
+
+@inproceedings{ghosh_preventing_2007,
+	title = {Preventing the {Side}-{Channel} {Leakage} of {Masked} {AES} {S}-{Box}},
+	doi = {10.1109/ADCOM.2007.63},
+	abstract = {Masking of gates is one of the most popular techniques to prevent Differential Power Analysis (DPA) of AES S- Boxes. However due to the presence of glitches in circuits even masked circuits leak side-channel information. Moti- vated by this fact, we proposed a balanced masked multi- plier where the inputs are synchronized either by sequential components or controlled AND logic, that can be a possible solution for preventing DPA attack on masked implementa- tion of AES S-Boxes. Detailed SPICE results are shown to support the claim that the modifications indeed reduce the vulnerability of the masked multiplier against DPA attacks. Keywords: Side Channel Attacks, Masked Multiplier, AES S-box, Differential Power Analysis},
+	booktitle = {15th {International} {Conference} on {Advanced} {Computing} and {Communications} ({ADCOM} 2007)},
+	author = {Ghosh, Santosh and Alam, Monjur and Kumar, Kundan and Mukhopadhyay, Debdeep and Chowdhury, Dipanwita Roy},
+	month = dec,
+	year = {2007},
+	keywords = {Circuits, Clocks, Computer science, Logic, Power engineering and energy, Public key cryptography, SPICE, Switches, Synchronization, Yarn},
+	pages = {15--20},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\M3KLW3J8\\4425945.html:text/html},
+}
+
+@inproceedings{nikova_threshold_2006,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Threshold {Implementations} {Against} {Side}-{Channel} {Attacks} and {Glitches}},
+	isbn = {978-3-540-49497-3},
+	doi = {10.1007/11935308_38},
+	abstract = {Implementations of cryptographic algorithms are vulnerable to side-channel attacks. Masking techniques are employed to counter side-channel attacks that are based on multiple measurements of the same operation on different data. Most currently known techniques require new random values after every nonlinear operation and they are not effective in the presence of glitches. We present a new method to protect implementations. Our method has a higher computational complexity, but requires random values only at the start, and stays effective in the presence of glitches.},
+	language = {en},
+	booktitle = {Information and {Communications} {Security}},
+	publisher = {Springer},
+	author = {Nikova, Svetla and Rechberger, Christian and Rijmen, Vincent},
+	editor = {Ning, Peng and Qing, Sihan and Li, Ninghui},
+	year = {2006},
+	keywords = {Masking, secret sharing, side-channel attacks},
+	pages = {529--545},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\JXPN7NRI\\Nikova et al. - 2006 - Threshold Implementations Against Side-Channel Att.pdf:application/pdf},
+}
+
+@article{bilgin_threshold_2015,
+	title = {Threshold implementations of small {S}-boxes},
+	volume = {7},
+	issn = {1936-2455},
+	url = {https://doi.org/10.1007/s12095-014-0104-7},
+	doi = {10.1007/s12095-014-0104-7},
+	abstract = {Threshold implementation (TI) is a masking method that provides security against first-order DPA with minimal assumptions on the hardware. It is based on multi-party computation and secret sharing. In this paper, we provide an efficient technique to find TIs for all 3 and 4-bit permutations which also covers the set of 3×3 and 4×4 invertible S-boxes. We also discuss alternative methods to construct shared functions by changing the number of variables or shares. Moreover, we further consider the TI of 5-bit almost bent and 6-bit almost perfect nonlinear permutations. Finally, we compare the areas of these various TIs.},
+	language = {en},
+	number = {1},
+	journal = {Cryptogr. Commun.},
+	author = {Bilgin, Begül and Nikova, Svetla and Nikov, Ventzislav and Rijmen, Vincent and Tokareva, Natalia and Vitkup, Valeriya},
+	month = mar,
+	year = {2015},
+	keywords = {Decomposition, DPA, Glitches, Masking, Nonlinear functions, S-box, Sharing},
+	pages = {3--33},
+	file = {Version acceptée:C\:\\Users\\Vincent\\Zotero\\storage\\8Y6B3EQ6\\Bilgin et al. - 2015 - Threshold implementations of small S-boxes.pdf:application/pdf},
+}
+
+@inproceedings{gross_domain-oriented_2016,
+	address = {New York, NY, USA},
+	series = {{TIS} '16},
+	title = {Domain-{Oriented} {Masking}: {Compact} {Masked} {Hardware} {Implementations} with {Arbitrary} {Protection} {Order}},
+	isbn = {978-1-4503-4575-0},
+	shorttitle = {Domain-{Oriented} {Masking}},
+	url = {https://doi.org/10.1145/2996366.2996426},
+	doi = {10.1145/2996366.2996426},
+	abstract = {Passive physical attacks, like power analysis, pose a serious threat to the security of embedded systems and corresponding countermeasures need to be implemented. In this talk, we demonstrate how the costs for protecting digital circuits against passive physical attacks can be lowered significantly. We introduce a novel masking approach called domain-oriented masking (DOM). Our approach provides the same level of security as threshold implementations (TI), while it requires less chip area and less randomness. DOM can also be scaled easily to arbitrary protection orders for any circuit. To demonstrate the flexibility of our scheme, we apply DOM to a hardware design of the Advanced Encryption Standard (AES). The presented AES implementation is built in a way that it can be synthesized for any protection order. Although our AES design is scalable, it is smaller, faster, and less randomness demanding than other side-channel protected AES implementations. Our first-order secure AES design, for example, requires only 18 bits of randomness per S-box operation and 6 kGE of chip area. We demonstrate the flexibility of our AES implementation by synthesizing it up to the 15th protection order. Beside our theoretical security analysis, we also evaluate the security of the AES implementation with a t-test based side-channel leakage assessments up to the second protection order. To demonstrate the flexibility of our scheme, we apply DOM to a hardware design of the Advanced Encryption Standard (AES). The presented AES implementation is built in a way that it can be synthesized for any protection order. Although our AES design is scalable, it is smaller, faster, and less randomness demanding than other side-channel protected AES implementations. Our first-order secure AES design, for example, requires only 18 bits of randomness per S-box operation and 6{\textasciitilde}kGE of chip area. We demonstrate the flexibility of our AES implementation by synthesizing it up to the 15th protection order. Beside our theoretical security analysis, we also evaluate the security of the AES implementation with a t-test based side-channel leakage assessments up to the second protection order.},
+	booktitle = {Proceedings of the 2016 {ACM} {Workshop} on {Theory} of {Implementation} {Security}},
+	publisher = {Association for Computing Machinery},
+	author = {Gross, Hannes and Mangard, Stefan and Korak, Thomas},
+	month = oct,
+	year = {2016},
+	keywords = {AES, domain-oriented masking, DPA, hardware security, isw, masking, private circuits, side-channel analysis, threshold implementations},
+	pages = {3},
+}
+
+@article{gross_unified_2018,
+	title = {A unified masking approach},
+	volume = {8},
+	issn = {2190-8516},
+	url = {https://doi.org/10.1007/s13389-018-0184-y},
+	doi = {10.1007/s13389-018-0184-y},
+	abstract = {The continually growing number of security-related autonomous devices requires efficient mechanisms to counteract low-cost side-channel analysis (SCA) attacks. Masking provides high SCA resistance at an adjustable level of security. A high level of resistance, however, goes hand in hand with an increasing demand for fresh randomness which drastically increases the implementation costs. Since hardware-based masking schemes have other security requirements than software masking schemes, the research in these two fields has been conducted quite independently over the last 10 years. One important practical difference is that recently published software schemes achieve a lower randomness footprint than hardware masking schemes. In this work we combine existing software and hardware masking schemes into a unified masking algorithm. We demonstrate how to protect software and hardware implementations using the same masking algorithm, and for lower randomness costs than the separate schemes. Especially for hardware implementations, the randomness costs can in some cases be halved over the state of the art. Theoretical considerations as well as practical implementation results are then used for a comparison with existing schemes from different perspectives and at different levels of security.},
+	language = {en},
+	number = {2},
+	journal = {J Cryptogr Eng},
+	author = {Gross, Hannes and Mangard, Stefan},
+	month = jun,
+	year = {2018},
+	keywords = {Domain-oriented masking, Hardware security, Masking, Side-channel analysis, Threshold implementations},
+	pages = {109--124},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\XDYN9SQF\\Gross et Mangard - 2018 - A unified masking approach.pdf:application/pdf},
+}
+
+@inproceedings{barthe_parallel_2017,
+	address = {Cham},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Parallel {Implementations} of {Masking} {Schemes} and the {Bounded} {Moment} {Leakage} {Model}},
+	isbn = {978-3-319-56620-7},
+	doi = {10.1007/978-3-319-56620-7_19},
+	abstract = {In this paper, we provide a necessary clarification of the good security properties that can be obtained from parallel implementations of masking schemes. For this purpose, we first argue that (i) the probing model is not straightforward to interpret, since it more naturally captures the intuitions of serial implementations, and (ii) the noisy leakage model is not always convenient, e.g. when combined with formal methods for the verification of cryptographic implementations. Therefore we introduce a new model, the bounded moment model, that formalizes a weaker notion of security order frequently used in the side-channel literature. Interestingly, we prove that probing security for a serial implementation implies bounded moment security for its parallel counterpart. This result therefore enables an accurate understanding of the links between formal security analyses of masking schemes and experimental security evaluations based on the estimation of statistical moments. Besides its consolidating nature, our work also brings useful technical contributions. First, we describe and analyze refreshing and multiplication algorithms that are well suited for parallel implementations and improve security against multivariate side-channel attacks. Second, we show that simple refreshing algorithms (with linear complexity) that are not secure in the continuous probing model are secure in the continuous bounded moment model. Eventually, we discuss the independent leakage assumption required for masking to deliver its security promises, and its specificities related to the serial or parallel nature of an implementation.},
+	language = {en},
+	booktitle = {Advances in {Cryptology} – {EUROCRYPT} 2017},
+	publisher = {Springer International Publishing},
+	author = {Barthe, Gilles and Dupressoir, François and Faust, Sebastian and Grégoire, Benjamin and Standaert, François-Xavier and Strub, Pierre-Yves},
+	editor = {Coron, Jean-Sébastien and Nielsen, Jesper Buus},
+	year = {2017},
+	keywords = {Leakage Function, Leakage Model, Parallel Implementation, Randomness Requirement, Serial Implementation},
+	pages = {535--566},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\KZT5XYC8\\Barthe et al. - 2017 - Parallel Implementations of Masking Schemes and th.pdf:application/pdf},
+}
+
+@inproceedings{cnudde_masking_2016,
+	title = {Masking {AES} with \$\$d+1\$\$ {Shares} in {Hardware}},
+	volume = {9813},
+	isbn = {978-3-662-53139-6},
+	doi = {10.1007/978-3-662-53140-2_10},
+	abstract = {Masking requires splitting sensitive variables into at least {\textbackslash}(d+1{\textbackslash}) shares to provide security against DPA attacks at order d. To this date, this minimal number has only been deployed in software implementations of cryptographic algorithms and in the linear parts of their hardware counterparts. So far there is no hardware construction that achieves this lower bound if the function is nonlinear and the underlying logic gates can glitch. In this paper, we give practical implementations of the AES using {\textbackslash}(d+1{\textbackslash}) shares aiming at first- and second-order security even in the presence of glitches. To achieve this, we follow the conditions presented by Reparaz et al. at CRYPTO 2015 to allow hardware masking schemes, like Threshold Implementations, to provide theoretical higher-order security with {\textbackslash}(d+1{\textbackslash}) shares. The decrease in number of shares has a direct impact in the area requirements: our second-order DPA resistant core is the smallest in area so far, and its S-box is {\textbackslash}(50{\textbackslash},{\textbackslash}\%{\textbackslash}) smaller than the current smallest Threshold Implementation of the AES S-box with similar security and attacker model. We assess the security of our masked cores by practical side-channel evaluations. The security guarantees are met with 100 million traces.},
+	author = {Cnudde, Thomas and Reparaz, Oscar and Bilgin, Begül and Nikova, Svetla and Nikov, Ventzislav and Rijmen, Vincent},
+	month = aug,
+	year = {2016},
+	pages = {194--212},
+	file = {Version acceptée:C\:\\Users\\Vincent\\Zotero\\storage\\FC5FW6GB\\Cnudde et al. - 2016 - Masking AES with \$\$d+1\$\$ Shares in Hardware.pdf:application/pdf},
+}
+
+@incollection{fischer_reconciling_2017,
+	address = {Cham},
+	title = {Reconciling d+1 {Masking} in {Hardware} and {Software}},
+	volume = {10529},
+	isbn = {978-3-319-66786-7 978-3-319-66787-4},
+	url = {http://link.springer.com/10.1007/978-3-319-66787-4_6},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} – {CHES} 2017},
+	publisher = {Springer International Publishing},
+	author = {Gross, Hannes and Mangard, Stefan},
+	editor = {Fischer, Wieland and Homma, Naofumi},
+	year = {2017},
+	doi = {10.1007/978-3-319-66787-4_6},
+	note = {Series Title: Lecture Notes in Computer Science},
+	pages = {115--136},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\8FVAPNLH\\Gross et Mangard - 2017 - Reconciling \$\$d+1\$\$ Masking in Hardware and Softwa.pdf:application/pdf},
+}
+
+@inproceedings{biham_differential_1997,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Differential fault analysis of secret key cryptosystems},
+	isbn = {978-3-540-69528-8},
+	doi = {10.1007/BFb0052259},
+	abstract = {In September 1996 Boneh, Demillo, and Lipton from Bellcore announced a new type of cryptanalytic attack which exploits computational errors to find cryptographic keys. Their attack is based on algebraic properties of modular arithmetic, and thus it is applicable only to public key cryptosystems such as RSA, and not to secret key algorithms such as the Data Encryption Standard (DES).},
+	language = {en},
+	booktitle = {Advances in {Cryptology} — {CRYPTO} '97},
+	publisher = {Springer},
+	author = {Biham, Eli and Shamir, Adi},
+	editor = {Kaliski, Burton S.},
+	year = {1997},
+	pages = {513--525},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\VMY4PLYK\\Biham et Shamir - 1997 - Differential fault analysis of secret key cryptosy.pdf:application/pdf},
+}
+
+
+@inproceedings{koga_single_1997,
+	title = {Single event functional interrupt ({SEFI}) sensitivity in microcircuits},
+	doi = {10.1109/RADECS.1997.698915},
+	abstract = {The single event functional interrupt (SEFI) sensitivity of several types of microcircuits is measured with heavy ions. While simple microcircuits have not been affected by SEFI, many complex microcircuits are vulnerable to it in varying degrees. Although there are many causes for SEFIs, ion irradiation testing in conjunction with an understanding of device architecture helps refine techniques which can be used to lessen the ill effects caused by SEFI.},
+	booktitle = {{RADECS} 97. {Fourth} {European} {Conference} on {Radiation} and its {Effects} on {Components} and {Systems} ({Cat}. {No}.{97TH8294})},
+	author = {Koga, R. and Penzin, S.H. and Crawford, K.B. and Crain, W.R.},
+	month = sep,
+	year = {1997},
+	keywords = {CMOS process, Computer errors, Digital signal processing, EPROM, Laboratories, Microprocessors, Random access memory, Single event transient, Single event upset, Testing},
+	pages = {311--318},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\YK6HX4AU\\698915.html:text/html},
+}
+
+@article{pagliarini_analyzing_2011,
+	title = {Analyzing the {Impact} of {Single}-{Event}-{Induced} {Charge} {Sharing} in {Complex} {Circuits}},
+	volume = {58},
+	issn = {1558-1578},
+	doi = {10.1109/TNS.2011.2168239},
+	abstract = {This paper proposes a soft error characterization methodology to analyze multiple faults caused by single-event-induced charge sharing in standard-cell based ASIC designs. Fault injection campaigns have been executed using data provided by placement analysis as well as a pulse width modeling through electrical simulation. Experimental results demonstrate that the error rate can be largely overestimated if placement is not considered.},
+	number = {6},
+	journal = {IEEE Transactions on Nuclear Science},
+	author = {Pagliarini, Samuel and Kastensmidt, Fernanda and Entrena, Luis and Lindoso, Almudena and Millan, Enrique San},
+	month = dec,
+	year = {2011},
+	note = {Conference Name: IEEE Transactions on Nuclear Science},
+	keywords = {Application specific integrated circuits, Circuit faults, Error analysis, Fault injection, Integrated circuit layout, Integrated circuit modeling, Logic gates, placement, single-event-induced charge sharing, soft error rate (SER), Transient analysis},
+	pages = {2768--2775},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\9FVHDG2T\\6043890.html:text/html},
+}
+
+@article{zoutendyk_characterization_1989,
+	title = {Characterization of multiple-bit errors from single-ion tracks in integrated circuits},
+	volume = {36},
+	issn = {1558-1578},
+	doi = {10.1109/23.45434},
+	abstract = {The spread of charge induced by an ion track in an integrated circuit and its subsequent collection at sensitive nodal junctions can cause multiple-bit errors. The authors have experimentally and analytically investigated this phenomenon using a 256-kb dynamic random-access memory (DRAM). The effects of different charge-transport mechanisms are illustrated, and two classes of ion-track multiple-bit error cluster are identified. It is demonstrated that ion tracks that hit a junction can affect the lateral spread of charge, depending on the nature of the pull-up load on the junction being hit. Ion tracks that do not hit a junction allow the nearly uninhibited lateral spread of charge.{\textless}{\textgreater}},
+	number = {6},
+	journal = {IEEE Transactions on Nuclear Science},
+	author = {Zoutendyk, J.A. and Edmonds, L.D. and Smith, L.S.},
+	month = dec,
+	year = {1989},
+	note = {Conference Name: IEEE Transactions on Nuclear Science},
+	keywords = {Capacitance, Capacitors, Image restoration, Integrated circuit technology, Ion implantation, Propulsion, Random access memory, Scanning electron microscopy, Silicon, Voltage},
+	pages = {2267--2274},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\6YWTBXPY\\45434.html:text/html},
+}
+
+@inproceedings{springer_analysis_2001,
+	title = {Analysis of application behavior during fault injection},
+	url = {https://ntrs.nasa.gov/citations/20060033756},
+	abstract = {This paper looks at the behavior of a single application when register, heap, and code space are injected with faults.},
+	author = {Springer, P. L.},
+	month = jul,
+	year = {2001},
+	note = {NTRS Author Affiliations: 
+NTRS Document ID: 20060033756
+NTRS Research Center: Jet Propulsion Laboratory (JPL)},
+	keywords = {Computer Programming and Software},
+	file = {Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\I29FWU48\\20060033756.html:text/html},
+}
+
+@inproceedings{balasch_-depth_2011,
+	title = {An {In}-depth and {Black}-box {Characterization} of the {Effects} of {Clock} {Glitches} on 8-bit {MCUs}},
+	doi = {10.1109/FDTC.2011.9},
+	abstract = {The literature about fault analysis typically describes fault injection mechanisms, e.g. glitches and lasers, and cryptanalytic techniques to exploit faults based on some assumed fault model. Our work narrows the gap between both topics. We thoroughly analyse how clock glitches affect a commercial low-cost processor by performing a large number of experiments on five devices. We observe that the effects of fault injection on two-stage pipeline devices are more complex than commonly reported in the literature. While injecting a fault is relatively easy, injecting an exploitable fault is hard. We further observe that the easiest to inject and reliable fault is to replace instructions, and that random faults do not occur. Finally we explain how typical fault attacks can be mounted on this device, and describe a new attack for which the fault injection is easy and the cryptanalysis trivial.},
+	booktitle = {2011 {Workshop} on {Fault} {Diagnosis} and {Tolerance} in {Cryptography}},
+	author = {Balasch, Josep and Gierlichs, Benedikt and Verbauwhede, Ingrid},
+	month = sep,
+	year = {2011},
+	keywords = {AVR MCU, Circuit faults, clock glitches, Clocks, Cryptography, Fault effect characterization, Field programmable gate arrays, Pipelines, Registers, Smart cards},
+	pages = {105--114},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\K24AHU7L\\6076473.html:text/html},
+}
+
+@inproceedings{djellid-ouar_supply_2006,
+	title = {Supply voltage glitches effects on {CMOS} circuits},
+	doi = {10.1109/DTIS.2006.1708651},
+	abstract = {Among the attacks applied on secure circuits, fault injection techniques consist in the use of a combination of environmental conditions that induce computational errors in the chip that can leak protected informations. The purpose of our study is to build an accurate model able to describe the behaviour of CMOS circuits in presence of deliberated short supply voltage variations. This behaviour depends strongly on the basic gates (combinational logic, registers...) that make up the circuit. In this paper, we show why D-flip-flop are resistant to power supply glitches occurring between clock transitions and we propose an approach to evaluate the basic elements sensitivities towards faults generated by power glitches. Our aimed model will consequently be dependent on this sensitivity},
+	booktitle = {International {Conference} on {Design} and {Test} of {Integrated} {Systems} in {Nanoscale} {Technology}, 2006. {DTIS} 2006.},
+	author = {Djellid-Ouar, A. and Cathebras, G. and Bancel, F.},
+	month = sep,
+	year = {2006},
+	keywords = {Circuit faults, Clocks, CMOS logic circuits, Combinational circuits, Logic gates, Power supplies, Protection, Registers, Semiconductor device modeling, Voltage},
+	pages = {257--261},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\FN9CBFNR\\Djellid-Ouar et al. - 2006 - Supply voltage glitches effects on CMOS circuits.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\AFVCXAZK\\1708651.html:text/html},
+}
+
+@inproceedings{zussa_power_2013,
+	title = {Power supply glitch induced faults on {FPGA}: {An} in-depth analysis of the injection mechanism},
+	shorttitle = {Power supply glitch induced faults on {FPGA}},
+	doi = {10.1109/IOLTS.2013.6604060},
+	abstract = {Secure circuits are prone to a wide range of physical attacks. Among those are fault attacks based on modifying the circuit environment in order to change its behaviour or to induce faults into its computations. There are many common means used to inject such faults: laser shots, electromagnetic pulses, overclocking, chip underpowering, temperature increase, etc. In this paper we study the effect of negative power supply glitches on a FPGA. The obtained faults were compared to faults injected by clock glitches. As a result, both power and clock glitch induced faults were found to be identical. Because clock glitches are related to timing constraint violations, we shall consider that both power and clock glitches share this common fault injection mechanism. We also further studied the properties of this fault injection means.},
+	booktitle = {2013 {IEEE} 19th {International} {On}-{Line} {Testing} {Symposium} ({IOLTS})},
+	author = {Zussa, Loïc and Dutertre, Jean-Max and Clédière, Jessy and Tria, Assia},
+	month = jul,
+	year = {2013},
+	note = {ISSN: 1942-9401},
+	keywords = {Circuit faults, Clocks, Encryption, Generators, Power supplies, Registers, Timing},
+	pages = {110--115},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\AGN5D65S\\Zussa et al. - 2013 - Power supply glitch induced faults on FPGA An in-.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\7VPQUXMQ\\6604060.html:text/html},
+}
+
+@article{bozzato_shaping_2019,
+	title = {Shaping the {Glitch}: {Optimizing} {Voltage} {Fault} {Injection} {Attacks}},
+	copyright = {Copyright (c) 2019 Claudio Bozzato, Riccardo Focardi, Francesco Palmarini},
+	issn = {2569-2925},
+	shorttitle = {Shaping the {Glitch}},
+	url = {https://tches.iacr.org/index.php/TCHES/article/view/7390},
+	doi = {10.13154/tches.v2019.i2.199-224},
+	abstract = {Voltage fault injection is a powerful active side channel attack that modifies the execution-flow of a device by creating disturbances on the power supply line. The attack typically aims at skipping security checks or generating side-channels that gradually leak sensitive data, including the firmware code. In this paper we propose a new voltage fault injection technique that generates fully arbitrary voltage glitch waveforms using off-the-shelf and low cost equipment. To show the effectiveness of our setup, we present new, unpublished firmware extraction attacks on six microcontrollers from three major manufacturers: STMicroelectronics, Texas Instruments and Renesas Electronics that, in 2016 declared a market of \$1.5 billion, \$800 million and \$2.5 billion on units sold, respectively. Among the presented attacks, the most challenging ones exploit multiple vulnerabilities and inject over one million glitches, heavily leveraging on the performance and repeatability of the new proposed technique. We perform a thorough evaluation of arbitrary glitch waveforms by comparing the attack performance against two other major V-FI techniques in the literature. Along a responsible disclosure policy, all the vulnerabilities have been timely reported to the manufacturers.},
+	language = {en},
+	journal = {IACR Transactions on Cryptographic Hardware and Embedded Systems},
+	author = {Bozzato, Claudio and Focardi, Riccardo and Palmarini, Francesco},
+	month = feb,
+	year = {2019},
+	keywords = {Microcontrollers},
+	pages = {199--224},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\6XPNV3T3\\Bozzato et al. - 2019 - Shaping the Glitch Optimizing Voltage Fault Injec.pdf:application/pdf},
+}
+
+@article{halderman_lest_2009,
+	title = {Lest we remember: cold-boot attacks on encryption keys},
+	volume = {52},
+	issn = {0001-0782},
+	shorttitle = {Lest we remember},
+	url = {https://doi.org/10.1145/1506409.1506429},
+	doi = {10.1145/1506409.1506429},
+	abstract = {Contrary to widespread assumption, dynamic RAM (DRAM), the main memory in most modern computers, retains its contents for several seconds after power is lost, even at room temperature and even if removed from a motherboard. Although DRAM becomes less reliable when it is not refreshed, it is not immediately erased, and its contents persist sufficiently for malicious (or forensic) acquisition of usable full-system memory images. We show that this phenomenon limits the ability of an operating system to protect cryptographic key material from an attacker with physical access to a machine. It poses a particular threat to laptop users who rely on disk encryption: we demonstrate that it could be used to compromise several popular disk encryption products without the need for any special devices or materials. We experimentally characterize the extent and predictability of memory retention and report that remanence times can be increased dramatically with simple cooling techniques. We offer new algorithms for finding cryptographic keys in memory images and for correcting errors caused by bit decay. Though we discuss several strategies for mitigating these risks, we know of no simple remedy that would eliminate them.},
+	number = {5},
+	journal = {Commun. ACM},
+	author = {Halderman, J. Alex and Schoen, Seth D. and Heninger, Nadia and Clarkson, William and Paul, William and Calandrino, Joseph A. and Feldman, Ariel J. and Appelbaum, Jacob and Felten, Edward W.},
+	month = may,
+	year = {2009},
+	pages = {91--98},
+}
+
+@inproceedings{mangard_side-channel_2005,
+	address = {Berlin, Heidelberg},
+	series = {{CT}-{RSA}'05},
+	title = {Side-channel leakage of masked {CMOS} gates},
+	isbn = {978-3-540-24399-1},
+	url = {https://doi.org/10.1007/978-3-540-30574-3_24},
+	doi = {10.1007/978-3-540-30574-3_24},
+	abstract = {There are many articles and patents on the masking of logic gates. However, the existing publications assume that a masked logic gate switches its output no more than once per clock cycle. Unfortunately, this assumption usually does not hold true in practice. In this article, we show that glitches occurring in circuits of masked gates make these circuits susceptible to classical first-order DPA attacks. Besides a thorough theoretical analysis of the DPA-resistance of masked gates in the presence of glitches, we also provide simulation results that confirm the theoretical elaborations. Glitches occur in every CMOS circuit. Consequently, the currently known masking schemes for CMOS gates do not prevent DPA attacks.},
+	booktitle = {Proceedings of the 2005 international conference on {Topics} in {Cryptology}},
+	publisher = {Springer-Verlag},
+	author = {Mangard, Stefan and Popp, Thomas and Gammel, Berndt M.},
+	month = feb,
+	year = {2005},
+	keywords = {DPA, masked digital circuits, masked logic gates, masking, power analysis},
+	pages = {351--365},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\CLC789XD\\Mangard et al. - 2005 - Side-channel leakage of masked CMOS gates.pdf:application/pdf},
+}
+
+@inproceedings{belaid_randomness_2016,
+	address = {Vienna, Austria},
+	title = {Randomness {Complexity} of {Private} {Circuits} for {Multiplication}},
+	url = {https://hal.archives-ouvertes.fr/hal-01324823},
+	doi = {10.1007/978-3-662-49896-5_22},
+	abstract = {Many cryptographic algorithms are vulnerable to side channel analysis and several leakage models have been introduced to better understand these flaws. In 2003, Ishai, Sahai and Wagner introduced the d-probing security model, in which an attacker can observe at most d intermediate values during a processing. They also proposed an algorithm that securely performs the multiplication of 2 bits in this model, using only d(d+1)/2
+
+random bits to protect the computation. We study the randomness complexity of multiplication algorithms secure in the d-probing model. We propose several contributions: we provide new theoretical characterizations and constructions, new practical constructions and a new efficient algorithmic tool to analyze the security of such schemes.
+
+We start with a theoretical treatment of the subject: we propose an algebraic model for multiplication algorithms and exhibit an algebraic characterization of the security in the d-probing model. Using this characterization, we prove a linear (in d) lower bound and a quasi-linear (non-constructive) upper bound for this randomness cost. Then, we construct a new generic algorithm to perform secure multiplication in the d-probing model that only uses d+d2/4
+
+random bits.
+
+From a practical point of view, we consider the important cases d≤4
+that are actually used in current real-life implementations and we build algorithms with a randomness complexity matching our theoretical lower bound for these small-order cases. Finally, still using our algebraic characterization, we provide a new dedicated verification tool, based on information set decoding, which aims at finding attacks on algorithms for fixed order d at a very low computational cost.},
+	booktitle = {{EUROCRYPT} 2016},
+	author = {Belaïd, Sonia and Benhamouda, Fabrice and Passelègue, Alain and Prouff, Emmanuel and Thillard, Adrian and Vergnaud, Damien},
+	month = may,
+	year = {2016},
+	pages = {616--648},
+	file = {HAL Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\84RNK8E7\\hal-01324823.html:text/html},
+}
+
+@inproceedings{kumar_design_2007,
+	address = {Berlin, Heidelberg},
+	series = {{INDOCRYPT}'07},
+	title = {Design of a differential power analysis resistant masked {AES} {S}-box},
+	isbn = {978-3-540-77025-1},
+	abstract = {Gate level masking is one of the most popular countermeasures against Differential Power Attack (DPA). The present paper proposes a masking technique for AND gates, which are then used to build a balanced and masked multiplier in GF(2n). The circuits are shown to be computationally secure and have no glitches which are dependent on unmasked data. Finally, the masked multiplier in GF(24) is used to implement a masked AES S-Box in GF(24)2. Power measurements are taken to support the claim of random power consumption.},
+	booktitle = {Proceedings of the cryptology 8th international conference on {Progress} in cryptology},
+	publisher = {Springer-Verlag},
+	author = {Kumar, Kundan and Mukhopadhyay, Debdeep and RoyChowdhury, Dipanwita},
+	month = dec,
+	year = {2007},
+	pages = {373--383},
+}
+
+@inproceedings{reparaz_consolidating_2015,
+	title = {Consolidating {Masking} {Schemes}},
+	volume = {9215},
+	doi = {10.1007/978-3-662-47989-6_37},
+	abstract = {In this paper we investigate relations between several masking schemes. We show that the Ishai-Sahai-Wagner private circuits construction is closely related to Threshold Implementations and the Trichina gate. The implications of this observation are manifold. We point out a higher-order weakness in higher-order Threshold Implementations, suggest a mitigation and provide new sharings that use a lower number of input shares.},
+	author = {Reparaz, Oscar and Bilgin, Begül and Nikova, Svetla and Gierlichs, Benedikt and Verbauwhede, Ingrid},
+	month = aug,
+	year = {2015},
+	pages = {764--783},
+	file = {Version acceptée:C\:\\Users\\Vincent\\Zotero\\storage\\WVLGXUIF\\Reparaz et al. - 2015 - Consolidating Masking Schemes.pdf:application/pdf},
+}
+
+@inproceedings{hutter_temperature_2013-1,
+	title = {The {Temperature} {Side}-{Channel} and {Heating} {Fault} {Attacks}},
+	volume = {8419},
+	doi = {10.1007/978-3-319-08302-5_15},
+	abstract = {In this paper, we present practical results of data leakages of CMOS devices via the temperature side channel - a side channel that has been widely cited in literature but not well characterized yet. We investigate the leakage of processed data by passively measuring the dissipated heat of the devices. The temperature leakage is thereby linearly correlated with the power leakage model but is limited by the physical properties of thermal conductivity and capacitance. We further present heating faults by operating the devices beyond their specified temperature ratings. The efficiency of this kind of attack is shown by a practical attack on an RSA implementation. Finally, we introduce data remanence attacks on AVR microcontrollers that exploit the Negative Bias Temperature Instability (NBTI) property of internal SRAM cells. We show how to recover parts of the internal memory and present first results on an ATmega162. The work encourages the awareness of temperature-based attacks that are known for years now but not well described in literature. It also serves as a starting point for further research investigations.},
+	author = {Hutter, Michael and Schmidt, Jörn-Marc},
+	month = nov,
+	year = {2013},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\R5QSE7IU\\Hutter et Schmidt - 2013 - The Temperature Side-Channel and Heating Fault Att.pdf:application/pdf},
+}
+
+@inproceedings{kumar_precise_2014,
+	title = {Precise {Fault}-{Injections} using {Voltage} and {Temperature} {Manipulation} for {Differential} {Cryptanalysis}},
+	isbn = {978-1-4799-5324-0},
+	doi = {10.1109/IOLTS.2014.6873670},
+	abstract = {State-of-the-art fault-based cryptanalysis methods are capable of breaking most recent ciphers after only a few fault injections. However, they require temporal and spatial accuracies of fault injection that were believed to rule out low-cost injection techniques such as voltage, frequency or temperature manipulation. We investigate selection of supply-voltage and temperature values that are suitable for high-precision fault injection even up to a single bit. The object of our studies is an ASIC implementation of the recently presented block cipher PRINCE, for which a two-stage fault attack scheme has been suggested lately. This attack requires, on average, about four to five fault injections in well-defined locations. We show by electrical simulations that voltage-temperature points exist for which faults show up at locations required for a successful attack with a likelihood of around 0.1\%. This implies that the complete attack can be mounted by approximately 4,000 to 5,000 fault injection attempts, which is clearly feasible.},
+	author = {Kumar, Raghavan and Jovanovic, Philipp and Polian, Ilia},
+	month = jul,
+	year = {2014},
+	pages = {43--48},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\26HD69CF\\Kumar et al. - 2014 - Precise Fault-Injections using Voltage and Tempera.pdf:application/pdf},
+}
+
+@inproceedings{skorobogatov_optical_2003,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Optical {Fault} {Induction} {Attacks}},
+	isbn = {978-3-540-36400-9},
+	doi = {10.1007/3-540-36400-5_2},
+	abstract = {We describe a new class of attacks on secure microcontrollers and smartcards. Illumination of a target transistor causes it to conduct, thereby inducing a transient fault. Such attacks are practical; they do not even require expensive laser equipment. We have carried them out using a flashgun bought second-hand from a camera store for \$30 and with an \$8 laser pointer. As an illustration of the power of this attack, we developed techniques to set or reset any individual bit of SRAM in a microcontroller. Unless suitable countermeasures are taken, optical probing may also be used to induce errors in cryptographic computations or protocols, and to disrupt the processor’s control flow. It thus provides a powerful extension of existing glitching and fault analysis techniques. This vulnerability may pose a big problem for the industry, similar to those resulting from probing attacks in the mid-1990s and power analysis attacks in the late 1990s.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} - {CHES} 2002},
+	publisher = {Springer},
+	author = {Skorobogatov, Sergei P. and Anderson, Ross J.},
+	editor = {Kaliski, Burton S. and Koç, çetin K. and Paar, Christof},
+	year = {2003},
+	keywords = {Block Cipher, Power Analysis Attack, Smart Card, SRAM Cell, Transient Fault},
+	pages = {2--12},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\ZM3CYFG6\\Skorobogatov et Anderson - 2003 - Optical Fault Induction Attacks.pdf:application/pdf},
+}
+
+@inproceedings{dutertre_laser_2018,
+	title = {Laser {Fault} {Injection} at the {CMOS} 28 nm {Technology} {Node}: an {Analysis} of the {Fault} {Model}},
+	shorttitle = {Laser {Fault} {Injection} at the {CMOS} 28 nm {Technology} {Node}},
+	doi = {10.1109/FDTC.2018.00009},
+	abstract = {S. Skorobogatov and R. Anderson identified laser illumination as an effective technique to conduct fault attacks in 2002. In these early days of laser-induced fault injection, it was proven to be possible to inject single-bit faults into integrated circuits. This corresponds to the more restrictive fault model found in the fault attack bibliography. The target area under laser illumination (a few micrometers, down to 1 µm) broadly matched that of a single transistor. It was consistent with a single-bit fault model. However, since then the technology of secure devices has evolved. In current circuits even the smallest laser spots may illuminate several logic cells. This raises the question of the validity of the single-bit fault model: does it still hold? In this work, we report an assessment of its validity through experimental results obtained from circuits designed at the 28 nm CMOS technology node. We also describe the main properties of the corresponding fault model obtained from both static and dynamic experiments.},
+	booktitle = {2018 {Workshop} on {Fault} {Diagnosis} and {Tolerance} in {Cryptography} ({FDTC})},
+	author = {Dutertre, Jean-Max and Beroulle, Vincent and Candelier, Philippe and De Castro, Stephan and Faber, Louis-Barthelemy and Flottes, Marie-Lise and Gendrier, Philippe and Hély, David and Leveugle, Regis and Maistri, Paolo and Di Natale, Giorgio and Papadimitriou, Athanasios and Rouzeyre, Bruno},
+	month = sep,
+	year = {2018},
+	keywords = {Bit flip, Circuit faults, CMOS, Fault model, Frequency modulation, Integrated circuits, Laser beams, Laser fault injection, Laser modes, Latches, SEE, Semiconductor lasers, SEU},
+	pages = {1--6},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\KTNFQ689\\Dutertre et al. - 2018 - Laser Fault Injection at the CMOS 28 nm Technology.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\M3ZSXU8B\\8573927.html:text/html},
+}
+
+@inproceedings{darracq_single-event_2001,
+	title = {Single-event sensitivity of a single {SRAM} cell},
+	doi = {10.1109/RADECS.2001.1159311},
+	abstract = {A test vehicle has been specially realized to demonstrate that different physical mechanisms are responsible for SEU phenomena within an elementary memory cell, depending on the impact location. Validation is performed by means of pulsed laser equipment.},
+	booktitle = {{RADECS} 2001. 2001 6th {European} {Conference} on {Radiation} and {Its} {Effects} on {Components} and {Systems} ({Cat}. {No}.{01TH8605})},
+	author = {Darracq, F. and Beauchene, T. and Pouget, V. and Lapuyade, H. and Lewis, D. and Fouillat, P. and Touboul, A.},
+	month = sep,
+	year = {2001},
+	keywords = {Deconvolution, Laser beams, Laser theory, Optical pulses, Random access memory, Single event upset, Space technology, Spatial resolution, Testing, Vehicles},
+	pages = {387--391},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\WQ3Z3FVU\\1159311.html:text/html},
+}
+
+@inproceedings{agoyan_how_2010,
+	title = {How to flip a bit?},
+	doi = {10.1109/IOLTS.2010.5560194},
+	abstract = {This note describes laser fault experiments on an 8-bit 0.35μm microcontroller with no countermeasures. We show that reproducible single-bit faults, often considered unfeasible, can be obtained by careful beam-size and shot-instant tuning.},
+	booktitle = {2010 {IEEE} 16th {International} {On}-{Line} {Testing} {Symposium}},
+	author = {Agoyan, Michel and Dutertre, Jean-Max and Mirbaha, Amir-Pasha and Naccache, David and Ribotta, Anne-Lise and Tria, Assia},
+	month = jul,
+	year = {2010},
+	note = {ISSN: 1942-9401},
+	keywords = {Circuit faults, Cryptography, Doped fiber amplifiers, Laser beams, Laser tuning, Random access memory},
+	pages = {235--239},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\JLYY88UT\\Agoyan et al. - 2010 - How to flip a bit.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\WR2GBJR2\\5560194.html:text/html},
+}
+
+@inproceedings{selmke_precise_2016,
+	address = {Cham},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Precise {Laser} {Fault} {Injections} into 90 nm and 45 nm {SRAM}-cells},
+	isbn = {978-3-319-31271-2},
+	doi = {10.1007/978-3-319-31271-2_12},
+	abstract = {In the area of fault attacks, lasers are a common method to inject faults into an integrated circuit. Against the background of decreasing structure sizes in ICs, it is of interest which fault model can be met with state of the art equipment. We investigate laser-based fault injections into the SRAM-cells of block RAMs of two different FPGAs with 90 nm and 45 nm feature size respectively. Our results show that individual bit manipulations are feasible for both, the 90 nm chip and the 45 nm chip, but with limitations for the latter. To the best of our knowledge, we are the first to investigate laser fault injections into 45 nm technology nodes. We provide detailed insights of our laser equipment and the parameters of our setup to give a comparison base for further research.},
+	language = {en},
+	booktitle = {Smart {Card} {Research} and {Advanced} {Applications}},
+	publisher = {Springer International Publishing},
+	author = {Selmke, Bodo and Brummer, Stefan and Heyszl, Johann and Sigl, Georg},
+	editor = {Homma, Naofumi and Medwed, Marcel},
+	year = {2016},
+	keywords = {Comparing 45 nm and 90 nm, High-precision, Laser-based fault injection, SRAM},
+	pages = {193--205},
+}
+
+@article{godlewski_electrical_2009,
+	series = {20th {European} {Symposium} on the {Reliability} of {Electron} {Devices}, {Failure} {Physics} and {Analysis}},
+	title = {Electrical modeling of the effect of beam profile for pulsed laser fault injection},
+	volume = {49},
+	issn = {0026-2714},
+	url = {https://www.sciencedirect.com/science/article/pii/S0026271409002674},
+	doi = {10.1016/j.microrel.2009.07.037},
+	abstract = {This paper presents a detailed simulation-based analysis of the influence of the laser spot shape and size on the parametric and logical transient errors that can be injected into a digital device. The effect of the impact of a Gaussian laser beam is simulated at the electrical level for different pulse durations. Results illustrate the complex interaction between the electrical function and the laser perturbation, with potential implications for secure circuit design.},
+	language = {en},
+	number = {9},
+	journal = {Microelectronics Reliability},
+	author = {Godlewski, C. and Pouget, V. and Lewis, D. and Lisart, M.},
+	month = sep,
+	year = {2009},
+	pages = {1143--1147},
+	file = {ScienceDirect Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\4V89DBE8\\S0026271409002674.html:text/html},
+}
+
+@inproceedings{breier_testing_2015,
+	address = {New York, NY, USA},
+	series = {{WESS}'15},
+	title = {Testing {Feasibility} of {Back}-{Side} {Laser} {Fault} {Injection} on a {Microcontroller}},
+	isbn = {978-1-4503-3667-3},
+	url = {https://doi.org/10.1145/2818362.2818367},
+	doi = {10.1145/2818362.2818367},
+	abstract = {Laser fault attack platform constitutes a powerful tool for a precise injection of faults into the device, allowing an attacker to carefully adjust timing and position on the chip. On the other hand, the cost of such equipment is high and the profiling time is non-negligible. In this paper, we would like to investigate the practicability of the back-side laser fault injection and to state benefits and drawbacks of this technique. We performed experiments on two methods of fault injections induced by a laser beam -- instruction disturbance experiments and register value changes. The first method, as our experiments show, is easy to perform, precise and repeatable. The second one is harder to perform and we could not achieve repeatability in such experiments.},
+	booktitle = {Proceedings of the {WESS}'15: {Workshop} on {Embedded} {Systems} {Security}},
+	publisher = {Association for Computing Machinery},
+	author = {Breier, Jakub and Jap, Dirmanto},
+	month = oct,
+	year = {2015},
+	keywords = {ATmega328P, Fault Attack, Laser},
+	pages = {1--6},
+}
+
+@article{quisquater_eddy_2002,
+	title = {Eddy current for magnetic analysis with active sensor, {Proceedings} of {ESmart}},
+	journal = {Proceedings of ESmart},
+	author = {Quisquater, Jean-Jacques and Samyde, D.},
+	year = {2002},
+	pages = {pp.185--194},
+}
+
+@inproceedings{aumuller_fault_2002,
+	title = {Fault {Attacks} on {RSA} with {CRT}: {Concrete} {Results} and {Practical} {Countermeasures}},
+	volume = {2523},
+	isbn = {978-3-540-00409-7},
+	shorttitle = {Fault {Attacks} on {RSA} with {CRT}},
+	doi = {10.1007/3-540-36400-5_20},
+	abstract = {This article describes concrete results and practically approved countermeasures concerning differential fault attacks on RSA using the CRT. It especially investigates smartcards with a RSA coprocessor where any hardware countermeasure to defeat such fault attacks have been switched off. This scenario has been chosen in order to completely analyze the resulting effects and errors occurring inside the hardware. Using the results of this kind of physical stress attack enables the development of...},
+	author = {Aumüller, Christian and Bier, Peter and Fischer, Wieland and Hofreiter, Peter and Seifert, Jean-Pierre},
+	month = aug,
+	year = {2002},
+	pages = {260--275},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\KDXB2R4U\\Aumüller et al. - 2002 - Fault Attacks on RSA with CRT Concrete Results an.pdf:application/pdf},
+}
+@inproceedings{Schmidt_opticaland,
+    author = {Jörn-marc Schmidt and Michael Hutter},
+    title = {Optical and EM Fault-Attacks on CRT-based RSA: Concrete Results},
+    year = {2007}
+}
+@inproceedings{dehbaoui_electromagnetic_2012,
+	title = {Electromagnetic {Transient} {Faults} {Injection} on a {Hardware} and a {Software} {Implementations} of {AES}},
+	doi = {10.1109/FDTC.2012.15},
+	abstract = {This paper considers the use of electromagnetic pulses (EMP) to inject transient faults into the calculations of a hardware and a software AES. A pulse generator and a 500 um-diameter magnetic coil were used to inject the localized EMP disturbances without any physical contact with the target. EMP injections were performed against a software AES running on a CPU, and a hardware AES (with and without countermeasure) embedded in a FPGA. The purpose of this work was twofold: (a) reporting actual faults injection induced by EMPs in our targets and describing their main properties, (b) explaining the coupling mechanism between the antenna used to produce the EMP and the targeted circuit, which causes the faults. The obtained results revealed a localized effect of the EMP since the injected faults were found dependent on the spatial position of the antenna on top of the circuit's surface. The assumption that EMP faults are related to the violation of the target's timing constraints was also studied and ascertained thanks to the use of a countermeasure based on monitoring such timing violations.},
+	booktitle = {2012 {Workshop} on {Fault} {Diagnosis} and {Tolerance} in {Cryptography}},
+	author = {Dehbaoui, Amine and Dutertre, Jean-Max and Robisson, Bruno and Tria, Assia},
+	month = sep,
+	year = {2012},
+	keywords = {AES, Circuit faults, Clocks, DFA, Electromagnetic Fault injection, Electromagnetic Pulse, Encryption, FPGA, MCU, Probes, Software, Transient analysis},
+	pages = {7--15},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\NNPJ4X4R\\6305224.html:text/html},
+}
+
+@inproceedings{dumont_electromagnetic_2019,
+	title = {Electromagnetic {Fault} {Injection} : {How} {Faults} {Occur}},
+	shorttitle = {Electromagnetic {Fault} {Injection}},
+	doi = {10.1109/FDTC.2019.00010},
+	abstract = {Electromagnetic Fault Injection (EMFI) has recently gained popularity as a mean to induce faults because of its inherent advantages. Among them, the most interesting is probably its ability to generate faults in Systems on Chips without removing the package, and this even if only the frontside is exposed to the EM field. Despite this popularity, there is only little information on how EMFI generates faults. Within this context, this paper first aims at filling this lack by proposing a complete modeling of EM induction fault mechanism. In a second step, the introduced model is confronted to experimental data in order to demonstrate its soundness.},
+	booktitle = {2019 {Workshop} on {Fault} {Diagnosis} and {Tolerance} in {Cryptography} ({FDTC})},
+	author = {Dumont, Mathieu and Lisart, Mathieu and Maurine, Philippe},
+	month = aug,
+	year = {2019},
+	keywords = {Circuit faults, Couplings, EM fault injection, fault attacks, Fault model, Integrated circuit modeling, Integrated ciruits, Probes, Timing, Wires},
+	pages = {9--16},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\5JY3ILDV\\Dumont et al. - 2019 - Electromagnetic Fault Injection  How Faults Occur.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\5CN9NJTN\\8844474.html:text/html},
+}
+
+@article{ordas_electromagnetic_2017,
+	title = {Electromagnetic fault injection: the curse of flip-flops},
+	volume = {7},
+	shorttitle = {Electromagnetic fault injection},
+	url = {https://hal-lirmm.ccsd.cnrs.fr/lirmm-01430913},
+	doi = {10.1007/s13389-016-0128-3},
+	abstract = {Electromagnetic (EM) waves have been recently pointed out as a medium for fault injection within integrated circuits (IC). Indeed, it has been experimentally demonstrated that an EM pulse (EMP), produced with a high-voltage pulse generator and an injector similar to that used to perform EM analyses, was susceptible to create faults exploitable from a cryptanalysis viewpoint. An analysis of the induced faults revealed that they originated from timing constraint violations. In this context, this paper demonstrates that EM injection, performed with enhanced injectors, can produce not only timing faults but also bit-set and bit-reset faults on an IC at rest. This first result clearly extends the range of the threats associated with EM fault injection. It then demonstrates, considering two different ICs under operation: an FPGA and a modern microcontroller, that faults produced by EMP injection are not timing faults but correspond to a different model which is presented in this paper. This model allows to explain experimental results introduced in all former communications.},
+	number = {3},
+	journal = {Journal of Cryptographic Engineering},
+	author = {Ordas, Sébastien and Guillaume-Sage, Ludovic and Maurine, Philippe},
+	year = {2017},
+	note = {Publisher: Springer},
+	keywords = {EM injection, EM susceptibility, Fault attacks, Hardware security, Model, Physical attacks},
+	pages = {183--197},
+	file = {HAL PDF Full Text:C\:\\Users\\Vincent\\Zotero\\storage\\W4Q9XVXY\\Ordas et al. - 2017 - Electromagnetic fault injection the curse of flip.pdf:application/pdf},
+}
+
+@inproceedings{wang_characterizing_2004,
+	title = {Characterizing the effects of transient faults on a high-performance processor pipeline},
+	doi = {10.1109/DSN.2004.1311877},
+	abstract = {The progression of implementation technologies into the sub-100 nanometer lithographies renew the importance of understanding and protecting against single-event upsets in digital systems. In this work, the effects of transient faults on high performance microprocessors is explored. To perform a thorough exploration, a highly detailed register transfer level model of a deeply pipelined, out-of-order microprocessor was created. Using fault injection, we determined that fewer than 15\% of single bit corruptions in processor state result in software visible errors. These failures were analyzed to identify the most vulnerable portions of the processor, which were then protected using simple low-overhead techniques. This resulted in a 75\% reduction in failures. Building upon the failure modes seen in the microarchitecture, fault injections into software were performed to investigate the level of masking that the software layer provides. Together, the baseline microarchitectural substrate and software mask more than 9 out of 10 transient faults from affecting correct program execution.},
+	booktitle = {International {Conference} on {Dependable} {Systems} and {Networks}, 2004},
+	author = {Wang, N.J. and Quek, J. and Rafacz, T.M. and Patel, S.J.},
+	month = jun,
+	year = {2004},
+	keywords = {Digital systems, Failure analysis, Lithography, Microarchitecture, Microprocessors, Out of order, Pipelines, Protection, Registers, Software performance},
+	pages = {61--70},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\E67XQ53A\\1311877.html:text/html},
+}
+
+@article{laurent_cross-layer_2019,
+	title = {Cross-layer analysis of software fault models and countermeasures against hardware fault attacks in a {RISC}-{V} processor},
+	volume = {71},
+	issn = {0141-9331},
+	url = {https://www.sciencedirect.com/science/article/pii/S0141933118304745},
+	doi = {10.1016/j.micpro.2019.102862},
+	abstract = {Fault injection is a powerful technique for attacking digital systems. Software developers have to take into account hardware fault effects when system security is a concern. Software fault models have been developed in an attempt to predict these faults. However, these models are often designed independently of any hardware consideration and thus raise the problem of realism. The generality of these models often cannot account for the specificities of each architecture. As a consequence, software countermeasures based on such software fault models do not guarantee an effective protection against fault attacks. Processor microarchitecture should be precisely analysed to better understand faulty behaviours. A cross-layer approach can then be developed, using conjointly hardware and software characteristics to design stronger software countermeasures with reasonable overheads. To illustrate this assumption, this paper shows actual faulty behaviours observed in a RISC-V processor RTL simulation, and shows that they can bypass countermeasures designed to protect against faults predicted by typical software fault models.},
+	language = {en},
+	journal = {Microprocessors and Microsystems},
+	author = {Laurent, Johan and Beroulle, Vincent and Deleuze, Christophe and Pebay-Peyroula, Florian and Papadimitriou, Athanasios},
+	month = nov,
+	year = {2019},
+	keywords = {Fault attack, RISC-V, software countermeasures, Software fault model},
+	pages = {102862},
+	file = {Texte intégral:C\:\\Users\\Vincent\\Zotero\\storage\\FR9BY9PS\\Laurent et al. - 2019 - Cross-layer analysis of software fault models and .pdf:application/pdf;ScienceDirect Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\HZMLQP5Z\\S0141933118304745.html:text/html},
+}
+
+@inproceedings{timmers_controlling_2016,
+	title = {Controlling {PC} on {ARM} {Using} {Fault} {Injection}},
+	doi = {10.1109/FDTC.2016.18},
+	abstract = {Fault injection attacks are a powerful technique to influence the intended behavior of embedded systems. They can be used to exploit or bypass robust security features found in secure embedded systems. Examples of such attacks include differential fault analysis (DFA) and bypassing authentication mechanisms. An embedded system's authenticated boot chain (i.e. secure boot) is an interesting target for fault injection. The initial boot stages are of limited size which means logically exploitable vulnerabilities are not guaranteed to be present. In this paper, we introduce an ARM specific fault injection attack strategy for exploiting embedded systems where externally controlled data is loaded in the program counter (PC) register of the processor. This allows an attacker to control the target's execution flow which eventually will lead to arbitrary code execution on the target. We first simulate the attack using a common fault model, after which we demonstrate the practicality of the attack using a development platform designed around an ARM based, fast and feature rich system on chip (SOC). We conclude with an overview of effective and non-effective countermeasures against this fault injection attack technique.},
+	booktitle = {2016 {Workshop} on {Fault} {Diagnosis} and {Tolerance} in {Cryptography} ({FDTC})},
+	author = {Timmers, Niek and Spruyt, Albert and Witteman, Marc},
+	month = aug,
+	year = {2016},
+	keywords = {ARM, Clocks, Cryptography, embedded systems, Embedded systems, exploitation, fault injection, Random access memory, Registers, system on chip, System-on-chip},
+	pages = {25--35},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\R9K697X3\\7774479.html:text/html},
+}
+
+@inproceedings{werner_protecting_2019,
+	title = {Protecting {RISC}-{V} {Processors} against {Physical} {Attacks}},
+	doi = {10.23919/DATE.2019.8714811},
+	abstract = {RISC-V is an emerging instruction-set architecture suitable for a wide variety of applications, which ranges from simple microcontrollers to high-performance CPUs. As an increasing number of commercial vendors now plans to adopt the architecture in their products, its security aspects are becoming a significant concern. For microcontroller implementations of RISC-V, one of the main security risks are attackers with direct physical access to the microchip. These physical attackers can perform highly powerful attacks that span from memory probing to power analysis up to fault injection and analysis. In this paper, we give an overview of the capabilities of attackers with direct physical device access, common threat models and attack vectors, and possible countermeasures. Besides, we discuss in more detail current approaches to secure RISC-V processors against fault injection attacks on the microchip itself. First, we show how to protect the control-flow against fault attacks by using an encrypted instruction stream and decrypting it on-the-fly in a newly added pipeline stage between the processor's fetch and decode unit. Second, we show how to protect conditional branches against fault injection by adding redundancy to the comparison operation and entangling the comparison result with the encrypted instruction stream. Finally, we discuss an approach to protect all pointers and memory accesses from tampering.},
+	booktitle = {2019 {Design}, {Automation} \& {Test} in {Europe} {Conference} \& {Exhibition} ({DATE})},
+	author = {Werner, Mario and Schilling, Robert and Unterluggauer, Thomas and Mangard, Stefan},
+	month = mar,
+	year = {2019},
+	note = {ISSN: 1558-1101},
+	keywords = {Ciphers, Context, countermeasures, Encryption, fault injection, physical attacks, Program processors, RISC-V},
+	pages = {1136--1141},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\PZRDSU2J\\8714811.html:text/html},
+}
+
+@inproceedings{hemme_differential_2004,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {A {Differential} {Fault} {Attack} {Against} {Early} {Rounds} of ({Triple}-){DES}},
+	isbn = {978-3-540-28632-5},
+	doi = {10.1007/978-3-540-28632-5_19},
+	abstract = {Previously proposed differential fault analysis (DFA) techniques against iterated block ciphers mostly exploit computational errors in the last few rounds of the cipher to extract the secret key. In this paper we describe a DFA attack that exploits computational errors in early rounds of a Feistel cipher. The principle of the attack is to force collisions by inducing faults in intermediate results of the cipher. We put this attack into practice against DES implemented on a smart card and extracted the full round key of the first round within a few hours by inducing one bit errors in the second and third round, respectively.},
+	language = {en},
+	booktitle = {Cryptographic {Hardware} and {Embedded} {Systems} - {CHES} 2004},
+	publisher = {Springer},
+	author = {Hemme, Ludger},
+	editor = {Joye, Marc and Quisquater, Jean-Jacques},
+	year = {2004},
+	keywords = {Computational Error, Counting Scheme, Data Encryption Standard, Round Function, Smart Card},
+	pages = {254--267},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\KZPDX88J\\Hemme - 2004 - A Differential Fault Attack Against Early Rounds o.pdf:application/pdf},
+}
+
+@inproceedings{blomer_fault_2003,
+	title = {Fault {Based} {Cryptanalysis} of the {Advanced} {Encryption} {Standard} ({AES})},
+	volume = {2742},
+	isbn = {978-3-540-40663-1},
+	doi = {10.1007/978-3-540-45126-6_12},
+	abstract = {In this paper we describe several fault attacks on the Ad- vanced Encryption Standard (AES). First, using optical/eddy current fault induction attacks as recently publicly presented by Skorobogatov, Anderson and Quisquater, Samyde (SA,QS), we present an implemen- tation independent fault attack on AES. This attack is able to deter- mine the complete 128-bit secret key of a sealed tamper-proof smart- card by generating 128 faulty cipher texts. Second, we present several implementation-dependent fault attacks on AES. These attacks rely on the observation that due to the AES's known timing analysis vulnera- bility (as pointed out by Koeune and Quisquater (KQ)), any implemen- tation of the AES must ensure a data independent timing behavior for the so called AES's xtime operation. We present fault attacks on AES based on various timing analysis resistant implementations of the xtime- operation. Our strongest attack in this direction uses a very liberal fault model and requires only 256 faulty encryptions to determine a 128-bit key.},
+	author = {Blömer, Johannes and Seifert, Jean-Pierre},
+	month = jan,
+	year = {2003},
+	pages = {162--181},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\CE5FTQMF\\Blömer et Seifert - 2003 - Fault Based Cryptanalysis of the Advanced Encrypti.pdf:application/pdf},
+}
+
+@inproceedings{fadiheh_processor_2019,
+	title = {Processor {Hardware} {Security} {Vulnerabilities} and their {Detection} by {Unique} {Program} {Execution} {Checking}},
+	doi = {10.23919/DATE.2019.8715004},
+	abstract = {Recent discovery of security attacks in advanced processors, known as Spectre and Meltdown, has resulted in high public alertness about security of hardware. The root cause of these attacks is information leakage across covert channels that reveal secret data without any explicit information flow between the secret and the attacker. Many sources believe that such covert channels are intrinsic to highly advanced processor architectures based on speculation and out-of-order execution, suggesting that such security risks can be avoided by staying away from high-end processors. This paper, however, shows that the problem is of wider scope: we present new classes of covert channel attacks which are possible in average-complexity processors with in-order pipelining, as they are mainstream in applications ranging from Internet-of-Things to Autonomous Systems. We present a new approach as a foundation for remedy against covert channels: while all previous attacks were found by clever thinking of human attackers, this paper presents a formal method called Unique Program Execution Checking which detects and locates vulnerabilities to covert channels systematically, including those to covert channels unknown so far.},
+	booktitle = {2019 {Design}, {Automation} \& {Test} in {Europe} {Conference} \& {Exhibition} ({DATE})},
+	author = {Fadiheh, Mohammad Rahmani and Stoffel, Dominik and Barrett, Clark and Mitra, Subhasish and Kunz, Wolfgang},
+	month = mar,
+	year = {2019},
+	note = {ISSN: 1558-1101},
+	keywords = {Hardware, Hazards, Microarchitecture, Pipelines, Security, Software, Timing},
+	pages = {994--999},
+	file = {Version soumise:C\:\\Users\\Vincent\\Zotero\\storage\\AR892ULK\\Fadiheh et al. - 2019 - Processor Hardware Security Vulnerabilities and th.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\WC7CV4VU\\8715004.html:text/html},
+}
+
+@article{arlat_fault_1990,
+	title = {Fault injection for dependability validation: a methodology and some applications},
+	volume = {16},
+	issn = {1939-3520},
+	shorttitle = {Fault injection for dependability validation},
+	doi = {10.1109/32.44380},
+	abstract = {The authors address the problem of validating the dependability of fault-tolerant computing systems, in particular, the validation of the fault-tolerance mechanisms. The proposed approach is based on the use of fault injection at the physical level on a hardware/software prototype of the system considered. The place of this approach in a validation-directed design process and with respect to related work on fault injection is clearly identified. The major requirements and problems related to the development and application of a validation methodology based on fault injection are presented and discussed. Emphasis is put on the definition, analysis, and use of the experimental dependability measures that can be obtained. The proposed methodology has been implemented through the realization of a general pin-level fault injection tool (MESSALINE), and its usefulness is demonstrated by the application of MESSALINE to the experimental validation of two systems: a subsystem of a centralized computerized interlocking system for railway control applications and a distributed system corresponding to the current implementation of the dependable communication system of the ESPRIT Delta-4 Project.{\textless}{\textgreater}},
+	number = {2},
+	journal = {IEEE Transactions on Software Engineering},
+	author = {Arlat, J. and Aguera, M. and Amat, L. and Crouzet, Y. and Fabre, J.-C. and Laprie, J.-C. and Martins, E. and Powell, D.},
+	month = feb,
+	year = {1990},
+	note = {Conference Name: IEEE Transactions on Software Engineering},
+	keywords = {Application software, Centralized control, Communication system control, Distributed computing, Fault diagnosis, Fault tolerant systems, Hardware, Process design, Rail transportation, Software prototyping},
+	pages = {166--182},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\VHW2FL3L\\44380.html:text/html},
+}
+
+@inproceedings{gunneflo_evaluation_1989,
+	title = {Evaluation of error detection schemes using fault injection by heavy-ion radiation},
+	doi = {10.1109/FTCS.1989.105590},
+	abstract = {Several concurrent error detection schemes suitable for a watch-dog processor were evaluated by fault injection. Soft errors were induced into a MC6809E microprocessor by heavy-ion radiation from a Californium-252 source. Recordings of error behavior were used to characterize the errors as well as to determine coverage and latency for the various error detection schemes. The error recordings were used as input to programs that simulate the error detection schemes. The schemes evaluated detected up to 79\% of all errors within 85 bus cycles. Fifty-eight percent of the errors caused execution to diverge permanently from the correct program. The best schemes detected 99\% of these errors. Eighteen percent of the errors affected only data, and the coverage of these errors was at most 38\%.{\textless}{\textgreater}},
+	booktitle = {[1989] {The} {Nineteenth} {International} {Symposium} on {Fault}-{Tolerant} {Computing}. {Digest} of {Papers}},
+	author = {Gunneflo, U. and Karlsson, J. and Torin, J.},
+	month = jun,
+	year = {1989},
+	keywords = {Circuit faults, Computer errors, Concurrent computing, Delay, Error correction, Event detection, Fault detection, Microprocessors, Radiation detectors, Single event upset},
+	pages = {340--347},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\U7DL8R9G\\105590.html:text/html},
+}
+
+@inproceedings{madeira_rifle_1994,
+	title = {{RIFLE}: {A} general purpose pin-level fault injector},
+	isbn = {978-3-540-58426-1},
+	shorttitle = {{RIFLE}},
+	doi = {10.1007/3-540-58426-9_132},
+	abstract = {This paper discusses the problems of pin-level fault injection for dependability validation and presents the architecture of a pin-level fault injector called RIFLE. This system can be adapted to a wide range of target systems and the faults are mainly injected in the processor pins. The injection of the faults is deterministic and can be reproduced if needed. Faults of different nature can be injected and the fault injector is able to detect whether the injected fault has produced an error or not without the requirement of feedback circuits. RIFLE can also detect specific circumstances in which the injected faults do not affect the target system. Sets of faults with specific impact on the target system can be generated. The paper also presents fault injection results showing the coverage and latency achieved with a set of simple behavior based error detection mechanisms. It is shown that up to 72,5\% of the errors can be detected with fairly simple mechanisms. Furthermore, for over 90\% of the faults the target system has behaved according to the fail-silent model, which suggests that a traditional computer equipped with simple error detection mechanisms is relatively close to a fail-silent computer.},
+	author = {Madeira, Henrique and Zenha-Rela, Mário and Moreira, Francisco and Silva, João},
+	month = jan,
+	year = {1994},
+	pages = {199--216},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\ZS3UEWKD\\Madeira et al. - 1994 - RIFLE A general purpose pin-level fault injector.pdf:application/pdf},
+}
+
+@article{eslami_survey_2020,
+	title = {A survey on fault injection methods of digital integrated circuits},
+	volume = {71},
+	issn = {0167-9260},
+	url = {https://www.sciencedirect.com/science/article/pii/S016792601930402X},
+	doi = {10.1016/j.vlsi.2019.11.006},
+	abstract = {One of the most popular methods for reliability assessment of digital circuits is Fault Injection (FI) in which the behavior of the circuit is simulated in presence of faults. In this paper, we present a survey of FI techniques as well as classifying these techniques considering different aspects and criteria to bring out their similarities and differences. The goal of this paper is to help the researchers and reliable circuit designers in gaining insights into the state-of-art in FI techniques and motivate them to further improve these techniques for more efficient reliability evaluation of digital circuit designs of tomorrow.},
+	language = {en},
+	journal = {Integration},
+	author = {Eslami, Mohammad and Ghavami, Behnam and Raji, Mohsen and Mahani, Ali},
+	month = mar,
+	year = {2020},
+	keywords = {Digital circuits, Fault injection, Fault simulation, Reliability assessment},
+	pages = {154--163},
+	file = {ScienceDirect Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\EXCNULQS\\S016792601930402X.html:text/html},
+}
+
+@inproceedings{kooli_survey_2014,
+	title = {A survey on simulation-based fault injection tools for complex systems},
+	doi = {10.1109/DTIS.2014.6850649},
+	abstract = {Dependability is a key decision factor in today's global business environment. A powerful method that permits to evaluate the dependability of a system is the fault injection. The principle of this approach is to insert faults into the system and to monitor its responses in order to observe its behavior in the presence of faults. Several fault injection techniques and tools have been developed and experimentally tested. They could be mainly grouped into three categories: hardware fault injection, simulation-based fault injection, and emulation-based fault injection. This paper presents a survey on the simulation-based fault injection techniques, with a focus on complex micro-processor based systems.},
+	booktitle = {2014 9th {IEEE} {International} {Conference} on {Design} \& {Technology} of {Integrated} {Systems} in {Nanoscale} {Era} ({DTIS})},
+	author = {Kooli, Maha and Di Natale, Giorgio},
+	month = may,
+	year = {2014},
+	keywords = {Circuit faults, Dependability, Fault Injection, Fault Tolerance, Fault tolerant systems, Faults, Hardware, Operating systems, Redundancy},
+	pages = {1--6},
+	file = {Texte intégral:C\:\\Users\\Vincent\\Zotero\\storage\\HJBPZF9M\\Kooli et Di Natale - 2014 - A survey on simulation-based fault injection tools.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\8YUMNNHA\\6850649.html:text/html},
+}
+
+@article{ziade_survey_2004,
+	title = {A {Survey} on {Fault} {Injection} {Techniques}},
+	volume = {1},
+	abstract = {Fault tolerant circuits are currently required in several major application sectors. Besides and in complement to other possible approaches such as proving or analytical modeling whose applicability and accuracy are significantly restricted in the case of complex fault tolerant systems, fault-injection has been recognized to be particularly attractive and valuable. Fault injection provides a method of assessing the dependability of a system under test. It involves inserting faults into a system and monitoring the system to determine its behavior in response to a fault. Several fault injection techniques have been proposed and practically experimented. They can be grouped into hardware-based fault injection, software-based fault injection, simulation-based fault injection, emulation-based fault injection and hybrid fault injection. This paper presents a survey on fault injection techniques with comparison of the different injection techniques and an overview on the different tools.},
+	journal = {Int. Arab J. Inf. Technol.},
+	author = {Ziade, Haissam and Ayoubi, Rafic and Velazco, R.},
+	month = jan,
+	year = {2004},
+	pages = {171--186},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\V55RFNMT\\Ziade et al. - 2004 - A Survey on Fault Injection Techniques.pdf:application/pdf},
+}
+
+@inproceedings{jenn_fault_1994,
+	title = {Fault injection into {VHDL} models: the {MEFISTO} tool},
+	shorttitle = {Fault injection into {VHDL} models},
+	doi = {10.1109/FTCS.1994.315656},
+	abstract = {This paper focuses on the integration of the fault injection methodology within the design process of fault-tolerant systems. Due to its wide spectrum of application and hierarchical features, VHDL has been selected as the simulation language to support such an integration. Suitable techniques for injecting faults into VHDL models are identified and depicted. Then, the main features of the MEFISTO environment aimed at supporting these techniques are described. Finally, some preliminary results obtained with MEFISTO are presented and analyzed.{\textless}{\textgreater}},
+	booktitle = {Proceedings of {IEEE} 24th {International} {Symposium} on {Fault}- {Tolerant} {Computing}},
+	author = {Jenn, E. and Arlat, J. and Rimen, M. and Ohlsson, J. and Karlsson, J.},
+	month = jun,
+	year = {1994},
+	keywords = {Analytical models, Computational modeling, Contracts, Costs, Fault tolerant systems, Genetic mutations, Hardware, Laboratories, Predictive models, Process design},
+	pages = {66--75},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\9MIUJYJ4\\315656.html:text/html},
+}
+
+@inproceedings{sieh_verify_1997,
+	title = {{VERIFY}: evaluation of reliability using {VHDL}-models with embedded fault descriptions},
+	shorttitle = {{VERIFY}},
+	doi = {10.1109/FTCS.1997.614074},
+	abstract = {A new technique for reliability evaluation of digital systems will be presented by demonstrating the functionality and usage of the simulation based fault injector VERIFY (VHDL-based Evaluation of Reliability by Injecting Faults efficientlY). This software tool introduces a new way for describing the behavior of hardware components in case of faults by extending the VHDL language with fault injection signals together with their rate of occurrence. The accuracy of the results is obtained by using the same VHDL-models which have been developed during conventional phases of hardware design. For demonstrating the capabilities of VERIFY, a VHDL-model of a simple 32-bit processor (DP32) will be used as an example to illustrate the several steps of reliability evaluation.},
+	booktitle = {Proceedings of {IEEE} 27th {International} {Symposium} on {Fault} {Tolerant} {Computing}},
+	author = {Sieh, V. and Tschache, O. and Balbach, F.},
+	month = jun,
+	year = {1997},
+	note = {ISSN: 0731-3071},
+	keywords = {Computational modeling, Computer science, Computer simulation, Controllability, Digital systems, Hardware, Observability, Pins, Software tools, System testing},
+	pages = {32--36},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\VGSKN65X\\614074.html:text/html},
+}
+
+@article{naviner_fifa_2011,
+	series = {Proceedings of the 22th {European} {Symposium} on the {RELIABILITY} {OF} {ELECTRON} {DEVICES}, {FAILURE} {PHYSICS} {AND} {ANALYSIS}},
+	title = {{FIFA}: {A} fault-injection–fault-analysis-based tool for reliability assessment at {RTL} level},
+	volume = {51},
+	issn = {0026-2714},
+	shorttitle = {{FIFA}},
+	url = {https://www.sciencedirect.com/science/article/pii/S0026271411002162},
+	doi = {10.1016/j.microrel.2011.06.017},
+	abstract = {This paper presents an efficient platform for fault robustness estimation of digital circuits. The proposed platform, named FIFA, was designed as a hardware IP to accelerate the Fault Injection and Fault masking Analysis approach. It supports several fault models as well as single and multiple faults. Synthesis results have shown that the proposed platform can exceed those existent in the literature in terms of area efficiency and performance. In addition, the FIFA platform allows the designer to control complexity and completeness of the analysis process.},
+	language = {en},
+	number = {9},
+	journal = {Microelectronics Reliability},
+	author = {Naviner, L. A. B. and Naviner, J. -F. and dos Santos, G. G. and Marques, E. C. and Paiva, N. M.},
+	month = sep,
+	year = {2011},
+	pages = {1459--1463},
+	file = {ScienceDirect Snapshot:C\:\\Users\\Vincent\\Zotero\\storage\\HLZ6J6P3\\S0026271411002162.html:text/html},
+}
+
+@inproceedings{valderas_set_2007,
+	title = {{SET} {Emulation} {Under} a {Quantized} {Delay} {Model}},
+	doi = {10.1109/DFT.2007.49},
+	abstract = {Single event transient (SET) fault analysis is usually performed trough digital simulation at the gate level. However, this method cannot be used for large fault injection campaigns, since gate level simulation is quite slow. In this paper, we propose an approach to build an FPGA based SET emulator, which implements a quantized delay model of the circuit under evaluation. Experimental results demonstrate that the quantized delay model produces accurate results and can be easily captured in a FPGA. The proposed approach can be automated to increase SET fault analysis performance by three orders of magnitude with respect to simulation.},
+	booktitle = {22nd {IEEE} {International} {Symposium} on {Defect} and {Fault}-{Tolerance} in {VLSI} {Systems} ({DFT} 2007)},
+	author = {Valderas, Mario Garcia and Cardenal, Raul Fernandez and Ongil, Celia Lopez and Garcia, Marta Portela and Entrena, Luis},
+	month = sep,
+	year = {2007},
+	note = {ISSN: 2377-7966},
+	keywords = {Circuit faults, Circuit simulation, Clocks, Delay effects, Emulation, Field programmable gate arrays, Flip-flops, Logic, Performance analysis, Voltage},
+	pages = {68--78},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\TIE59R48\\4358374.html:text/html},
+}
+
+@article{entrena_set_2009,
+	title = {{SET} {Emulation} {Considering} {Electrical} {Masking} {Effects}},
+	volume = {56},
+	issn = {1558-1578},
+	doi = {10.1109/TNS.2009.2013346},
+	abstract = {A new approach is proposed for evaluating circuit robustness against Single Event Transients (SETs) through FPGA emulation. A voltage-time quantization model allows capturing circuit delays in the FPGA, including electrical masking effects. Experimental results demonstrate this approach improves SET fault injection rate by three orders of magnitude with respect to logic simulation and provides an accuracy close to analog simulation.},
+	number = {4},
+	journal = {IEEE Transactions on Nuclear Science},
+	author = {Entrena, Luis and Valderas, Mario GarcÍa and Cardenal, RaÚl FernÁndez and Garcia, Marta Portela and Ongil, Celia LÓpez},
+	month = aug,
+	year = {2009},
+	note = {Conference Name: IEEE Transactions on Nuclear Science},
+	keywords = {Circuit faults, Circuit simulation, Delay effects, Electrical masking, Emulation, Error analysis, fault injection, Field programmable gate arrays, FPGA emulation, Logic, Quantization, single event transient (SET), Single event upset, Transient analysis},
+	pages = {2021--2025},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\25KTIGGR\\5204761.html:text/html},
+}
+
+@inproceedings{antoni_using_2002,
+	title = {Using run-time reconfiguration for fault injection in hardware prototypes},
+	doi = {10.1109/DFTVS.2002.1173521},
+	abstract = {In this paper, a new methodology for the injection of single event upsets (SEU) in memory elements is introduced. SEUs in memory elements can occur due to many reasons (e.g. particle hits, radiation) and at any time. It becomes therefore important to examine the behaviour of circuits when an SEU occurs in them. Reconfigurable hardware (especially FPGAs) was shown to be suitable to emulate the behaviour of a logic design and to realise fault injection. The proposed methodology for SEU injection exploits FPGAs and, contrarily to the most common fault injection techniques, realises the injection directly in the reconfigurable hardware, taking advantage of run-time reconfiguration capabilities of the device. In this case, no modification of the initial design description is needed to inject a fault, that results in avoiding hardware overheads and specific synthesis, place and route phases.},
+	booktitle = {17th {IEEE} {International} {Symposium} on {Defect} and {Fault} {Tolerance} in {VLSI} {Systems}, 2002. {DFT} 2002. {Proceedings}.},
+	author = {Antoni, L. and Leveugle, R. and Feher, M.},
+	month = nov,
+	year = {2002},
+	note = {ISSN: 1550-5774},
+	keywords = {Circuit faults, Circuit synthesis, Circuit testing, Field programmable gate arrays, Hardware, Laboratories, Power system modeling, Prototypes, Runtime, Single event upset},
+	pages = {245--253},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\KI2WSASY\\1173521.html:text/html},
+}
+
+@article{fibich_fiji_2019,
+	title = {{FIJI}: {Fault} {InJection} {Instrumenter}},
+	volume = {2019},
+	shorttitle = {{FIJI}},
+	doi = {10.1186/s13639-019-0088-7},
+	abstract = {FPGAs are increasingly used in safety-critical applications (e.g., in aerospace and automotive engineering). Safety standards stipulate that implemented countermeasures against run-time faults such as detection and isolation of affected components, automatic reconfiguration, and redundancy mechanisms must be adequately verified. To that end, fault injection tests by various means have been established as a suitable method. For such tests, faults can be provoked by radiation, simulation, or manipulating the design, for example, by inserting additional logic or manipulating the synthesis flow. This work briefly summarizes the various fault injection approaches with a focus on methods that are capable of stressing critical nets of a design running on actual hardware without requiring to re-synthesize. While the state-of-the-art tools can work with complex designs, they often lack controllability of the exact timing of the injection events (which is important to track the system’s response on faults in a logic simulation) and/or use a high amount of FPGA resources. To overcome these issues, we propose a resource-saving netlist-based fault injection framework Fault InJection Instrumenter (FIJI) that can target individual nets at test runtime. This paper presents FIJI’s work flow, implementation details, and an evaluation in terms of FPGA resources, timing impact, and performance during instrumentation and test execution. The FIJI framework has been made publicly available by the authors under an open-source license.},
+	journal = {EURASIP Journal on Embedded Systems},
+	author = {Fibich, Christian and Tauner, Stefan and Rössler, Peter and Horauer, Martin and Matschnig, Martin and Taucher, Herbert},
+	month = dec,
+	year = {2019},
+	file = {Texte intégral:C\:\\Users\\Vincent\\Zotero\\storage\\HNPK9F7M\\Fibich et al. - 2019 - FIJI Fault InJection Instrumenter.pdf:application/pdf},
+}
+
+@inproceedings{guzman-miranda_ft-unshades-up_2008,
+	title = {{FT}-{UNSHADES}-{uP}: {A} platform for the analysis and optimal hardening of embedded systems in radiation environments},
+	shorttitle = {{FT}-{UNSHADES}-{uP}},
+	doi = {10.1109/ISIE.2008.4677166},
+	abstract = {Designing dependable systems is a systematic task where area, power and performance are competing constraints. In many applications, design restrictions do not permit the total hardening of a design, leaving some internal circuitry vulnerable to radiation effects. Hierarchical analysis is necessary to identify the relative importance and vulnerability of individual sub-circuits in a design so that selective hardening can be optimally applied. This paper describes the tool FT-UNSHADES-uP which provides an environment and methodology for the rapid dynamic hierarchical analysis of embedded based processor systems using runtime fault injection. A case study is presented, analyzing the effects of fault injection in the embedded RAM and internal registers of a MicroBlaze uP system. The results can be used for the optimal hardening of the FPGA or ASIC design.},
+	booktitle = {2008 {IEEE} {International} {Symposium} on {Industrial} {Electronics}},
+	author = {Guzman-Miranda, H. and Tombs, J. N. and Aguirre, M. A.},
+	month = jun,
+	year = {2008},
+	note = {ISSN: 2163-5145},
+	keywords = {Circuit faults, Circuit simulation, Embedded system, Field programmable gate arrays, Hardware, Integrated circuit technology, Radiation hardening, Registers, Runtime, Single event upset},
+	pages = {2276--2281},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\UNE6QE7E\\4677166.html:text/html},
+}
+
+@inproceedings{parreira_fault_2003,
+	address = {Berlin, Heidelberg},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Fault {Simulation} {Using} {Partially} {Reconfigurable} {Hardware}},
+	isbn = {978-3-540-45234-8},
+	doi = {10.1007/978-3-540-45234-8_81},
+	abstract = {This paper presents a fault simulation algorithm and that uses efficient partial reconfiguration of FPGAs. The methodology is particularly useful for evaluation of BIST effectiveness, and for applications in which multiple fault injection is mandatory, such as safety-critical applications. A novel fault collapsing methodology is proposed, which efficiently leads to the minimal stuck-at fault list at the look-up-tables’ terminals. Fault injection is performed using local partial reconfiguration with small binary files. Our results on the ISCAS’89 sequential circuit benchmarks show that our methodology can be orders of magnitude faster than software or fully reconfigurable hardware fault simulation..},
+	language = {en},
+	booktitle = {Field {Programmable} {Logic} and {Application}},
+	publisher = {Springer},
+	author = {Parreira, A. and Teixeira, J. P. and Pantelimon, A. and Santos, M. B. and de Sousa, J. T.},
+	editor = {Y. K. Cheung, Peter and Constantinides, George A.},
+	year = {2003},
+	keywords = {Fault Injection, Fault Simulation, Field Programmable Gate Array, Sequential Circuit, Test Vector},
+	pages = {839--848},
+}
+
+@misc{otto_fault_2005,
+	title = {Fault attacks and countermeasures},
+	author = {Otto, Martin},
+	year = {2005},
+}
+
+@article{marzouqi_review_2014,
+	title = {Review of {Gate}-level {Differential} {Power} {Analysis} and {Fault} {Analysis} {Countermeasures}},
+	volume = {8},
+	doi = {10.1049/iet-ifs.2012.0319},
+	abstract = {Hardware implementation of modern crypto devices paves the way for a special type of cryptanalysis, which is known as side channel analysis (SCA) attacks. These attacks are designed to extract critical information from the physical leakage of the digital circuitry such as the power consumption and electromagnetic emissions. Differential power analysis (DPA) attacks are considered the most efficient form of SCA attacks that require special types of countermeasures. Another form of attacks, known as fault analysis (FA), is based on forcing the circuit to produce faulty results in order to extract useful information about the secret. Several countermeasures have been proposed in the literature to address and mitigate SCA attacks at different levels of abstraction. They include algorithmic, gate and transistor-level countermeasures. Leakage originates at every level according to the implemented crypto system and attack methodology. Countermeasures at gate level and transistor level are more generic than those at the algorithmic level as they tend to be specialised for certain implementations. Complication of the design process increases down to the basic abstraction layers, however, gate-level countermeasures provide the balance of generality and design complication. The major state-of-the-art gate-level countermeasures against DPA and FA attacks are reviewed here.},
+	journal = {IET Information Security},
+	author = {Marzouqi, Hamad and Al-Qutayri, Mahmoud and Salah, Khaled},
+	month = jan,
+	year = {2014},
+	file = {Full Text PDF:C\:\\Users\\Vincent\\Zotero\\storage\\XQZNRKYL\\Marzouqi et al. - 2014 - Review of Gate-level Differential Power Analysis a.pdf:application/pdf},
+}
+
+@article{zhang_sequential_2006,
+	title = {Sequential {Element} {Design} {With} {Built}-{In} {Soft} {Error} {Resilience}},
+	volume = {14},
+	issn = {1557-9999},
+	doi = {10.1109/TVLSI.2006.887832},
+	abstract = {This paper presents a built-in soft error resilience (BISER) technique for correcting radiation-induced soft errors in latches and flip-flops. The presented error-correcting latch and flip-flop designs are power efficient, introduce minimal speed penalty, and employ reuse of on-chip scan design-for-testability and design-for-debug resources to minimize area overheads. Circuit simulations using a sub-90-nm technology show that the presented designs achieve more than a 20-fold reduction in cell-level soft error rate (SER). Fault injection experiments conducted on a microprocessor model further demonstrate that chip-level SER improvement is tunable by selective placement of the presented error-correcting designs. When coupled with error correction code to protect in-pipeline memories, the BISER flip-flop design improves chip-level SER by 10 times over an unprotected pipeline with the flip-flops contributing an extra 7-10.5\% in power. When only soft errors in flips-flops are considered, the BISER technique improves chip-level SER by 10 times with an increased power of 10.3\%. The error correction mechanism is configurable (i.e., can be turned on or off) which enables the use of the presented techniques for designs that can target multiple applications with a wide range of reliability requirements},
+	number = {12},
+	journal = {IEEE Transactions on Very Large Scale Integration (VLSI) Systems},
+	author = {Zhang, Ming and Mitra, Subhasish and Mak, T. M. and Seifert, Norbert and Wang, Nicholas J. and Shi, Quan and Kim, Kee Sup and Shanbhag, Naresh R. and Patel, Sanjay J.},
+	month = dec,
+	year = {2006},
+	note = {Conference Name: IEEE Transactions on Very Large Scale Integration (VLSI) Systems},
+	keywords = {Circuit faults, Circuit simulation, Coupling circuits, Error analysis, error correction, Error correction, fault injection, Flip-flops, Latches, Microprocessors, Resilience, sequential element design, soft error rate (SER), Tunable circuits and devices},
+	pages = {1368--1378},
+	file = {IEEE Xplore Abstract Record:C\:\\Users\\Vincent\\Zotero\\storage\\8RCIPWA5\\4052356.html:text/html},
+}
+
+@inproceedings{patranabis_biased_2015,
+	title = {A {Biased} {Fault} {Attack} on the {Time} {Redundancy} {Countermeasure} for {AES}},
+	volume = {9064},
+	isbn = {978-3-319-21475-7},
+	doi = {10.1007/978-3-319-21476-4_13},
+	abstract = {In this paper we propose the first practical fault attack on the time redundancy countermeasure for AES using a biased fault model. We develop a scheme to show the effectiveness of a biased fault model in the analysis of the time redundancy countermeasure. Our attack requires only faulty ciphertexts and does not assume strong adversarial powers. We successfully demonstrate our attack on simulated data and 128-bit time redundant AES implemented on Xilinx Spartan-3A FPGA.},
+	author = {Patranabis, Sikhar and Chakraborty, Abhishek and Nguyen, Phuong and Mukhopadhyay, Debdeep},
+	month = apr,
+	year = {2015},
+	pages = {189--203},
+}
+
+@misc{noauthor_first_nodate,
+	title = {The first space-qualified {Klessydra} {RISC}-{V} microcontroller to be launched on a satellite},
+}
+
+
+@inproceedings{DBLP:conf/IEEEares/GruhnM13,
+  author    = {Michael Gruhn and
+               Tilo M{\"{u}}ller},
+  title     = {On the Practicability of Cold Boot Attacks},
+  booktitle = {2013 International Conference on Availability, Reliability and Security,
+               {ARES} 2013, Regensburg, Germany, September 2-6, 2013},
+  pages     = {390--397},
+  publisher = {{IEEE} Computer Society},
+  year      = {2013},
+  url       = {https://doi.org/10.1109/ARES.2013.52},
+  doi       = {10.1109/ARES.2013.52},
+  timestamp = {Wed, 16 Oct 2019 14:14:54 +0200},
+  biburl    = {https://dblp.org/rec/conf/IEEEares/GruhnM13.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/dtis/MenuDPRD20,
+  author    = {Alexandre Menu and
+               Jean{-}Max Dutertre and
+               Olivier Potin and
+               Jean{-}Baptiste Rigaud and
+               Jean{-}Luc Danger},
+  title     = {Experimental Analysis of the Electromagnetic Instruction Skip Fault
+               Model},
+  booktitle = {15th Design {\&} Technology of Integrated Systems in Nanoscale
+               Era, {DTIS} 2020, Marrakech, Morocco, April 1-3, 2020},
+  pages     = {1--7},
+  publisher = {{IEEE}},
+  year      = {2020},
+  url       = {https://doi.org/10.1109/DTIS48698.2020.9081261},
+  doi       = {10.1109/DTIS48698.2020.9081261},
+  timestamp = {Mon, 11 May 2020 12:25:53 +0200},
+  biburl    = {https://dblp.org/rec/conf/dtis/MenuDPRD20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/nordsec/DutertreRPR19,
+  author    = {Jean{-}Max Dutertre and
+               Timoth{\'{e}}e Riom and
+               Olivier Potin and
+               Jean{-}Baptiste Rigaud},
+  editor    = {Aslan Askarov and
+               Ren{\'{e}} Rydhof Hansen and
+               Willard Rafnsson},
+  title     = {Experimental Analysis of the Laser-Induced Instruction Skip Fault
+               Model},
+  booktitle = {Secure {IT} Systems - 24th Nordic Conference, NordSec 2019, Aalborg,
+               Denmark, November 18-20, 2019, Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {11875},
+  pages     = {221--237},
+  publisher = {Springer},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-35055-0\_14},
+  doi       = {10.1007/978-3-030-35055-0\_14},
+  timestamp = {Wed, 13 Nov 2019 15:28:18 +0100},
+  biburl    = {https://dblp.org/rec/conf/nordsec/DutertreRPR19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+@inproceedings{DBLP:conf/cardis/CristianiLH19,
+  author    = {Valence Cristiani and
+               Maxime Lecomte and
+               Thomas Hiscock},
+  editor    = {Sonia Bela{\"{\i}}d and
+               Tim G{\"{u}}neysu},
+  title     = {A Bit-Level Approach to Side Channel Based Disassembling},
+  booktitle = {Smart Card Research and Advanced Applications - 18th International
+               Conference, {CARDIS} 2019, Prague, Czech Republic, November 11-13,
+               2019, Revised Selected Papers},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {11833},
+  pages     = {143--158},
+  publisher = {Springer},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-42068-0\_9},
+  doi       = {10.1007/978-3-030-42068-0\_9},
+  timestamp = {Mon, 09 Mar 2020 14:09:08 +0100},
+  biburl    = {https://dblp.org/rec/conf/cardis/CristianiLH19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@article{DBLP:journals/corr/ClercqV17,
+  author    = {Ruan de Clercq and
+               Ingrid Verbauwhede},
+  title     = {A survey of Hardware-based Control Flow Integrity {(CFI)}},
+  journal   = {CoRR},
+  volume    = {abs/1706.07257},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1706.07257},
+  eprinttype = {arXiv},
+  eprint    = {1706.07257},
+  timestamp = {Mon, 13 Aug 2018 16:47:47 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/ClercqV17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@inproceedings{DBLP:conf/eurosp/WernerUSM18,
+  author    = {Mario Werner and
+               Thomas Unterluggauer and
+               David Schaffenrath and
+               Stefan Mangard},
+  title     = {Sponge-Based Control-Flow Protection for IoT Devices},
+  booktitle = {2018 {IEEE} European Symposium on Security and Privacy, EuroS{\&}P
+               2018, London, United Kingdom, April 24-26, 2018},
+  pages     = {214--226},
+  publisher = {{IEEE}},
+  year      = {2018},
+  url       = {https://doi.org/10.1109/EuroSP.2018.00023},
+  doi       = {10.1109/EuroSP.2018.00023},
+  timestamp = {Wed, 16 Oct 2019 14:14:55 +0200},
+  biburl    = {https://dblp.org/rec/conf/eurosp/WernerUSM18.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+@inproceedings{DBLP:conf/dsd/SavryEH20,
+  author    = {Olivier Savry and
+               Mustapha El{-}Majihi and
+               Thomas Hiscock},
+  title     = {Confidaent: Control FLow protection with Instruction and Data Authenticated
+               Encryption},
+  booktitle = {23rd Euromicro Conference on Digital System Design, {DSD} 2020, Kranj,
+               Slovenia, August 26-28, 2020},
+  pages     = {246--253},
+  publisher = {{IEEE}},
+  year      = {2020},
+  url       = {https://doi.org/10.1109/DSD51259.2020.00048},
+  doi       = {10.1109/DSD51259.2020.00048},
+  timestamp = {Wed, 14 Oct 2020 14:59:44 +0200},
+  biburl    = {https://dblp.org/rec/conf/dsd/SavryEH20.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@inproceedings{DBLP:conf/applepies/BlasiVCMMO19,
+  author    = {Luigi Blasi and
+               Francesco Vigli and
+               Abdallah Cheikh and
+               Antonio Mastrandrea and
+               Francesco Menichelli and
+               Mauro Olivieri},
+  editor    = {Sergio Saponara and
+               Alessandro De Gloria},
+  title     = {A {RISC-V} Fault-Tolerant Microcontroller Core Architecture Based
+               on a Hardware Thread Full/Partial Protection and a Thread-Controlled
+               Watch-Dog Timer},
+  booktitle = {Applications in Electronics Pervading Industry, Environment and Society
+               - {APPLEPIES} 2019, Pisa, Italy, 11-13 September 2019},
+  series    = {Lecture Notes in Electrical Engineering},
+  volume    = {627},
+  pages     = {505--511},
+  publisher = {Springer},
+  year      = {2019},
+  url       = {https://doi.org/10.1007/978-3-030-37277-4\_59},
+  doi       = {10.1007/978-3-030-37277-4\_59},
+  timestamp = {Tue, 24 Mar 2020 18:05:02 +0100},
+  biburl    = {https://dblp.org/rec/conf/applepies/BlasiVCMMO19.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@article{DBLP:journals/jce/MoroHER14,
+  author    = {Nicolas Moro and
+               Karine Heydemann and
+               Emmanuelle Encrenaz and
+               Bruno Robisson},
+  title     = {Formal verification of a software countermeasure against instruction
+               skip attacks},
+  journal   = {J. Cryptogr. Eng.},
+  volume    = {4},
+  number    = {3},
+  pages     = {145--156},
+  year      = {2014},
+  url       = {https://doi.org/10.1007/s13389-014-0077-7},
+  doi       = {10.1007/s13389-014-0077-7},
+  timestamp = {Mon, 26 Oct 2020 09:01:26 +0100},
+  biburl    = {https://dblp.org/rec/journals/jce/MoroHER14.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/ches/ShibutaniIHMAS11,
+  author    = {Kyoji Shibutani and
+               Takanori Isobe and
+               Harunaga Hiwatari and
+               Atsushi Mitsuda and
+               Toru Akishita and
+               Taizo Shirai},
+  editor    = {Bart Preneel and
+               Tsuyoshi Takagi},
+  title     = {Piccolo: An Ultra-Lightweight Blockcipher},
+  booktitle = {Cryptographic Hardware and Embedded Systems - {CHES} 2011 - 13th International
+               Workshop, Nara, Japan, September 28 - October 1, 2011. Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {6917},
+  pages     = {342--357},
+  publisher = {Springer},
+  year      = {2011},
+  url       = {https://doi.org/10.1007/978-3-642-23951-9\_23},
+  doi       = {10.1007/978-3-642-23951-9\_23},
+  timestamp = {Fri, 03 Jan 2020 08:28:33 +0100},
+  biburl    = {https://dblp.org/rec/conf/ches/ShibutaniIHMAS11.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/cardis/ColombierGVCBLC21,
+  author    = {Brice Colombier and
+               Paul Grandamme and
+               Julien Vernay and
+               {\'{E}}milie Chanavat and
+               Lilian Bossuet and
+               Lucie de Laulani{\'{e}} and
+               Bruno Chassagne},
+  editor    = {Vincent Grosso and
+               Thomas P{\"{o}}ppelmann},
+  title     = {Multi-Spot Laser Fault Injection Setup: New Possibilities for Fault
+               Injection Attacks},
+  booktitle = {Smart Card Research and Advanced Applications - 20th International
+               Conference, {CARDIS} 2021, L{\"{u}}beck, Germany, November 11-12,
+               2021, Revised Selected Papers},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {13173},
+  pages     = {151--166},
+  publisher = {Springer},
+  year      = {2021},
+  url       = {https://doi.org/10.1007/978-3-030-97348-3\_9},
+  doi       = {10.1007/978-3-030-97348-3\_9},
+  timestamp = {Tue, 15 Mar 2022 10:21:49 +0100},
+  biburl    = {https://dblp.org/rec/conf/cardis/ColombierGVCBLC21.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@article{DBLP:journals/tecs/AmbroseRP12,
+  author    = {Jude Angelo Ambrose and
+               Roshan G. Ragel and
+               Sri Parameswaran},
+  title     = {Randomized Instruction Injection to Counter Power Analysis Attacks},
+  journal   = {{ACM} Trans. Embed. Comput. Syst.},
+  volume    = {11},
+  number    = {3},
+  pages     = {69:1--69:28},
+  year      = {2012},
+  url       = {https://doi.org/10.1145/2345770.2345782},
+  doi       = {10.1145/2345770.2345782},
+  timestamp = {Mon, 26 Oct 2020 08:39:32 +0100},
+  biburl    = {https://dblp.org/rec/journals/tecs/AmbroseRP12.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/ches/CoronK09,
+  author    = {Jean{-}S{\'{e}}bastien Coron and
+               Ilya Kizhvatov},
+  editor    = {Christophe Clavier and
+               Kris Gaj},
+  title     = {An Efficient Method for Random Delay Generation in Embedded Software},
+  booktitle = {Cryptographic Hardware and Embedded Systems - {CHES} 2009, 11th International
+               Workshop, Lausanne, Switzerland, September 6-9, 2009, Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {5747},
+  pages     = {156--170},
+  publisher = {Springer},
+  year      = {2009},
+  url       = {https://doi.org/10.1007/978-3-642-04138-9\_12},
+  doi       = {10.1007/978-3-642-04138-9\_12},
+  timestamp = {Tue, 14 May 2019 10:00:47 +0200},
+  biburl    = {https://dblp.org/rec/conf/ches/CoronK09.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/ches/ClavierCD00,
+  author    = {Christophe Clavier and
+               Jean{-}S{\'{e}}bastien Coron and
+               Nora Dabbous},
+  editor    = {{\c{C}}etin Kaya Ko{\c{c}} and
+               Christof Paar},
+  title     = {Differential Power Analysis in the Presence of Hardware Countermeasures},
+  booktitle = {Cryptographic Hardware and Embedded Systems - {CHES} 2000, Second
+               International Workshop, Worcester, MA, USA, August 17-18, 2000, Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {1965},
+  pages     = {252--263},
+  publisher = {Springer},
+  year      = {2000},
+  url       = {https://doi.org/10.1007/3-540-44499-8\_20},
+  doi       = {10.1007/3-540-44499-8\_20},
+  timestamp = {Tue, 14 May 2019 10:00:47 +0200},
+  biburl    = {https://dblp.org/rec/conf/ches/ClavierCD00.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/wistp/GuilleyKLD11,
+  author    = {Sylvain Guilley and
+               Karim Khalfallah and
+               Victor Lomn{\'{e}} and
+               Jean{-}Luc Danger},
+  editor    = {Claudio A. Ardagna and
+               Jianying Zhou},
+  title     = {Formal Framework for the Evaluation of Waveform Resynchronization
+               Algorithms},
+  booktitle = {Information Security Theory and Practice. Security and Privacy of
+               Mobile Devices in Wireless Communication - 5th {IFIP} {WG} 11.2 International
+               Workshop, {WISTP} 2011, Heraklion, Crete, Greece, June 1-3, 2011.
+               Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {6633},
+  pages     = {100--115},
+  publisher = {Springer},
+  year      = {2011},
+  url       = {https://doi.org/10.1007/978-3-642-21040-2\_7},
+  doi       = {10.1007/978-3-642-21040-2\_7},
+  timestamp = {Mon, 21 Mar 2022 18:09:53 +0100},
+  biburl    = {https://dblp.org/rec/conf/wistp/GuilleyKLD11.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/ctrsa/WoudenbergWB11,
+  author    = {Jasper G. J. van Woudenberg and
+               Marc F. Witteman and
+               Bram Bakker},
+  editor    = {Aggelos Kiayias},
+  title     = {Improving Differential Power Analysis by Elastic Alignment},
+  booktitle = {Topics in Cryptology - {CT-RSA} 2011 - The Cryptographers' Track at
+               the {RSA} Conference 2011, San Francisco, CA, USA, February 14-18,
+               2011. Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {6558},
+  pages     = {104--119},
+  publisher = {Springer},
+  year      = {2011},
+  url       = {https://doi.org/10.1007/978-3-642-19074-2\_8},
+  doi       = {10.1007/978-3-642-19074-2\_8},
+  timestamp = {Tue, 14 May 2019 10:00:52 +0200},
+  biburl    = {https://dblp.org/rec/conf/ctrsa/WoudenbergWB11.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/ctrsa/Mangard04,
+  author    = {Stefan Mangard},
+  editor    = {Tatsuaki Okamoto},
+  title     = {Hardware Countermeasures against {DPA} ? {A} Statistical Analysis
+               of Their Effectiveness},
+  booktitle = {Topics in Cryptology - {CT-RSA} 2004, The Cryptographers' Track at
+               the {RSA} Conference 2004, San Francisco, CA, USA, February 23-27,
+               2004, Proceedings},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {2964},
+  pages     = {222--235},
+  publisher = {Springer},
+  year      = {2004},
+  url       = {https://doi.org/10.1007/978-3-540-24660-2\_18},
+  doi       = {10.1007/978-3-540-24660-2\_18},
+  timestamp = {Tue, 14 May 2019 10:00:52 +0200},
+  biburl    = {https://dblp.org/rec/conf/ctrsa/Mangard04.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@inproceedings{DBLP:conf/cardis/DurvauxRSOV12,
+  author    = {Fran{\c{c}}ois Durvaux and
+               Mathieu Renauld and
+               Fran{\c{c}}ois{-}Xavier Standaert and
+               Lo{\"{\i}}c van Oldeneel tot Oldenzeel and
+               Nicolas Veyrat{-}Charvillon},
+  editor    = {Stefan Mangard},
+  title     = {Efficient Removal of Random Delays from Embedded Software Implementations
+               Using Hidden Markov Models},
+  booktitle = {Smart Card Research and Advanced Applications - 11th International
+               Conference, {CARDIS} 2012, Graz, Austria, November 28-30, 2012, Revised
+               Selected Papers},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {7771},
+  pages     = {123--140},
+  publisher = {Springer},
+  year      = {2012},
+  url       = {https://doi.org/10.1007/978-3-642-37288-9\_9},
+  doi       = {10.1007/978-3-642-37288-9\_9},
+  timestamp = {Thu, 14 Oct 2021 10:29:55 +0200},
+  biburl    = {https://dblp.org/rec/conf/cardis/DurvauxRSOV12.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+

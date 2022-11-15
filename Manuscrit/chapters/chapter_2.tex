@@ -1,0 +1,470 @@
+\chapter{État de l'art}
+\textit{En introduction, on a présenté les deux types d'attaques contre lesquelles nous cherchons à nous protéger. Dans un premier temps, nous étudierons les attaques par canaux auxiliaires avec leur vecteur de fuite, mais aussi les deux grands types d'exploitations. Ensuite, nous passerons rapidement sur les différents types de contremesure pour finir sur l'évaluation des circuits.
+Dans un second temps, nous verrons les attaques par injections de fautes. Avec dans un premier temps les différentes manières d'injecter des fautes que nous définirons notre modèle de fautes que nous utilisons pour le reste de la thèse. Ensuite, nous étudierons les différentes méthodes de tests et finirons par définir les différents types de contremesure contre les attaques par injection de faute.}\\
+\minitoc
+\newpage
+
+\section{Attaque canaux auxiliaires}
+Tout d'abord, une attaque par canaux auxiliaire est une attaque qui cherche à exploiter les failles de l'implémentation matérielle. Cela ne remet pas en cause la robustesse théorique de l'implémentation, mais elle permet de récupérer de l'information par des moyens indirects. En effet, lors du traitement des données, il faut du temps et dissiper une quantité minimum d'énergie pour changer d'un état à un autre. De ce fait, des fuites par consommation de courant, temps d'exécution, température ou rayonnement électromagnétique sont inévitables.
+
+\subsection{Méthode d'analyse par canaux auxiliaires}
+
+Les canaux auxiliaires sont multiples, du fait que tout calcul est le résultat de composants électroniques ceux ci produise de la chaleur, une consommation électrique, une émanation électromagnétique mais aussi un temps d'exécution qui leur est propre. Toute ces fuites difficilement contrôlé par le concepteur peuvent dépendre de la donnée manipulé et ainsi permettre a un attaquant d'en extraire de l'information.
+
+\subsubsection{Fuite par consommation}
+
+Les premières fuites par canaux auxiliaire observées l'ont été sur la consommation du circuit. Cette consommation se divise en deux composantes une dynamique et une statique.
+
+La consommation dynamique (Dynamic Power Dissipation DPD) est la principale source de fuite par side channel. Elle a lieu lors d'un changement de l'état logique, elle se compose de deux composants le chargement et déchargement de la capacité de charge, l'on remarque ces changements lors de la transitions de 0-1 ou de 1-0, et le court-circuit dû à un signal d'entrée non nul \cite{korkikian_side-channel_2016}
+
+La consommation statique (Static power dissipation SPD) se compose de 6 mécanismes qui sont illustré en Figure~\ref{fig:SPD}:
+\begin{itemize}
+\item $I_1$ Consommation dans la jonction p-n,
+\item $I_2$ Fuite par subthreshold
+\item $I_3$ Tunneling dans et à travers la porte oxyde
+\item $I_4$ Hot carriers injection dans le substrat de la porte oxyde
+\item $I_5$ Fuite du drain induit par la gate
+\item $I_6$ courant punch through
+\end{itemize}
+
+Les fuites $I_2$, $I_5$, $I_4$, $I_6$ ne se produisent quand dans l'état off ce qui fait que le SPD permet d'extraire de la donnée de ces fuites, $I_1$ et $I_3$ sont eux indépendants.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/SPD.png}
+\caption{\label{fig:SPD} Résume des SPD.}
+\end{figure}
+
+\subsubsection{Fuite électromagnétique}
+
+Les émissions électromagnétiques viennent de la circulation du courant lors du traitement des données, du contrôle ou toute autre partie du circuit. Ces courants peuvent être volontaires ou involontaires. 
+De plus, un courant peut aussi influencer les émanations d'autre composant par des phénomènes de couplage ou en fonction de la géométrie du circuit.
+La principale différence avec les fuites en consommation est que les fuites électromagnétiques sont locales alors qu'en consommations c'est l'agrégation totale de toutes les consommations. Elle permet aussi de différencier le passage des bits de 0-1 et de 1-0.
+Il faut différencier deux types d'émanations, celle direct et indirect :
+\begin{itemize}
+\item[--] Les émanations directes qui dépendent directement de la circulation du courant. Ce sont souvent les composants avec les plus hautes fréquences qui sont les plus utiles à l'attaquant, car le bruit et les interférences sont plutôt en base de fréquence. Dans les circuits complexes, il peut être difficile d'isoler les émanations directes, il faut donc des sondes très précises et très proches de la source du signal. Il est même préférable de décapsuler le circuit pour obtenir des résultats assez précis.
+\item[--] Avec la miniaturisation et la complexification des circuits, les phénomènes de couplage électromagnétique et électrique sont de plus en plus significatifs du fait de la proximité des composants. Ces émanations se manifestent comme une modulation de signaux porteurs. Le signal d'horloge est un signal porteur très modulé par le circuit et est donc un important vecteur d'attaque.
+Cette modulation peut être une modulation d'amplitude s'il y a un couplage non linéaire entre la porteuse et le signal de donnée. La donnée peut être extraite grâce à une démodulation d'amplitude. Le couplage de circuit peut aussi entraîner une modulation de phase. Dans ce cas, une démodulation de phase s'impose.
+Étudier les émanations indirectes peuvent permettre de meilleurs résultats que les signaux directs, car ils se propagent mieux dans le circuit.
+\end{itemize}
+
+\subsubsection{Autres fuites}
+
+Le temps d'exécution est un canal très important pour les fuites que ce soit au niveau des temps d'accès des caches \cite{bernstein_cache-timing_2005} par exemple ce qui permet les attaques types spectre et Meltdown. Mais aussi en temps d'exécution ce qui a permis de casser certaine implémentation de RSA \cite{kocher_timing_1996}.
+
+La température du circuit peut, de la même manière que la consommation fournir des informations sur l'état et les données qui sont en train d'être exécute sur le circuit. De même que les fuites EM la température permet d'extraire des informations locales. Cependant l'élévation de température n'est pas instantanée et il faut plusieurs milisecondes voir secondes pour avoir des fuites significatives ce qui limite les attaques à des systèmes qui répète en boucle un opération critique \cite{hutter_temperature_2013}. Pour des raisons de précision il faut décapsuler le circuit pour le sonder.
+Les fuites acoustiques sont assez peu exploité, cependant dans \cite{genkin_acoustic_2017} il a été mis en évidence que ces fuites, dans le contexte de CPU Intel pour laptop, permettait de déterminer les instructions qui était en train d'être exécutée. Toujours d'après cette article les fuites sont bien des vibrations des composants électriques du processeur même s'il est difficile de les caractériser précisément. Cette attaque a permis d'extraire les clés d'un chiffrement RSA.
+ 
+\subsection{Modèle de fuite }
+
+Nous avons vu les différentes fuites qui sont possibles dans un circuit dans la section précédente, il est maintenant légitime de voir comment est-il possible d'évaluer ces fuites et comment les prendre en compte dans des modèles statistiques.
+
+Il est possible de caractériser les fuites selon 2~groupes. Le premier est celui dont les fuites dépendent de l'état actuel du matériel, c'est-à-dire le nombre d'états à 1. C'est le modèle en poids de Hamming. Le second s'intéresse à la transition entre deux états pour en quantifier la différence. Plus précisément, le nombre de transitions entre ces deux états. C'est le modèle en distance de Hamming.
+
+Il faut cependant prendre en compte de nombreux facteurs qui peuvent bruiter la mesure notamment les activités qui s'effectuent en parallèle de la donnée cible. Le bruit de l'environnent, mais aussi celui de la mesure et enfin les paramètres extérieurs tels que la température, les jitters d'horloge ou d'alimentation, etc.
+Même si on ne peut pas éliminer physiquement ces bruits selon la loi des grands nombres, à mesure que le nombre de variables distribuées de manière identique et aléatoire augmente, leur moyenne d'échantillon se rapproche de leur moyenne théorique. Ce qui permet de distinguer deux valeurs, même si le bruit est significatif, cela demandera juste plus de données.
+
+La Table~\ref{tab:fuite} présente les informations qui peuvent être obtenues à partir des fuites des canaux auxiliaires. Outre les données binaires l'information, c'est-à-dire le poids de Hamming ou la distance de Hamming, la fuite du canal auxiliaire peut caractériser le temps et l'emplacement spatial d'une donnée ciblée. Ainsi, les canaux auxiliaires peuvent être utilisés pour la rétro-ingénierie~\cite{tang_power_2012}.
+
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c|c|c|c|c}
+                 & Time   & SPD    & DPD    & EM    & PSD    & TSA    \\\hline
+Hamming Weight   & $\surd$  & $\surd$  & $\surd$  & $\surd$ & $\surd$  & $\surd$  \\\hline
+Hamming distance & $\surd$  & $\times$ & $\surd$  & $\surd$ & $\surd$  & $\times$ \\\hline
+Temporal Location& $\times$ & $\times$ & $\surd$  & $\surd$ & $\times$ & $\times$ \\\hline
+Spatial location & $\times$ & $\times$ & $\times$ & $\surd$ & $\times$ & $\surd$  \\\hline
+\end{tabular}
+\caption{\label{tab:fuite}tableau récapitulatif des fuites extrait de \cite{korkikian_side-channel_2016}.}
+\end{table}
+
+\subsection{Exploitation des fuites}
+
+\subsubsection{Attaques simples}
+
+Les attaques par analyse de courant les plus simple (Simple power attack SPA) sont des attaques qui fonctionnent en exploitant des dispositions ou des schémas dépendant de la clé dans une seule trace de fuite, par exemple l'enregistrement de la consommation électrique d'un appareil pendant un chiffrement ou une sous-séquence de la procédure de chiffrement. Cela ne signifie pas que pour une attaque SPA, une seule trace de puissance est utilisée. Des traces multiples pourraient être utilisées pour réduire le rapport signal/bruit entre le signal de fuite réel et le bruit électronique et de mesure, par exemple. Cependant, le terme "simple" fait référence au fait que dans une SPA, la relation entre les traces multiples et les changements à l'intérieur des valeurs intermédiaires qui produisent la trace de fuite enregistrée n'est pas exploitée.
+
+Un exemple classique d'une attaque SPA est la reconnaissance des modèles de fuite qui sont causés par les commandes individuelles d'un processeur. Un carré et une multiplication tels qu'ils sont utilisés dans  l'exponentiation binaire des implémentations non sécurisées de l'algorithme de multiplication par un scalaire d'un point d'une courbe elliptique ou également de la multiplication de nombres premiers dans le chiffrement RSA, montre que selon qu'il s'agit d'un simple mise au carré (opération par groupe) ou d'un mise au carré plus une multiplication les traces différeront.. Comme ces modèles peuvent même apparaître dans la simple inspection visuelle d'une trace de puissance, l'exposant qui a été utilisé pour la l'exponentiation (qui peut être la clé elle-même ou liée à la clé) peut être directement extrait de la trace de puissance.
+
+\subsubsection{Attaques non supervisé}
+
+En plus des variations de puissance, il y a des effets corrélés aux valeurs des données manipulées. Ces variations tendent à être plus petits et sont parfois éclipsés par des erreurs de mesure et d'autres bruits. Dans ces cas, il est encore souvent possible d'exploiter les fuites en utilisant des fonctions statistiques adaptées à l'algorithme cible.
+Une attaque classique peut être divisée en trois phases : la phase de collecte des fuites, la phase de construction des hypothèses et la phase de correspondance des hypothèses. Dans ce qui suit, nous ne résumons que brièvement le fonctionnement d'une attaque DPA typique.
+
+Dans la première phase, les traces de fuite sont collectées sous différentes entrées, par exemple différents textes en clair qui sont chiffrés à l'aide de la même clé secrète. L'exploitation des différences dans les traces de fuite nécessite un alignement, aussi exactes que possible, des traces individuelles les unes par rapport aux autres. Pour les attaques pratiques, il n'existe souvent pas de point de référence dans le temps pour chaque chiffrement. Cette phase pourrait donc comporter une phase de post-traitement au cours de laquelle les traces de fuite sont d'abord alignées. Les attaques nécessitent un post-traitement sont plus complexe car elles impliquent le filtrage ou la combinaison de points de fuite.
+Etant donné qu'aucune connaissance de la clé secrète utilisée n'est supposée, l'étape suivante consiste à générer des hypothèses sur la base de la clé secrète inconnue. Cette phase est généralement réalisée de manière à diviser pour mieux régner, car la construction d'hypothèses basées sur un espace clé de 128 bits, tel qu'il est requis pour un AES-128 complet, par exemple, serait trop complexe. Par conséquent, il faut d'abord trouver un point approprié dans l'algorithme attaqué pour lequel il existe une relation avec la clé secrète attaquée et les données d'entrée connues et qu'a cet instant la clé et la donnée soient processées par paquet de taille inférieure à 128 bits. Un point approprié pour la construction de cette hypothèse est par exemple le résultat de l'addition de la clé et du texte en clair dans le premier tour d'un AES qui est suivie par la recherche de la S-box 8 bits. On peut ainsi calculer des hypothèses individuellement pour tous les morceaux de 8 bits de la clé de 128 bits. Les hypothèses contiennent les valeurs potentielles du résultat intermédiaire attaqué de l'algorithme qui sont calculé pour chaque trace de fuite de l'octet clé ciblé. Comme la puissance dynamique d'un circuit CMOS dépend des modifications d'un signal plutôt que des valeurs absolues de la valeur intermédiaire, les valeurs intermédiaires hypothétiques sont ensuite mises en correspondance avec un modèle de fuites. Cette mise en correspondance peut à nouveau être assez simple, par exemple en calculant simplement le nombre de bits que sont non nuls (modèle de Hamming-weight) ou le nombre de bits qui ont changé (modèle de Hamming-distance), mais peut aussi devenir plus complexe et utiliser les caractéristiques de consommation de l'appareil attaqué.
+
+Dans la phase de correspondance, le modèle de puissance hypothétique pour les principales suppositions est évalué statistiquement par rapport aux observations réelles dans les traces de fuite. Dans la pratique, il existe un grand nombre de d'outils mathématiques permettant la distinction des clés utilisées sur les fuites par canaux auxiliaires.x Pour sélectionner le candidat clé le plus probable parmi l'ensemble des clés hypothétiques. Ces distinctions sont basées sur des méthodes statistiques différentes, comme La corrélation de Pearson, la différence de moyennes ou l'analyse d'informations mutuelles, et ont des propriétés et des implications pratiques variables. L'objectif de toutes ces outils est cependant de trouver et de quantifier les dépendances entre les hypothétique modèle de fuite afin de déterminer la clé utilisée.
+
+\subsubsection{Attaques supervisé }
+
+Essentiellement, nous avons un dispositif effectuant l'une des K séquences d'opérations possibles, ${O_1,…,O_k}$ : il peut s'agir, par exemple, d'exécuter le même code pour différentes valeurs de bits clés. Un adversaire qui peut échantillonner le canal auxiliaire pendant cette opération souhaite identifier laquelle des opérations est exécutée ou alors réduire de manière significative l'ensemble des hypothèses possibles pour l'opération.
+Dans le traitement du signal, il est habituel de modéliser l'échantillon observé comme une combinaison d'un signal intrinsèque généré par l'opération et de bruit qui est soit intrinsèquement généré, soit ambiant. Alors que la composante du signal est la même pour les invocations répétées de l'opération, le bruit est mieux modélisé comme un échantillon aléatoire tiré d'une distribution de probabilité du bruit qui dépend des conditions de fonctionnement et d'autres conditions ambiantes. L'approche optimale pour l'adversaire, qui tente de trouver la bonne hypothèse à partir d'un petit nombre d'échantillons S, est d'utiliser l'approche du maximum de vraisemblance: La meilleure hypothèse consiste à choisir l'opération de telle sorte que la correspondance entre les traces et le modèle soit maximal. Pour calculer cette correspondance, l'adversaire doit modéliser avec précision à la fois le signal intrinsèque et la distribution de probabilité du bruit pour chaque opération.
+
+L'adversaire utilise un dispositif expérimental, identique au dispositif testé, pour identifier une petite partie de l'échantillon S qui ne dépend que de quelques bits de clés inconnus. Avec l'expérimentation, il construit des modèles correspondant à chaque valeur possible des bits clés inconnus. Le modèle est constitué des distributions de probabilité moyennes du signal et du bruit. Il utilise ensuite ces modèles pour classer cette partie de S et limiter les choix pour les bits clés à un petit ensemble. Cette opération est ensuite répétée avec un préfixe de S plus long impliquant plus de bits clés. Nous ne retiendrons qu'un petit nombre de possibilités pour la partie de la clé considérée jusqu'à présent. Ainsi, les attaques par template utilisent essentiellement une stratégie d'extension et de réduction dirigée par l'échantillon unique S à attaquer : nous utilisons des préfixes de S de plus en plus longs et les templates correspondants pour réduire l'espace des clés possibles. Le succès dépend essentiellement de l'efficacité avec laquelle la stratégie de réduction réduit l'explosion combinatoire dans le processus d'extension.
+
+Les attaques par template sont particulièrement efficaces sur les implémentations d'algorithmes cryptographiques sur des dispositifs CMOS en raison de leur contamination et de leur diffusion sur plusieurs cycles dans une section de calcul. Dans les dispositifs CMOS, la manipulation directe des bits clés les fait entrer dans l'état du dispositif et ces fuites d'état peuvent persister pendant plusieurs cycles. En outre, d'autres variables affectées par la clé, telles que les indices et les valeurs des tables dépendantes de la clé, provoquent une contamination supplémentaire lors d'autres cycles. L'étendue de la contamination contrôle le succès de la réduction des nouveaux bits clés introduits dans la phase d'expansion. Il faut s'attendre à ce que si deux clés sont presque identiques, même avec les effets de la contamination, la réduction ne puisse pas éliminer l'une d'entre elles. La diffusion est la propriété cryptographique bien connue par laquelle de petites différences dans les bits clés sont amplifiées dans les parties suivantes du calcul. Même si certains candidats pour les bits clés n'ont pas été éliminés en raison des effets de la contamination, la diffusion garantira que les clés très rapprochées seront élaguées rapidement.
+
+L'implémentation d'un algorithme sur un dispositif particulier impose par nature des limites théoriques au succès de l'attaque du modèle. Le mieux qu'un adversaire puisse faire pour approcher cette limite théorique est de disposer de caractérisations extrêmement bonnes et précises du bruit. Bien que de telles caractérisations soient très sophistiquées, en pratique, des approximations telles qu'un modèle gaussien multivarié pour les distributions du bruit donnent de très bons résultats. Et les progres en machine learning permet des attaques supervisé encore plus précise si les données d'entraînement sont en nombre suffisant.
+
+\subsection{Méthode de test}
+
+Deux méthodes de test sont principalement utilisées pour évaluer la résistance des implémentation face aux attaques par canaux auxiliaires la première empirique où on évalue la résistance avec l'analyse des fuites et des méthodes statistiques. La seconde est formelle c'est-à-dire que l'on vérifie si notre design respecte des propriétés mathématiques. Les deux méthodes sont souvent complémentaires, on vérifie d'abord formellement si l'implémentation est formellement résistante puis on vérifie par l'expérience si c'est effectivement le cas.
+
+\subsubsection{Méthode empirique}
+Analyser la résistance contre les attaques par canaux auxiliaires des implémentations de manière empirique, est souvent effectué par l'intermédiaire d'un t-test selon la méthode de Goodwill et al. [14] . Nous notons que les t-tests ne sont pas adaptés pour prouver des déclarations générales sur la sécurité d'un modèle (pour toutes les conditions et tous les temps de signal possibles) comme il serait nécessaire pour une vérification complète de la sécurité. Les t-tests n'autorisent des déclarations que pour les dispositifs testés et dans les limites du dispositif de mesure. De nombreux ouvrages testent les circuits masqués sur un FPGA (Field Programmable Gate Array) et effectuent le t-test sur les traces recueillies à partir des mesures de puissance. Cette approche présente l'inconvénient qu'en raison des niveaux de bruit relativement élevés, l'évaluation est généralement limitée à des t-tests multivariés du premier et du deuxième ordre.
+Cependant, dans la pratique, les t-tests se sont avérés très sensibles et utiles pour tester la résistance des canaux auxiliaires de circuit.
+Les traces de signaux sont enregistrées lors des simulations post-synthèse des netlists, qui sont exemptes de bruit et nous permettent d'évaluer les conceptions jusqu'au troisième ordre. L'utilisation de traces de fuites post-synthèse sur des traces collectées à partir d'une conception de FPGA ou de circuit intégré spécifique à une application (ASIC) montre quelques différences qui sont dans certains cas très bénéfiques, mais il y a aussi des inconvénients. Tout d'abord, les traces de fuite après synthèse sont totalement exemptes de bruit environnemental et de variations des conditions de fonctionnement comme la température ou la tension d'alimentation. En conséquence, les violations de la sécurité d'ordre D sont constatées avec beaucoup moins de traces de fuite. Un autre grand avantage est que les t-tests peuvent être effectués soit à un niveau assez grossier, en prenant en compte tous les signaux ensemble, soit à une granularité très fine en utilisant des signaux individuels. Cette dernière méthode permet de localiser directement la source de la fuite au niveau du signal, ce qui facilite grandement la conception des tests.
+L'un des inconvénients de cette approche est que les traces post-synthèse n'utilisent pas une source de fuite réelle existante. Cependant, un t-test effectué sur une puce ASIC ou sur la conception d'un FPGA ne permet de donner qu'une fuite existante sur ce dispositif et ne donne même pas de garantie sur son comportement à l'avenir, car les retards de signal peuvent changer dans les conditions environnementales et au cours du cycle de vie d'un dispositif. Dans le cas de la netlist synthétisée simulée, les retards de signal sont basés sur les retards de la porte unifié qui entraînent également des glitchs de signal qui apparaissent à partir des portes logiques en cascade. Les glitchs qui pourraient résulter des longueurs de fils de différentes, et autres effets parasites, ne sont cependant pas modélisés et sont donc plus susceptibles d'apparaître sur les t-tests basés sur FPGA ou ASIC.
+Pour vérifier qu'un appareil ne présente aucune fuite exploitable, deux séries de traces sont collectées par t-test : 
+\begin{enumerate}
+    \item un ensemble avec des entrées choisies au hasard
+    \item la valeur t est calculée selon l'équation ci-dessous où X désigne la moyenne de l'ensemble de traces respectif, S2 est la variance et N est la taille de l'ensemble.
+\end{enumerate}
+
+\begin{equation}
+t=\frac{X_1-X_2} {\sqrt{\frac{S_1^2}{N_1 }+\frac{S_2^2}{N_2}}}
+\end{equation}
+
+L'hypothèse nulle est que les moyennes des deux ensembles de traces sont égales, ce qui est accepté si la valeur t calculée est inférieure au seuil de ±4,5. Si la valeur t dépasse ce seuil, alors l'hypothèse nulle est rejetée avec une confiance supérieure à 99,999 \% pour les ensembles de traces suffisamment importants. Une étape dite de prétraitement centré du produit, avec des points de trace à l'intérieur d'une fenêtre de six cycles, est effectuée pour les t-tests d'ordre supérieur. Au-delà de cette fenêtre de temps, on s'assure que les produits intermédiaires n'ont aucun lien avec les entrées. Nous combinons donc plusieurs points de trace en normalisant d'abord les moyennes des points de trace, puis en multipliant les valeurs résultantes par d'autres points normalisés à l'intérieur de la fenêtre temporelle.
+
+\subsubsection{Méthode formelle}
+Le masquage booléen d'ordre d (d share) d'une variable $a \in GF(2^m)$ est représenté par $s_a  = {a_i }_{(i=1)^n}$ où chaque part $ a_i \in GF(2^m)$ est un  nombre tiré aléatoirement. La donnée est ensuite combiné avec les différentes parts. Pour retrouver la donnée il faut ainsi combiner les differnet share via l'operation inverse. 
+ 
+Le nombre de parts n dépend du schéma de masquage, et est toujours supérieur à l'ordre de sécurité d. Toute combinaison des parts d au maximum ne doit pas donner d'informations sur a.
+Toute fonction $F(a) = x$ peut être mise en œuvre en utilisant un ensemble d'opérations affines et de multiplications dans le champ correspondant. Le calcul masqué d'une fonction affine A est trivial, car la fonction peut simplement opérer sur chaque action individuellement : $A(a_i) = x_i.$
+En revanche, le AND logique masquée est plus difficile. Nous donnons ci-dessous un exemple de partage pour la fonction $F(a,b) = ab$ qui utilise trois parts et une variable aléatoire $r_i$, tirée de \cite{ishai_private_2003}.
+\begin{center}
+$t_1  = (a_1 b_2  \oplus r_1 )  \oplus a_2 b_1$
+
+$t_2  = (a_1 b_3  \oplus r_2   ) \oplus  a_3 b_1$
+
+$t_3  = (a_2 b_3  \oplus r_3) \oplus a_3 b_2$
+
+$x_1  = a_1 b_1  \oplus r_1  \oplus r_2$
+
+$x_2  = a_2 b_2  \oplus t_1\oplus r_3$
+
+$x_3  = a_3 b_3  \oplus t_2  \oplus t_3$ 
+\end{center}
+
+\begin{definition}[d-probing security  \cite{ishai_private_2003}]\label{def:d_probing}
+ Un circuit est sécurisé d-probing si et seulement si chaque d-tuple de ses variables intermédiaires est indépendant de toute variable sensible.
+ \end{definition}
+Notez que l'ensemble des équations présentées est sûr car chaque variable intermédiaire (en plus des variables d'entrée et de sortie) est indépendante des variables sensibles non masquées.
+Il a été montré que pour un circuit sans aucun glitchs, la sécurité d-probing implique la sécurité du modèle bruité. Ce modèle suppose que chaque opération fuit indépendamment, lorsqu'il n'y a pas de bruit entre les actions, et que la somme des fuites de bruit de chaque action est fournie à l'adversaire. Il a été démontré que ce modèle correspond à des fuites physiques réelles. Toutefois, il a également été démontré qu'il présente deux inconvénients majeurs.
+\begin{enumerate}
+    \item La sécurité face au attaque par canaux auxiliaires d'un gadget tel qu'une porte ET masquée n'implique pas la sécurité d'un circuit où ces gadgets sont composés arbitrairement
+    \item Il a été démontré que l'hypothèse selon laquelle un circuit ne présente pas de glitchs est irréaliste, en particulier sur les circuits matériels
+\end{enumerate}
+
+Pour repondre aux deux lacunes de ce modèle de nouveau modèle ont émergés:
+\begin{definition}[Gadget composable]
+Un gadget sécurisé d-probing est composable si la combinaison arbitraire de ces gadgets aboutit à un circuit sécurisé d-probing.
+\end{definition}
+Plus tard, il a été démontré dans \cite{barthe_strong_2016} qu'un gadget satisfaisant à la propriété d-SNI telle que décrite ci-dessous est composable. De plus, tout circuit composé de gadgets affines (où les limites de partage ne sont pas violées, c'est-à-dire $A(a_i) = x_i)$ et de gadgets d-SNI est d-probing sécurisé.
+
+\begin{definition}[d-Strong Non-Interference \cite{barthe_strong_2016}]
+Un gadget est un d-SNI (d-Strong Non Interfering) si et seulement si, pour un ensemble de $p_1$ sondes sur ses valeurs intermédiaires et chaque ensemble de $p_2$ sondes sur ses sorties, la totalité des sondes peut être simulée avec $p_1  + p_2  \leqslant d$, avec $p_1$ parts de chaque entrée. Ici, la simulation implique une fonction qui prend des parts $p_1$ pour chaque entrée et calcule une distribution conjointe qui est exactement égale à la distribution produite sur ses d sondes par le gadget ou l'algorithme étudié \cite{barthe_improved_2020}
+\end{definition}
+Donc si un modèle de circuit est sécurisé dans le cadre du modèle d-probing, il peut ne pas l'être dans la pratique. En effet, le modèle ne tient pas compte des effets physiques tels que les glitchs. Les glitchs sont des artefacts matériels involontaires et indésirables qui provoquent des consommations d'énergies involontaires et les concepteurs de matériel font de grands efforts pour les minimiser pour des raisons qui vont au-delà de la sécurité. Toutefois, la réduction des glitchs nécessite un processus de cheminement minutieux, qui est un grand défi compte tenu de facteurs tels que l'architecture, l'environnement de travail et l'âge de l'appareil. Plus important encore dans notre contexte, les glitchs peuvent momentanément démasquer des valeurs, invalidant ainsi théoriquement les garanties de sécurité et en le rendant dangereux pour la sécurité. Le modèle de extended d-probing a été créé pour remédier aux défauts du modèle d-probing en ce qui concerne les défauts physiques tels que les glitchs \cite{meyer_multiplicative_2018}. Dans ce modèle, chaque sonde glitch-extended ne donne pas seulement des informations sur le fil sondé, mais aussi toutes les variables utilisées pour calculer la valeur de ce fil jusqu'au dernier point de synchronisation. Notez qu'il s'agit d'un modèle très solide couvrant les fuites dans le pire des cas qui pourraient ne pas se produire en pratique. Toutefois, il fournit un modèle théorique que l'on peut utiliser avec un degré de confiance élevé. Un gadget est considéré comme composable sous le modèle d glitch-extended probing s'il satisfait à la propriété d glitch-extended SNI (d-GSNI) comme décrites ci-dessous.
+
+\begin{definition}\cite{meyer_consolidating_2019}]
+Considérons un gadget avec d + 1 parts d'entrée $a_i$, où $i \in {1,...,d + 1}$. Soit $O$ tout ensemble d'observations d'au plus d sondes glitch-extended dans $GF(2\wedge m)$. Soit $p_1$ et $p_2$ le nombre de sondes intermédiaires et de sortie respectivement tel que $p1 + p2\leqslant d$ . Le gadget est d-GSNI si, pour l'un quelconque de ces $O$, la condition suivante est remplie :
+
+$\exists P \subset \{1,...d + 1\}$ et son complément $\overline{P}$  avec $|P| = p_1$  tel que $ I(O ; a_P' |a_P) = 0$.
+\end{definition}
+Notez que cette définition suppose un point de vue de théorie de l'information et est équivalente à la définition \ref{def:d_probing} si des sondes régulières sont utilisées à la place des sondes glitch-extended.
+
+
+
+\subsection{Classifications des contremesure}
+
+De nombreuses contremesures ont été développé depuis la première attaque par canaux auxiliaires en 1999 \cite{kocher_differential_1999}. Ces contremesures peuvent être repartie en plusieurs groupes :
+\begin{itemize}
+\item Ajouter du bruit temporel pour éviter les attaques par analyse de consommation, de timing ou d'émission électromagnétique.
+    \begin{itemize}
+    \item Instabilité dans le rapport cyclique ou la fréquence d'horloge.
+    \item Circuits asynchrones, le circuits n'est plus soumis a une horloge pour effectuer les opérations.
+    \item Ajout de opération factice aléatoire, qui sont des opérations qui n'ont pas d'influence sur le fonctionnement du circuit.
+    \end{itemize}
+\item -	L'homomorphisme utilise les propriétés arithmétiques pour obtenir le résultat en fonctions d'un ou plusieurs chemins de calcul.
+
+La randomisation consiste à changer la représentation de la donnée sensible, elle n'est donc plus directement accessible à l'attaquant. Ces contre-mesures sont efficaces contre tous les types de canaux auxiliaires.
+\begin{itemize}
+\item Le masquage consiste à combiné la donnée sensible avec une donnée aléatoire pendant tout le processus à effectuer sur cette donnée. A la fin de ce processus on peut démasquer pour obtenir le résultat.
+\item Ajouter du bruit dans la consommation globales ou local du circuit :
+    \begin{itemize}
+    \item Préchargement de données dans les registres ou le chemin de données
+    \item Instabilité dans l'alimentation.
+    \end{itemize}
+\end{itemize}
+
+\item Les détecteurs qui sont capable de reconnaître si un circuit est en train d'être attaqué. Il est possible de détecter le depackaging, les sondes EM, les modifications d'horloges ou d'alimentation etc... Cependant il est toujours possible de passer outre ces protections.
+
+\ item La réduction des émissions par canaux auxiliaires consiste à diminuer au niveau des portes du circuit les dépendances entre les données. On peut ainsi équilibrer consommation d'énergie ou avoir une exécution en temps constant. De nombreuses solutions ont été proposé notamment pour équilibré ou réduire la consommation : Dual-Rail Random Switching Logic (DRSL)\cite{chen_dual-rail_2006}, Masked Dual-Rail Pre-charge Logic (MDPL)\cite{popp_masked_2005}, Dual-Rail Pre-charge Logic (TDPL)\cite{bucci_three-phase_2006}, Random Switching Logic (RSL)\cite{suzuki_random_2004}, Sense Amplifier Based Logic (SABL), Wave Dynamic Differential Logic (WDDL)
+\end{itemize}
+
+
+\section{Attaque par injection de fautes}
+
+Après l'observation du circuit et de ses fuites par canaux auxiliaires, il est possible d'interférer directement avec le circuit. Le fonctionnement optimal d'un circuit est donné pour un milieu avec des contraintes physiques données (température, alimentation, hydrométrie, etc..). De plus dans les années 70, avec l'avènement de l'ère spatiale, les premières fautes sur les circuits ont été observées dues aux rayons cosmiques hors de l'atmosphère terrestre. Avec la réduction de taille des transistors et donc de leur énergie d'activation, on a commencé à observer ces effets dans des contextes terrestres ou aéronautiques à des échelles certes inférieures, mais tout de même présentes. On a appeler ces erreurs des soft errors.
+
+Les fautes peuvent également être intentionnelles, on parle alors d'attaque par injection de fautes. Elle consiste à venir perturber un circuit de manière volontaire et contrôlée en changeant de manière parfois brutale ses conditions de fonctionnement. De telles attaques sont généralement invasives, modification du composant pour effectuer l'attaques, ou semi-invasives avec la non modification du composant, on considere que ce genre d'attaque est toujours invasives car il y a modification du fonctionnement du circuit (en opposition aux attaques par canaux auxiliaires qui sont plutôt non invasives). Ces attaques sont redoutables et peuvent mettre en défaut un système,déni de service, modifier son comportement à des fins profitables,contournement d'authentification, élévation de privilèges, ou encore permettre de révéler des données sensibles, des clés cryptographiques par exemple.
+
+Les attaques par injections se développent à la fin des années 90 \cite{biham_differential_1997}, comme dit précédemment les fautes dans le domaine du spatial datent du début des années 70. Cette différence est que le sujet des fautes dans le domaine spatial est bien plus traité. Dans le domaine de l'injection de faute, ce sont principalement les crypto processeurs qui cherchent à éviter les fautes. En effet de nombreuses exploitations de l'injection de fautes sont possibles dans les algorithmes de chiffrements.
+
+Il est important d'établir une différence claire entre sécurité et sureté. En sécurité, on est en présence d'un adversaire malveillant envers notre système. Cette différence de nature du risque induit une différence dans la gestion de celui-ci. Dans le cas de la sureté, le risque est statique et probabiliste, c'est-à-dire qu'il est connu lors de la création du système et peut donc être anticipé de manière probabiliste. Dans le cas de la sécurité, l'adversaire cherche à mettre à mal les contremesures implémentées et toutes les contremesures peuvent devenir de nouveaux vecteurs d'attaques.Ces deux cas de figure sont très différents et il peut être difficiles de les concilier, en effet le sûreté se base souvent la correction de l'erreur ce qui offre plus de possibilité pour un attaquant. La sécurité elle se base principalement sur la détection et la réponse a incident via des routines spécifiques.
+
+\subsection{Fautes stochastiques} \label{plan:fault}
+Différents types de fautes qui peuvent intervenir, quelle que soit indifféremment de la méthode d'injection de fautes. Il y a de nombreux single-event effets (SEEs) transitoires possible:
+
+\begin{itemize}
+\item Single-event transients (SETs) qui causent un changement temporaire de tension à la sortie d'une porte.
+\item Single-event upsets (SEUs) qui causent une inversion de la valeur d'une mémoire.
+\item Single-event functional interrups (SEFIs) qui causent une dysfonction jusqu'au redémarrage du système \cite{koga_single_1997}.
+\end{itemize}
+
+En cas de concentration trop importante d'énergie, les SEEs vont causer des dommages permanents: 
+
+\begin{itemize}
+\item Single-event latchups (SELs) qui cause un thyristor parasite dans le CMOS qui active celui-ci en permanence avec une tension haute.
+\item Single-event burnouts (SEBs) qui cause une polarisation directe dans le transistor parasite d'un power MOSFET.
+\item Single-event gate ruptures (SEGRs) qui causent un champ électrique transitoire à travers la gate oxide d'un power MOSFET
+\end{itemize}
+	
+Plusieurs de ses fautes peuvent se réaliser au même instant on parle alors de multiple-event effets (MEEs). De plus, avec la réduction des tailles de gravures une particule peut causer plusieurs softs errors\cite{pagliarini_analyzing_2011}, \cite{zoutendyk_characterization_1989}. Il en résulte qu'une soft erreur peut affecter plusieurs bits d'une même variable.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/fault_zone.png}
+\caption{\label{fig:fault_zone} Influence d'une faute.}
+\end{figure}
+
+Si l'on se réfère aux données que l'on peut trouver dans des articles de la NASA, un processeur sera soumis en moyenne à 5-10 fautes par heures et plus de 99,99\% d'entre elles seront des fautes transitoires et 99,9\% sont des SEUs \cite{springer_analysis_2001}.
+
+\subsection{Faute non stochastique}
+
+\subsubsection{Glitch d'horloge}
+
+Le glitch d'horloge est décrit en Figure \ref{fig:temporal}, elle explique comment des une violation des contraintestemporelle peut induire des fautes. Il consiste en la modification de la fréquence d'horloge nominale $T_n$ par l'injection d'un glitch de période $T_g$. le principe est d'overclocker temporairement le circuit c'est-à-dire $T_g \ll T_n$ Ce qui peut potentiellement causer des violations de contrainte temporelles. Si $T_g \ll T_n$ Le post-glitch ne modifie pas le fonctionnement normal du circuit \cite{balasch_-depth_2011}.
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/clock_glitch.png}
+\caption{\label{fig:clock_glitch} Glitch sur le signal d'horloge.}
+\end{figure}
+Il y a deux caractéristiques aux erreurs par violation de contrainte temporelle : 
+\begin{itemize}
+    \item Les fautes dépendent des données en cours d'exécution. En effet, les données peuvent modifier les chemins critiques notamment dans le cas des instructions d'un processeur d'application.
+    \item Le processus d'injection peut amener à des états métastables quand le stress applique au circuit est trop faible. Ils peuvent devenir déterministes si on augmente ce stress. Il faut donc trouver les meilleurs paramètres pour permettre la faute.
+\end{itemize}
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{images/temporal.png}
+\caption{\label{fig:temporal} Violation de contrainte temporelle.}
+\end{figure}
+Ces deux propriétés sont communes à toutes les injections qui modifient les contraintes temporelles du circuit (glitch d'alimentation, changement de température, injection EM).
+
+\subsubsection{Glitch d'alimentation}
+Le glitch d'alimentation consiste en faire varier l'alimentation du circuit pendant un bref instant. Cette injection est la plupart du temps est sous-alimentation. L'explication la plus probable est la modification des caractéristiques physiques des transistors s'en trouve modifié et des erreurs de temps de SETUP et de HOLD sont observées. \cite{djellid-ouar_supply_2006} Il est difficile de définir si les erreurs de timings sont la seule cause des fautes, mais c'est actuellement la piste la plus sérieuse \cite{zussa_power_2013}. Dans ce même article, les auteurs arrivent à la conclusion de l'équivalence entre les glitchs d'alimentations et les glitchs d'horloges.
+Il est possible d'augmenter la reproductibilité des glitchs d'alimentations en injectant non plus des signaux carrés en entrée, mais des signaux de forme aléatoire \cite{bozzato_shaping_2019}. Les fautes ont entre 2 et 10 fois plus de chance de se produire avec ce type d'injection.
+\subsubsection{Changement de température}
+Les équipements électroniques ont une certaine plage de température d'utilisation. De nombreuses publications mentionnent seulement la possibilité de réaliser des attaques par changement de température, mais beaucoup moins l'ont effectivement réalisé. Le refroidissement est principalement utilisé pour récupérer des données dans les SRAMs après l'extinction  \cite{halderman_lest_2009}. Pour l'injection de faute, on se concentre plus sur l'augmentation de température. Il est par exemple possible de produire des fautes avec une probabilité de 71,4\% avant que la machine s'arrête de fonctionner en chauffant à 100 °C avec une lampe de bureau de 50W. Une exposition prolonge à des températures élevées peut provoquer une instabilité de l'ordre de 30\% des bits de la mémoire. \cite{hutter_temperature_2013-1}
+Le changement de température affecte tout le circuit. Il ne semble pas qu'il y ait des injections de température précise et la gestion temporelle de celle-ci. Enfin les fautes produites peuvent être permanente ce qui diminue grandement l'intérêt de ces attaques.
+\subsubsection{Injection combinée}
+Il est possible de combiner les différentes méthodes d'injections de fautes. En effet, il est possible de combiner glitch temporel, d'alimentation et les changements de température \cite{kumar_precise_2014}. En effet, en combinant les attaques on arrive à fixer les paramètres physiques et ainsi affiner la précision des techniques d'injection. Cela permet d'attaquer des parties très localisées du circuit à moindre coût. Cependant ces injections combinées ne permettent pas l'émergence de nouvelles fautes, mais permettent d'augmenter la reproductibilité de certaines.
+\subsubsection{Injection laser}
+Le laser (Light Amplification by Stimulated Emission of Radiation) est une émission électromagnétique monochromatique unidirectionnelle et cohérente. Ce laser peut être de diamètre très faible de l'ordre du µm et peut traverser de nombreux matériaux sur une période très courte. Il semble donc parfaitement adapté pour l'injection de faute. La première utilisation de laser pour induire des fautes sur les circuits électroniques a été reportée par \cite{skorobogatov_optical_2003}. La meilleure explication du pourquoi le laser est donné par JM Dutertre \cite{dutertre_laser_2018}.
+Différents paramètres sont à prendre en compte lors d'une attaque par laser. Le diamètre, la longueur d'onde, les coordonnées, la quantité d'énergie et la durée d'exposition. Il  faut notamment faire attention à la durée d'exposition et la quantité d'énergie quand on  fait des fautes par laser, car celle-ci peut créer des erreurs permanentes\cite{darracq_single-event_2001}. L'avantage est la reproductibilité des fautes par laser, mais aussi sa grande précision de l'ordre de l'octet ou du bit même sur des technologies récentes. \cite{agoyan_how_2010} \cite{selmke_precise_2016}. De plus, de nouveaux bancs d'injections permettent de faire des injections multispots, des bancs 2 et 4 spots sont actuellement commercialisés. Lors d'une injection laser bien que le diamètre du laser soit de l'ordre du µm la précision de celui-ci est plus élevée, car le centre du laser possède plus d'énergie et donc il y a plus de chance de faute. \cite{godlewski_electrical_2009}
+L'injection laser peut être effectuée sur face avant ou face arrière bien que les caractéristiques soient différentes le principe reste identique.
+Pour l'attaque par face avant le positionnement est facilité par la visibilité des composants électroniques. Cependant, à cause de la couche métallique d'interconnexion et de sa réflexivité, il est difficile d'avoir une précision élevée. On utilise souvent des longueurs d'onde de ~523nm.
+Pour les attaques par face arrière on préfère utiliser des longueurs d'onde de ~1064 nm pour une meilleure pénétration dans l'épaisseur de silicium. Cependant le positionnement est plus difficile, mais la précision des fautes est plus élevée, car on évite la couche métallique. Il faut prendre en compte les coefficients d'absorption et de réflexion du silicium qui dépendent grandement de la longueur d'onde \cite{breier_testings_2015}.
+Les résultats d'une campagne d'injection réalisée sur une puce de 28nm sont données en figure \ref{tab:fuite}.
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c|c|c|c|c|c|c|c}
+Energie[nJ]        & 0.4  & 0.5  & 0.8 & 1  & 1.5  &  2  &  3  &  4  &  5   \\\hline
+nb de fautes       & 1    &  8   & 21  & 23 &  24  & 24  & 26   & 30 &  31  \\\hline
+nb de fautes 1-bit & 1    &  8   & 15  & 17 &  10  &  7  &  7   &  9 &  9   \\\hline
+nb de fautes 2-bit & -    &  -   &  6  &  6 &  7   &  5  &  4   &  5 &  6   \\\hline
+nb de fautes 3-bit & -    &  -   &  -  &  - &  4   &  7  &  8   &  4 &  4   \\\hline
+nb de fautes 4-bit & -    &  -   &  -  &  - &  3   &  3  &  3   &  5 &  1   \\\hline
+nb de fautes 5-bit & -    &  -   &  -  &  - &  -   &  1  &  1   &  2 &  4   \\\hline
+nb de fautes 6-bit & -    &  -   &  -  &  - &  -   &  1  &  1   &  2 &  2   \\\hline
+nb de fautes 7-bit & -    &  -   &  -  &  - &  -   &  -  &  1   &  2 &  4   \\\hline
+nb de fautes 8-bit & -    &  -   &  -  &  - &  -   &  -  &  -   &  1 &  1   \\\hline
+\end{tabular}
+\caption{\label{tab:fuite}tableau récapitulatif du nombre et taille de faute en fonction de la puissance du laser.}
+\end{table}
+
+Ces résultats montrent le fait que les fautes peuvent modifier un nombre important de bits consécutif, il est ainsi possible de réaliser des faute multiple avec une unique source de faute. Ainsi il est possible de procéder à un grand nombre de faute consécutive sur une donnée particulière avec une puissance de laser suffisante. 
+\subsubsection{Injection EM}
+En 2002, Quisquater et Samyde mettent en évidence que le champ magnétique d'une sonde électromagnétique peut perturber les calculs sur un circuit \cite{quisquater_eddy_2002}. C'est en 2007 que cette technique est réalisée pour effectuer une attaque, l'attaque Bellcore \cite{Schmidt_opticaland}. Contrairement à ce qu'il a été longtemps cru les fautes induites par l'injection EM ne sont pas seulement des erreurs de timing \cite{dehbaoui_electromagnetic_2012}, mais aussi des samplings fault c'est-à-dire des fautes au niveau de la porte et non pas au niveau du circuit (bits-set et des bits-reset) \cite{dumont_electromagnetic_2019} \cite{ordas_electromagnetic_2017}. 
+L'avantage de l'injection de faute par électromagnétisme est qu'il n'est pas nécessaire de décapsuler le circuit. Cependant dans la pratique il est souvent nécessaire de décapsuler le circuit pour obtenir de meilleure performance d'injection. Quand à la précision temporelle elle reste inférieure aux injections par glitch et par laser il faut charger le générateur d'impulsion avant d'effectuer l'attaque.
+\subsection{Méthode de test}
+On peut classer les méthodes de test en quatre catégories en fonction du niveau selon lequel on se place : 
+\begin{itemize}
+    \item effectuer les tests directement sur le système physique cette technique
+    \item logiciel
+    \item simulation
+    \item émulation
+\end{itemize} Pour chacune de ces méthodes on peut se placer à différent niveau d'abstraction : assembleur/jeux d'instructions, RTL, porte logique, post-implémentation. Nous ne détaillerons pas l'injection physique de faute, car cela a déjà été fait en partie I. On peut cependant noter que pour l'injection de faute physique dans un contexte de sureté, des outils ont été mis en place pour automatiser les campagnes de fautes \cite{arlat_fault_1990},\cite{madeira_rifle_1994}. Cette synthèse se base sur différentes bibliographies déjà existantes dont j'ai essayé de concilier les différents apports de chacune d'entre elles. Cependant elle rentre souvent beaucoup plus en détail sur les différents outils possibles pour chacune des catégories. \cite{eslami_survey_2020}, \cite{kooli_survey_2014}
+
+\subsubsection{Niveau d'abstraction}
+On peut tester la résistance les fautes à plusieurs niveaux d'abstraction. Chaque niveau a ses avantages selon le contexte. Nous allons commencer par les modèles de plus hauts niveaux.
+\begin{itemize}
+    \item Le niveau le plus abstrait est celui d'assembleur/jeux d'instruction. Il consiste à modifier le code source d'une application pour modifier le fonctionnement du processeur. Il tient plus compte des détails d'architectures et permet de simuler des fautes. L'avantage de cette solution est de permettre d'injecter facilement des fautes sur des applications et le système d'exploitation. Cependant elle ne permet d'injecter des fautes sur les ressources accessibles via le jeu d'instructions et modifie le code source donc le code exécuter pendant la phase de test est différent du code qui sera exécuté lors du fonctionnement nominal.
+    \item Le niveau transactionnel, on simule le fonctionnement des composants en ne considérant que les transactions et on regarde comment réagit le système en cas de faute. On peut simuler des fautes dans les registres et les mémoires, les transactions sur le bus. mais aussi des détails plus centrés sur l'implémentation comme les rejeux, la corruption des registres ou de la mémoire, des erreurs de lectures sur le disque ou les accès que peut effectuer le processeur. L'avantage de cette solution est sa facilité de mise en place.
+    \item Pour avoir une vision réaliste de l'implémentation il faut se placer en Register Level Transfert (RTL) l'avantage est que l'on a un aperçu réaliste de l'implémentation et des signaux de notre circuit. Cependant cette représentation est seulement appropriée pour une analyse fonctionnelle on ne prend pas en compte les analyses temporelles et de consommation.
+    \item Le niveau supérieur au RTL est celui de la synthèse. Les tests effectués sur celle-ci restent assez bien généralisables à toutes les technologies, car il s'agit d'une étape commune à toutes les implémentations matérielles. L'avantage de cette solution est la généralisation cependant c'est aussi son point faible, car il est difficile de déterminer des timings et des et les consommations instantanées. Et elle reste plus longue que la simulation RTL, mais elle demeure plus proche des implémentations matérielles.
+    \item Il est ensuite possible de réaliser des simulations sur après le placement routage. Dans ce cas, nous avons un modèle correspondant à notre circuit physique. On a donc des valeurs réalistes de timing et de consommation cependant de telles simulations sont beaucoup plus lourdes et les temps de simulations deviennent prohibitifs.
+    \item Il est sinon possible de travailler directement sur un circuit physique qu'il soit ASIC ou FPGA ce qui permet de réduire la durée des campagnes d'injections de fautes. De plus, on a des temps de propagation et de consommation qui sont par définition réalistes. Cependant comme il s'agit de circuit physique nous sommes limités sur les interfaces et sur la connaissance de l'état interne du circuit. Il y a donc un travail important d'instrumentation à réaliser. De plus, de fait de la différence de nature entre un FPGA, routage de LUTs pour simuler les portes logiques, et les ASICS, routage de portes logiques, les résultats d'une campagne de faute sur une technologies ne sont pas directement généralisable à l'autre technologie.
+\end{itemize}
+
+
+\subsubsection{Injection Software}
+L'injection logicielle permet d'injecter des fautes pendant l'exécution nominale du système (simulation, émulation ou sur le système physique) en utilisant seulement les composants de ce système, dans le cas d'un processeur avec le JTAG, le code source, les mécanismes de DEBUG. La plupart des cas, il s'agit de modifier l'état des mémoires, registres ou RAM, le résultat d'un calcul. 
+On peut injecter les fautes dynamiquement ou statiquement.
+\begin{itemize}
+    \item L'injection de faute statique est effectuée lors de la compilation, on modifie le système pour simuler une faute. Cette technique est facilement intégrable dans un flot de conception, car elle ne modifie que la compilation et ne dépend donc pas du système physique.
+    \item L'injection de faute dynamique consiste à ajouter un déclencheur avant l'instruction à fauter. Cette technique se base sur les mécanismes d'exception et d'interruption. À la différence du code statique, on ne modifie pas des instructions, mais on en ajoute.
+\end{itemize}
+Cette technique ne nécessite pas de matériel spécifique lors de la campagne d'injection, en effet on utilise seulement les capacités de la cible. L'injection de faute logicielle permettant seulement de se placer au niveau assembleur, elle est principalement utilisé pour caractériser les fautes au niveau de l'application et du système d'exploitation. De plus, la vitesse de fonctionnement pendant l'injection est presque identique au fonctionnement nominal ce qui permet de réaliser des campagnes de grande ampleur. Cependant avec les modifications que l'on apporte au système, on peut avoir des erreurs notamment sur le temps d'exécution. 
+
+\subsubsection{Injection par simulation}
+L'injection par simulation implique la construction d'un modèle de simulation. Celui-ci peut être du jeu d'instruction, transactionnel, RTL, post-synthèse ou post ment/routage avec les limitations vues précédemment. Dans l'état de l'art, les principaux outils d'injections de fautes par simulation se basent sur un modèle RTL \cite{sieh_verify_1997}. Une faute de la campagne d'injection correspond à une simulation. 
+Il y a deux moyens d'effectuer une campagne d'injection en modifiant le code source ou en utilisant les outils des simulateurs. On peut changer le code VHDL en modifiant les composants pour qu'il soit en exécution fauté, on appelle cela des mutants. On peut aussi ajouter des composants qui seront en charge d'injecter des fautes à l'exécution, ce sont des saboteurs voir figure \ref{fig:saboteur}. 
+Un mutant est un code source d'un composant qui a été modifié pour qu'à l'exécution celui-ci exécute la faute voulue. L'avantage de cette méthode est que n'importe quel niveau d'abstraction de faute peut être injecté et elle est complètement indépendante du simulateur. Cependant le coût de modification des sources pour chaque faute est très important et il faut ajouter à cela le temps de simulation. Un saboteur est un composant ajouté au RTL dans le seul but d'injecter des fautes. Il est de manière générale inactif, mais il peut modifier le circuit, au niveau des signaux ou des timings, quand un ou des signaux spécifiques sont actifs. Ces saboteurs peuvent être ajoutés manuellement ou automatiquement dans le RTL en parallèle ou en séries des composants. Les saboteurs \cite{naviner_fifa_2011} permettent de simuler une grande partie des fautes et des conditions environnementales telles que le bruit. Mais comme sa méthode de déclenchement est limitée, elle ne peut modéliser des fautes au niveau de la porte seulement.
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{images/saboteur.png}
+\caption{\label{fig:saboteur} Placement des saboteurs en entrée ou en sortie.}
+\end{figure}
+
+La seconde famille se base sur l'injection de faute dans les traces. Il peut s'agir d'un simulateur SPLICE pour les niveaux transistors ou des simulations niveaux RTL, là aussi deux méthodes sont couramment utilisées. Il est soit possible de modifier les signaux, c'est-à-dire déconnecter le signal de son driver puis le forcer à une valeur fixe. Soit on modifier les variables à l'intérieur d'un process. L'injection par les outils de simulation dépend fortement comme son nom l'indique des outils de simulations. 
+Les techniques de simulation sont classées en fonction de trois critères principaux : la capacité à simuler des fautes, l'effort de mise en place et overhead de temps de simulations.
+\begin{itemize}
+    \item Les mutants offrent la meilleure capacité à simuler des fautes suivies des mutants
+    \item La manipulation de signal et de variables nécessite peu d'effort à être mise en place, alors que les mutants et les saboteurs nécessitent la création et la génération de nouveaux modèles pour injecter des fautes et la recompilation du RTL. Cependant les saboteurs restent plus simples que les mutants.
+    \item L'overhead de temps de simulation pour la manipulation de variable et de signaux est principalement dû au fait d'arrêter et redémarrer la simulation pour effectuer les modifications.
+\end{itemize}
+ D'autre part pour les mutants et les saboteurs cela dépend de la quantité d'évènements additionnels qui ont été ajoutés, le nombre de lignes de code à exécuter pour chaque évènement et enfin de la complexité du contrôle ajouté.
+ 
+\subsubsection{Injection par émulation}
+L'injection par simulation regroupe les injections de fautes qui sont spécifiques au FPGA. On ne considérera donc pas les solutions de mutant et de saboteur c'est-à-dire les méthodes de simulations placées sur cible FPGA. 
+L'un des principaux problèmes lorsque l'on veut effectuer des vérifications de résistances aux fautes sur FPGA alors que notre cible est ASIC est le problème des délais. En effet, du fait de la différence entre les deux technologies les délais sont complètement différents ce qui pose des problèmes de généralisations des résultats FPGA sur les cibles ASICS. Pour résoudre ce problème on ajoute des informations de temps \cite{valderas_set_2007}, mais aussi de consommation \cite{entrena_set_2009} pour éviter tous les effets de masquage qui ont lieu lors de l'injection de fautes dans la logique, voir figure \ref{fig:delay}.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{images/delays.png}
+\caption{\label{fig:delays} Ajout des informations de delays en entrée ou en sortie de porte.}
+\end{figure}
+
+La reconfiguration dynamique des FPGAs peut être utilisée comme outil d'injection de faute. Pour la première fois introduite en 2000 \cite{antoni_using_2002}, elle est l'un des champs de simulation des fautes les plus actifs \cite{fibich_fiji_2019}. L'avantage de cette technique est d'utiliser les mécanismes internes de reconfiguration pour injecter les fautes. De plus, comme cette reconfiguration ne peut être que partielle, il est d'insérer la faute à un position précise et laisse le reste du circuit tel qu'il est. Ce processus de reconfiguration est bien plus court que celui de la synthèse.
+Cependant comme on se trouve sur une cible matérielle il peut être difficile de remonter la chaine de conséquence de la faute. Ce que l'on gagne en temps de simulation on le perd en connaissance de notre système.
+
+\subsection{Modèle de faute}
+Dans cette partie, il est question du modèle de faute c'est à dire la représentation abstraite permettant de définir l'impact de la faute sur le fonctionnement global d'un circuit que l'on cherche à étudier. Dans cette thèse, la classification choisie est inspirée de celle présentée par \cite{otto_fault_2005} dans cette thèse les principaux modèles de fautes sont présentés selon sa classification. Nous utiliserons cette classification qui a le mérite d'être assez claire et complète pour définir nos modèles de faute, car je n'ai pas trouvé de formalisme clair dans les définitions des modèles de fautes. La classification a été légèrement modifiée pour introduire des précisions sur les fautes multiples. Les définitions de faute transitoire, permanente ont été changée pour correspondre aux définitions données en \ref{plan:fault}. Différents paramètre sont pertinent à prendre en compte pour caractériser une faute:
+\begin{itemize}
+\item Localité spatiale : Les fautes peuvent être aléatoirement (répartie aléatoirement sur le circuit), localisées (une variable peut être ciblée précisément) et précisent (un octet ou un bit peut être ciblé)
+\item Localité temporelle : Les fautes peuvent être aléatoirement (répartie aléatoirement sur le circuit), localisées (une variable peut être ciblée précisément) et précisent (un octet ou un bit peut être ciblé).
+\item Nombre de bits affecté 
+\item Durée : temps pendant laquelle la faute a lieu si cette faute est transitoire ou bien permanente. 
+\item Type de fautes : plusieurs types de fautes peuvent intervenir selon le circuit et la méthode d'injections de fautes. Chacune de ces fautes peut être transitoire ou permanente.
+\begin{itemize}
+    \item Stuck-at fault: la valeur des bits affectés ne changera plus. 
+    \item Bit flip: la valeur des bits affectés prend la valeur complémentaire à l'instant de la faute.
+    \item Random Fault: la valeur des bits affectés prend une valeur aléatoire.
+    \item Bit Set: la valeur des bits affectés prend une valeur 1.
+    \item Bit reset: la valeur des bits affectés prends une valeur 0.
+\end{itemize}
+\item La probabilité : avec quelle probabilité une faute peut avoir lieu. Par exemple certaines attaques ont plus de change de SET que de RESET sur les bits notamment les attaques par glitch.
+\item Localité spatiale des fautes multiples: Cette possibilité est ajouté pour introduire des fautes multiples induite par un évènement commun. Cet ajout caractérise le nombre de bits consécutif affecté lors d'une faute. En effet, lorsqu'une faute a lieu il y a des chances que les transistors proches subissent aussi cette faute.
+\end{itemize}
+	
+Pour résumer les principales caractéristiques, des paramètres sont donnés dans le tableau \ref{tab:fault_ref}.
+
+\begin{table}
+\centering
+\begin{tabular}{|l|r|}
+\hline
+Paramètres              & Valeurs possibles   \\\hline
+Localité spatiale       &                     \\\hline
+Localité temporelle     &                     \\\hline
+Fautes multiples        &                     \\\hline
+Nombre de bits affecté  &                     \\\hline
+Durée 	                &                     \\\hline
+Type de fautes 	        &                     \\\hline
+Probabilité 	        &                     \\\hline
+\end{tabular}
+\caption{\label{tab:fault_ref}tableau type d'un modèle de faute.}
+\end{table}
+	
+
+Deux types grandes types de fautes se distinguent celui des soft errors et celui des injection de faute. La principale différence entre les deux est qu'il n'y a pas de soft errors multiple du fait de la nature aléatoire de celle ci. En effet, il est improbable que deux particules chargées tombe en même temps sur la même variable.
+\subsubsection{ Sureté : Soft error}
+Dans le cas de la sûreté, on cherche à corriger le plus rapidement les fautes qui arrivent. Les fautes sont un cas d'usage normal du circuit et celle-ci se produit aléatoirement sur le circuit. Avec la diminution des circuits, il est devenu probable qu'un rayonnement cosmique produise des fautes multi bits \cite{zoutendyk_characterization_1989} \cite{pagliarini_analyzing_2011}. Les fautes multiples sont donc proches spatialement, mais cette localité spatiale est aléatoirement répartie sur l'ensemble du circuit. Les caractéristique de tels fautes sont données en tableau \ref{tab:fault_safety}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Localité spatiale       & Aléatoire           \\\hline
+Localité temporelle     & Cycle               \\\hline
+Fautes multiples        & Non                 \\\hline
+Nombre de bits affecté  & Entre 1 - longueur de la variable affecté  \\\hline
+Durée 	                & 99.99\% Trans 0.01\% Perm                   \\\hline
+Type de fautes 	        & Bit-flip                    \\\hline
+Probabilité 	        & 100\%                    \\\hline
+\end{tabular}
+\caption{\label{tab:fault_safety}tableau type d'un modèle de faute.}
+\end{table}
+
+\subsubsection{ Sécurité : Injection de faute}
+Pour les cas d'injection de faute nous nous plaçons dans le cas de l'attaquant avec des capacités à l'état de l'art. Celui ci possède des capacités d'injection laser multiple (jusque 4) avec une gestion de la puissance de ceux si. Ainsi il est précis au cycle et à la variable près et la variation de puissance du laser il peut plusieurs bits consécutifs. Le tableau \ref{tab:fault_security} défini ce genre d'attaquant.
+
+\begin{table}
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Localité spatiale       &   Sur les variables sensibles                  \\\hline
+Localité temporelle     &   Cycle                   \\\hline
+Fautes multiples        &   Jusqu'à 4                   \\\hline
+Nombre de bits affecté  &   Entre 1 - longueur de la variable affecté                  \\\hline
+Durée 	                &   transitoire                     \\\hline
+Type de fautes 	        &   Bit-flip                  \\\hline
+Probabilité 	        &   100\%                  \\\hline
+\end{tabular}
+\caption{\label{tab:fault_security}tableau type d'un modèle de faute.}
+\end{table}
+
+\subsection{Solution}
+Les contremesures à implémenter sont destinées à être complètement transparentes pour le logiciel. Il n'est pas exclu d'introduire de nouvelles instructions RISCV pour modifier les niveaux de sécurités, mais cela doit explicitement activer ou désactiver des composants matériels. De plus, seules les contremesures au niveau de la microarchitecture sont étudiées, car facilement adaptable à d'autres designs indépendamment de la technologie d'implémentation. Les méthodes de détections à base de capteur et les solutions aux niveaux de la porte ne sont pas dans notre spectre de solution, mais ces solutions sontp complémentaires au travail microarchitectural à effectuer.
+Les principales solutions pour renforcer un système contre les attaques par injections de fautes sont basées sur de la redondance. Celle-ci peut être spatiale, temporelle et informationnelle. Les contremesures sont différentes en fonction du type de circuit à protéger : mémoires ou logique combinatoire.
+Un point important à prendre en compte est le degré de redondance. En effet, une simple redondance permet de seulement détecter les fautes cependant les redondances de degrés supérieurs permettent à la fois de corriger et de détecter les fautes. Comme expliqué précédemment, il est difficile de classifier le pouvoir détecteur/correcteur d'une solution. Le degré de redondance s'applique donc bien pour la redondance spatiale et temporelle, mais est plus difficilement adaptable pour la redondance d'information.
+
+\subsubsection{Redondance par réplication}
+Les solutions classiques de sécurisations contre les fautes consistent en de la duplication des blocs fonctionnels et de comparer leurs résultats. Quand nous parlons de composants, cela peut très bien être une porte logique d'un étage de pipeline ou le processeur entier. Les solutions proposées peuvent se placer à n'importe quel niveau.
+La duplication matérielle consiste en la duplication à l'identique des composants. Un doublement avec un comparateur permet de détecter des erreurs. Un duplication, avec le plus souvent un comparateur, permet de détecter toute les erreurs si elle se produit sur une seule des unités, si les deux unités sont fautées des fautes peuvent ne pas être detecté. Si une correction des erreurs est désirée, il faut non plus une duplication, mais un triplement des unités fonctionnelles et il faut un vote pour décider si la donnée est valide, corrigible ou non corrigible. Cependant là aussi, bien que cette solution protège bien contre les fautes aléatoires, il est très peu probable de produire une faute valide, pour cela deux fautes touchent deux des redondances au même endroit. Mais dans le cas d'un attaquant, il devient réalisable d'effectuer une faute valide avec deux fautes bien placées.
+Il faut tenir compte du fait que chaque ajout matériel pour sécuriser contre les fautes est lui-même sensible contre les fautes pour résoudre ce problème. La solution la plus simple est de dupliquer aussi les voteurs. Ces solutions sont appelées Full TMR, car  aussi bien le composant que la vérification est triplé.
+Ces solutions sont souvent utilisées dans le domaine de la fiabilité, car les fautes étant uniformément répartie les chances que deux fautes se produisent sur deux redondances différentes est très faibles. Cependant dans le cadre de la sécurité un attaquant peut injecter fautes identiques sur les redondances. 
+
+Vient ensuite la duplication temporelle qui consiste à effectuer plusieurs fois de suite la même opération et voir si le résultat diffère. De la même manière que le doublement matériel une duplication permet seulement la détection et le triplement la correction. Comme dit précédemment, il est assez facile d'attaquer ce type de protection, par exemple sur des crypto processeurs. En effet, une faute assez longue va affecter les deux itérations successives de la même manière et entraîner une faute valide.
+
+\subsubsection{redondance information}
+On trouve enfin la redondance d'information, qui consiste à ajouter de l'information complémentaire à la donnée pour pouvoir détecter ou corriger les fautes. Les principales solutions sont les codes détecteurs et correcteurs d'erreurs. Cependant très peu sont adapté au contexte hardware et encore moins aux exigences du pipeline. Les plus utilisés sont les codes résidus, le code berger et enfin la parité. L'avantage de ces codes est qu'ils ne sont pas une simple duplication, il est donc plus difficile d'identifier la zone à fauter. De plus, avec certains codes correcteurs il m'est pas possible d'injecter des erreurs mono bit car elles seront nécessairement détecté. Le principal avantage des codes correcteurs est qu'ils sont en général plus légers qu'une duplication, de plus ils induisent moins de fuites par canaux auxiliaires.
+Les principaux codes détecteurs et correcteurs utilisés dans le matériel sont : la parité, Cyclic redundancy check (CRC), code de hamming, code BCH, code SEC-DED, code Red-Salomon, Reed-muller et les low density Parity Code (LDPC).
+ 
+\subsubsection{Offuscation}
+Enfin, une des dernières grandes catégories de protection contre les injections de faute est l'obfuscation. On trouve dans les cryptoprocesseurs l'ajout de cycles factices c'est-à-dire des cycles où le processeur effectuer des opérations sans rapport avec l'exécution en cours. On peut aussi mélanger la donnée pour éviter que l'attaquant ne sache où il doit injecter les fautes. Elles doivent donc obligatoirement être combinées avec d'autre technique. De plus, si ces contremesures ne sont pas aléatoires, la difficulté de l'attaque est rendue plus difficile seulement le temps d'identifier la constante ajoutée, si celle-ci est aléatoire la démarche devra être répétée à chaque attaque. Ces méthodes sont efficaces pour compliquer la tâche d'injection, mais elles ne sont pas une protection en soi.
+
+\section{Conclusion}
+Ce chapitre a présenté une vision d'ensemble des attaques par observation et des attaques par perturbation mais aussi les concepts généraux des contre-mesures.
+Les attaques par canaux auxiliaires sont complexes et plurielles et de nombreux vecteur de fuite et d'exploitation de ces fuites sont possible. Cependant un travail théorique important a été produit pour évaluer les masquage et de nombreuses méthodes empiriques sont proposé pour évaluer les autres méthodes.  Dans le cas de notre thèse nous nous concentrerons sur les contremesures de randomisation et d'ajout de bruit. 
+
+Les attaques par injections de fautes sont elles aussi pluriels, mais dans leur cas peu de vérifications formelles et de métriques permet l'évaluation des contremesure. De plus, il est difficile d'assurer à la fois la sécurité et de la sûreté d'un composant. Même si cette thèse se concentrera principalement sur la sécurité mais des piste de réflexions et d'implantation seront proposés pour combiner sûreté et sécurité dans les cas des fautes sur les circuits électroniques
+
+Enfin, en regardant, en detail les contremesures possibles contre ces attaques on remarque qu'elle sont en partie antinomique. Les contremesures de masquages pour les canaux auxiliaires offre plus de possibilités de faute et les redondances des contremesures contre les fautes créées de nouvelles fuites.

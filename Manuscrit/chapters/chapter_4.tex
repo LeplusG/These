@@ -1,0 +1,270 @@
+\chapter{Chemin d'instruction et de contrôle}
+\textit{Ce chapitre se concentre sur les attaques puis les contremesures développées pour protéger le chemin de contrôle du pipeline. Les protections apportées se divisent en deux contributions. La première se concentre sur la protection contre les attaques par canaux auxiliaires et par injections de faute sue les instructions jusqu'à leur décodage en limitant le surcout à son maximum. La seconde est de proposer une nouvelle méthode de vérification d'intégrité des données de contrôles en proposant d'utiliser la parité pour tirer avantage des limites des méthodes d'injections de fautes.}\\
+\minitoc
+\newpage
+
+\section{Attaques possibles}
+
+Les objectifs de l'attaquant par canaux auxiliaires et par injection de faute sur le chemin d'instructions est de compromettre la confidentialité et l'intégrité du code exécuté par le dispositif. D'autres attaques sont possible mais sont en dehors de notre modèle d'attaquant, on peux par exemple citer les attaques par cold boot \cite{DBLP:conf/IEEEares/GruhnM13} de même que les attaques logicielles, tels que l'injection de code avec par exemple l'écrasement de l'adresse de retour sur la pile. Pour répondre à ce type de menace des méthodes de chiffrement et de control flow sont les plus indiqués.
+Les applications embarquées nécessitent du matériel à la fois léger et sécurisé afin de préserver la confidentialité et l'intégrité du code exécuté. Les attaques physiques et par observation se développent contre les processeurs destinés à l'IOT et les solutions proposées ont souvent un surcout important. Le chemin de donnée, en particulier, est sensible aux attaques par injections de fautes, car c'est le centre de la gestion des instructions. En effet, les injections de fautes sont particulièrement efficaces sur les instructions, notamment les fautes par saut d'instruction \cite{DBLP:conf/dtis/MenuDPRD20,DBLP:conf/nordsec/DutertreRPR19} qui permettent d'outrepasser de nombreuses sécurités algorithmiques. Ces attaques permettent aussi de modifier les instructions pour soit changer le flux d'exécution ou le résultat de calcul. Le changement dans le flux d'exécution se concentre notamment sur la modification de prise de branchement ou de modification d'instruction pour pouvoir effectuer des sauts dans le code. Mais ce ne sont pas les seules menaces qui sont identifiées. La propriété de code source peut aussi être remise en cause avec par exemple du désassemblage par canaux auxiliaire\cite{DBLP:conf/cardis/CristianiLH19}.
+
+\section{Contre-mesures existantes}
+Pour assurer une sécurité des instructions face aux menaces précédentes, quatre propriétés doivent être respectées : 
+\begin{itemize}
+    \item L'instruction en cours est bien précédée par l'instruction précédente dans le flow d'exécution. C'est-à-dire éviter les sauts et les modifications d'instructions.
+    \item Protection de l'étage DECOD, le décodage doit se dérouler sans fautes.
+    \item Protection des branchements, le processeur doit exécuter la bonne branche
+    \item La valeur de chaque bit de l'instruction ne doit pas être directement accessible
+\end{itemize}
+Dans l'état de l'art, ces quatre propriétés ne sont jamais traitées efficacement en même temps. Les solutions les plus courantes pour protéger le flux d'exécution sont les unités d'intégrité du flux de contrôle (CFI) \cite{DBLP:journals/corr/ClercqV17} qui peuvent garantir l'intégrité des instructions jusqu'aux premiers étages du pipeline \cite{DBLP:conf/eurosp/WernerUSM18} et peuvent éviter les fuites par des canaux secondaires dans la hiérarchie de la mémoire si des méthodes de  sont mises en œuvre \cite{DBLP:conf/dsd/SavryEH20}. Cependant, ces contre-mesures ne protègent pas le décodage des instructions et donc le branchement. Ce type de contre-mesure présente un surcoût important, car il s'attaque à d'autres vecteurs d'attaque sur le flux d'exécution que les attaques physiques. Dans les processeurs fiables, comme Klessydra \cite{DBLP:conf/applepies/BlasiVCMMO19}, nous trouvons une duplication spatiale de l'étage DECOD pour sécuriser le décodage. De plus, la duplication temporelle permet d'éviter le saut d'instruction \cite{DBLP:journals/jce/MoroHER14}. Le principal problème des solutions basées sur la duplication est le surcoût matériel ou temporel. Enfin, pour contrer les attaques par canaux auxiliaires, les solutions de masquage sont les plus utilisées. Cependant, les coûts d'implémentation sont importants, notamment avec la duplication de la taille des instructions pour stocker le masque.
+
+\section{SECDEC}
+
+Notre contribution est de donner deux solutions proches, mais avec des implications d'implémentation différentes. Elles assurent la sécurité du chemin d'instruction contre les attaques par perturbation et observation. La première solution a un surcoût matériel et de taille de mémoire d'instruction négligeable, mais induit une dépendance du code compilé avec des contraintes microarchitecturales. La deuxième solution est libre de ces contraintes, mais implique une redondance de décodage. Ces solutions conduisent à des modifications dans le backend du compilateur, mais elles sont simples à mettre en œuvre et sont adaptables à différents types de compilation.
+
+\subsection{Présentation de fonctionnement}
+\subsubsection{Description de la contremesure }
+Cette contribution cherche a apporter à adresser les quatre propriétés de sécurité énoncées précédemment en utilisant les signaux générés par l'instruction précédente pour masquer l'instruction courante. Il s'agit d'un masquage booléen non aléatoire, car il dépend de l'instruction précédente. Pour ce faire, on génère un masque au cycle N qui sera utilisé dans l'étape de décodage (DECOD) du cycle N+1 pour démasquer l'instruction entrante. On peut choisir de prendre les signaux avant le décodeur, voir Figure \ref{fig:pre_decoder}, ce sera l'instruction elle-même qui servira à la génération de masque. Nous appelons cette solution pré-décodeur. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/pre-decoder.png}
+\caption{\label{fig:pre_decoder} Pré-décodeur.}
+\end{figure}
+
+Il est également possible de prendre les signaux après le décodeur, voir Figure \ref{fig:post_decoder}, cette solution est appelée post-décodeur. 
+
+
+L'instruction doit donc être masquée lorsqu'elle arrive dans l'étape DECOD. Pour appliquer ce masque, des passes de compilation supplémentaires doivent être ajoutées dans le backend du compilateur. En conséquence, toutes les instructions dépendent de l'instruction qui la précède. Ainsi, si un défaut survient au cycle N, le démasquage de l'instruction dans l'étape de décodage au cycle N+1 sera différent du décodage sans défaut. Cette solution permet donc de vérifier que l'instruction présente est exécutée après l'instruction qui la précède dans le code machine, on évite donc les sauts d'instructions et les modifications d'instructions. Lors d'un branchement, deux chemins sont possibles. Ainsi, il est courant d'essayer lors d'une campagne d'injection de fautes de faire prendre au processeur la mauvaise branche pour exécuter du code non désiré. La solution proposée permet de différencier les deux branches en leur attribuant des masques différents en fonction de la branche prise et ce en fonction des signaux de décodage. Ainsi, contrairement au CFI existant qui sont au moins sensible lors du décodage de l'instruction, la validité du branchement est assurée pendant l'ensemble du chemin d'instruction.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/post-decoder.png}
+\caption{\label{fig:post_decoder} Post-décoder.}
+\end{figure}
+
+Le choix définitif de la branche est déterminé lorsque les conditions de branchement sont vérifiées. Le choix est donc effectué lorsque le résultat de la condition est disponible, ce qui est normalement le cas à la fin de l'étage EXEC.  La seule façon de faire en sorte qu'une branche prenne la mauvaise branche est de fausser l'étage EXEC. Ce cas est géré par les tags d'intégrités présenté en \ref{section:tag}.
+
+
+La détection se fait sur les erreurs de décodage induites par cette faute. Une faute sur l'instruction à décoder, ou sur son masque, induit une modification du décodage. Si ce décodage est invalide, une exception "instruction invalide" est levée et l'erreur sera détectée. Cependant, même si cette instruction défectueuse est valide (c'est-à-dire qu'elle fait partie du jeu d'instructions), le masque généré par cette instruction sera différent de celui de l'instruction qui aurait du être exécuté sans la faute. Par conséquent, plus le jeu d'instructions est clairsemé,c'est a dire qu'il y a de nombreuses instructions invalides par rapport au nombre d'instruction valide, plus cette méthode de détection est efficace. 
+
+
+Si une grande partie des opcodes est invalide, la détection ne prend que quelques cycles. La figure \ref{fig:fault_propagation} montre la propagation d'une faute à travers les différentes étapes, instruction d'extraction (IF), instruction décodée (DEC) et EXEC d'un processeur généraliste. 
+
+
+Ainsi, si une faute se produit au temps $t= - 1$, elle génère un faux masque qui est propagé au cycle suivant, mais sans détection d'erreur à l'étape DECOD. Il en est de même pour l'étape DECOD au cycle 0. Cependant, au cycle 1, l'étape DECOD détecte une instruction invalide et lève une exception d'instruction invalide et le signal d'arrêt correspondant, ainsi dans l'exemple de la figure \ref{fig:fault_propagation}, le processeur prend 2 cycles pour détecter la faute.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/fault_propagation.png}
+\caption{\label{fig:fault_propagation} Propagation et détection d'une instruction fautées.}
+\end{figure}
+
+Pour établir une stratégie de détection de faute rapide, il faut évaluer dans quelle partie de l'instruction les fautes ont des chances d'être détecté. Dans notre cas, il s'agit des bits d'opcode, funct3 et funct7. Il est cependant à noter que ces bits ne permettent pas de détecter les fautes de tous les types d'instruction. En effet comme on peut le voir sur la figure \ref{fig:RISC-V_instruction}, il existe plusieurs types d'instruction, seul le type R possède les 3 champs opcodes, func3, func7. Ce sont des instructions arithmétiques et logiques. De plus, les bits de registres (rd, rs1, rs2) parce qu'ils correspondent aux registres ou aux immédiats sont toujours valides et ne permettent pas de détecter les fautes. Ainsi, les principales sources de détection de fautes sont les opcodes. Il faut donc maximisé la propagation des fautes vers les bits d'opcode et dans une moindre mesure les bits func.
+Cette contre-mesure est implémentée dans un processeur CV32E40P RISC-V, mais l'approche est bien transposable à une autre ISA ou architecture.
+ 
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/RISC-V_instruction.png}
+\caption{\label{fig:RISC-V_instruction} Types d'instructions RISC-V.}
+\end{figure}
+
+\subsubsection{Choix du masque}
+Pour que cette détection soit la plus rapide possible, c'est-à-dire pour qu'une faute entraîne une instruction invalide le plus rapidement possible, deux approches complémentaires peuvent être suivies. La première consiste à rendre les bits interdépendants. Si une faute survient, elle doit entraîner un maximum de modifications des bits capables de provoquer une erreur de décodage. Il s'agit plus précisément des bits opcode et dans une moindre mesure func3 et func7. L'autre approche est la propagation des fautes à chaque nouveau cycle.
+Pour une détection efficace si une modification a lieu, le masque généré doit être très différent du masque légitime, mais aussi donner une place plus importante au bit opcode. Pour ce faire, nous allons générer deux masques en utilisant la sbox 4 bits du chiffrement léger Piccolo \cite{DBLP:conf/ches/ShibutaniIHMAS11} présenté dans le tableau \ref{tab:piccolo_sbox} et figure \ref{fig:piccolo_sbox}, pour sa légèreté d'implémentation en matériel. Le premier masque prend des blocs de 4 bits consécutifs pour créer la dépendance, le second masque prend 4 bits aux indices i,i+8,i+16,i+24 avec $i \in \llbracket 0,7 \rrbracket $ . En conséquence, presque tous les bits deviennent dépendants des bits de l'opcode.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/piccolo_sbox.png}
+\caption{\label{fig:piccolo_sbox} Sbox de l'algorithme Piccolo.}
+\end{figure}
+
+\begin{table}
+\centering
+\begin{tabular}{|c||c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+    x     & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & A & B & C & D & E & F \\\hline
+   S[x]   & C & 5 & 6 & B & 9 & 0 & A & D & 3 & E & F & 8 & 4 & 7 & 1 & 2 \\\hline
+\end{tabular}
+\caption{\label{tab:piccolo_sbox}Tableau de la Sbox de Piccolo.}
+\end{table}
+
+La propagation des bits défectueux en cas de succession de décodage valide est assurée par une permutation du masque qui ne présente aucun surcoût matériel. En effet, il est prévu que les fautes se propagent sur l'ensemble du masque si les instructions restent valides après plusieurs cycles de décodage. Pour les propriétés de diffusion, la permutation 32 bits de l'algorithme de chiffrement DES, présentée dans le tableau \ref{tab:DES_permutation}, est choisie. 
+\begin{table}
+\centering
+\begin{tabular}{|c||c|c|c|c|c|c|c|c|}
+\hline
+          & 16 & 7  & 20 & 21 & 29 & 12 & 28 & 17 \\\cline{2-9}
+     P    & 1  & 15 & 23 & 26 & 5  & 18 & 31 & 10 \\\cline{2-9}
+          & 2  & 8  & 24 & 14 & 32 & 27 & 3  & 9  \\\cline{2-9}
+          & 19 & 13 & 30 & 6  & 22 & 11 & 4  & 25 \\\hline
+\end{tabular}
+\caption{\label{tab:DES_permutation}Permutation du DES.}
+\end{table}
+Ainsi, si une faute se produit avant l'entrée de l'étape DECOD, elle provoquera des fautes multiples lors de la génération du masque grâce aux différentes sbox. La combinaison d'une permutation et d'une sbox assure la diffusion des fautes à tous les bits de l'instruction en quelques cycles.
+
+\subsection{Sécurisation du DECOD}
+Cette solution utilise les signaux du post-décodeur pour générer les masques. Les signaux utilisés sont l'index du registre, l'immédiat, le sélecteur de multiplexeur ainsi que les signaux d'activation. Il est difficile de faire des généralisations car ces signaux sont spécifiques à chaque architecture mais avec ceux-ci on peut s'assurer que le décodage est correct dans le cas de RISCY. Avec la solution de l'instruction précédente, on se protège contre les fautes seulement jusqu'au début de l'étape de décodage juste avant le décodeur, comme le montre la figure \ref{fig:pre_decoder}. Si l'on utilise les signaux de sortie du décodeur, on est assuré que le décodage a eu lieu sans erreur.
+En termes de taille de matériel ou de mémoire d'instructions, cette technique présente un surcoût relativement faible. Cependant, du fait que les masques sont générés à partir des signaux de décodage, le chemin critique de cette étape est allongé et peut donc conduire à une diminution de la fréquence du processeur. De plus, la compilation est rendue plus complexe, car les signaux de décodage doivent être générés de manière logicielle. Ainsi, un décodeur similaire à celui présent dans l'étage DECOD du processeur doit être ajouté au compilateur. Ces deux décodeurs doivent générer les mêmes signaux pour que le décodage soit possible. Le principal inconvénient de cette solution est de faire dépendre le code compilé non seulement de l'ISA mais aussi des spécificités de l'implémentation, dans notre cas le décodage des instructions. 
+Pour rendre plus simple l'implémentation de la contre-mesure au niveau de la compilation, le choix a été fait d'utiliser directement les instructions précédentes et non leurs signaux de décodage.
+
+\subsubsection{Regénération du masque}
+Si on utilise l'instruction précédente, il n'est plus possible d'assurer la sécurité du décodage. Il est donc nécessaire de profiter des différents éléments déjà ajoutés. Le principal d'entre eux est l'enregistrement du masque généré. Il serait donc intéressant de le vérifier au cycle suivant pour assurer le décodage.
+Les signaux d'entrée de l'étage EXEC peuvent être utilisés comme entrée pour un générateur d'instructions. En effet, il n'y a pas de perte d'information lors du décodage, seulement un changement de forme. Il est donc possible de coder les signaux de sortie du décodage sous la forme de l'instruction originale. Une fois l'instruction codée, le masque peut être généré et comparé à celui contenu dans le registre, figure \ref{fig:mask_regeneration}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/mask_regeneration.png}
+\caption{\label{fig:mask_regeneration} Regénération du masque.}
+\end{figure}
+
+Cette solution peut être comparée à une duplication de l'étage DECOD, mais elle présente des avantages par rapport à une simple duplication. En effet, le premier avantage est d'utiliser les signaux sortant du registre entre l'étage DECOD et l'étage EXEC. En utilisant ces signaux, on sécurise également ce registre. Au-delà de la sécurisation du registre, cela permet également d'utiliser une simple duplication qui n'est sensible qu'aux attaques par double injection. Les injections de fautes multiples sont toujours considérées comme plus difficiles à mettre en œuvre \ref{DBLP:conf/cardis/ColombierGVCBLC21}. De plus, par rapport à la duplication simple, une génération de masque est utilisée, ce qui conduit à la diffusion des fautes dans l'intégralité du masque, ce qui complique encore la détection des fautes. Le surcoût du chiffrement est du même ordre que celui du décodage et est réalisé en parallèle, ce qui ne conduit pas à un allongement du chemin critique par rapport à la duplication.
+Si l'on compare avec la solution des masques générés à partir des signaux de décodage, on peut noter plusieurs avantages. Tout d'abord, la détection n'est plus limitée par les erreurs de décodage et permet donc une détection plus rapide des fautes lors de celui-ci. Cependant, l'overhead matériel est plus important dans cette solution avec l'ajout d'un encodeur et d'une génération de masque, mais le chemin critique n'est pas allongé.
+
+
+Cependant, d'autres problèmes apparaissent si un masque est créé à partir de l'instruction précédente ou des signaux de décodage. En effet, le code source d'un programme n'est pas parfaitement linéaire : des sauts sont possibles à différents indices du code. Par conséquent, l'instruction précédente dans le fil d'exécution n'est pas nécessairement l'instruction précédente dans le code compilé.
+
+
+\subsection{Problème à la compilation}
+Ce masquage ne peut se faire qu'au moment de la compilation, seul endroit où l'on connaît la signification du code assembleur et la séquence des instructions. La principale difficulté est alors de gérer les différentes branches possibles du flux d'exécution. Il y a deux cas, le premier est celui où un bloc de base comporte plusieurs blocs qui peuvent se succéder, figure \ref{images/two_successor.png}, c'est le cas du branchement. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/two_successor.png}
+\caption{\label{fig:two_successor} Bloc de base avec deux successeurs.}
+\end{figure}
+
+Pour résoudre ce problème, il faut être capable de générer deux masques différents à partir d'une même instruction. Le deuxième cas se présente si plusieurs blocs de base pointent vers le même bloc de base suivant comme le montre la figure \ref{images/two_predecessor.png}. Ainsi une instruction peut avoir plusieurs instructions précédentes et donc avoir plusieurs masques possibles. Comme la connaissance du bloc de base qui est à l'origine de l'instruction précédente dans le pipeline du processeur est difficile, on ne peut pas choisir parmi les masques possibles. En général, un seul masque est utilisé par instruction. Ainsi, si une instruction a plusieurs antécédents, ils doivent tous générer le même masque ou cette instruction ne doit pas demander de masque.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/two_predecessor.png}
+\caption{\label{fig:two_predecessor} Bloc de base avec deux prédécesseurs.}
+\end{figure}
+
+\subsubsection{Jump}
+Les premières instructions qui peuvent générer des antécédents multiples sont les sauts, qu'ils soient directs ou indirects. En effet, deux instructions de saut peuvent arriver à la même adresse. Pour ce cas particulier, le masque des instructions de saut doit être identique que le saut soit direct ou indirect. Mais il ne doit pas non plus dépendre de l'offset ou d'un registre. Des instructions de saut avec des offsets différents peuvent arriver à la même instruction. 
+Un autre problème est qu'une instruction de saut peut également être atteinte par l'incrémentation standard du processeur. Ici, le problème est plus complexe, car n'importe quelle instruction peut précéder une destination de saut. Il est donc nécessaire que l'instruction précédant l'instruction masquée génère un masque de saut. Pour ce faire, la solution adoptée a été d'ajouter avant chaque destination de saut une instruction de saut avec l'instruction suivante comme destination. Ainsi, une destination de saut n'est accessible que par des sauts et le masque généré est toujours un mask$\_$JUMP, Figure \ref{images/mask_jump.png
+}.
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/mask_jump.png}
+\caption{\label{fig:mask_jump} Masque pendant un saut.}
+\end{figure}
+\subsubsection{Branch}
+Un problème similaire à celui soulevé pour les sauts subsiste pour les branches. En effet, lorsque la branche est prise, elle est comparable à un saut, tous les autres chemins possibles pour accéder à cette instruction doivent produire le même masque. Ajouter des branches avant chaque destination de branchement n'a pas de sens, car une branche signifie un saut conditionnel, qui serait ici inconditionnel. L'ajout d'une instruction de saut est donc recommandé. Ainsi, avant chaque destination de branchement, une instruction de saut doit être ajoutée. De plus, le masque "mask$\_$DEC0' ", voir Figure \ref{images/mask_branch.png}, est remplacé par le masque utilisé pour les sauts, "mask$\_$JUMP", car c'est cette branche qui peut être assimilée à un saut. 
+Ainsi, toutes les instructions provoquant un saut dans le code assembleur produisent le même masque. De plus, chaque destination de saut est précédée d'un saut, ce qui permet d'avoir un masque unique, quel que soit le chemin pour y arriver. Enfin, il est possible de différencier si une branche est prise ou non en utilisant un masque différent dans chaque cas.
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/mask_branch.png}
+\caption{\label{fig:mask_branch} Masque pendant un branchement.}
+\end{figure}
+\subsubsection{Résolutions des problèmes de commutation de contexte et des interruptions}
+Lors du changement de contexte, l'une des premières étapes consiste à sauvegarder le masque pour démasquer l'instruction suivante, sinon il ne sera pas possible de démasquer l'instruction à l'adresse de retour. Une étape de sauvegarde du masque est ajoutée au début du changement de contexte et une étape de restauration du masque à la fin du changement de contexte. Cette étape est analogue à celle du PC switch. Dans le cas d'une interruption, le masque qui aurait dû être utilisé dans le cycle suivant si l'interruption n'avait pas eu lieu est automatiquement sauvegardé. Dans le cas du RISC-V, cette sauvegarde est gérée automatiquement au niveau des registres de contrôle et d'état pendant une interruption.
+\subsubsection{Résolution des stall}
+Un processeur pour diverses raisons, dépendance de données, calcul de la branche à prendre, etc. peut geler son exécution le temps que les calculs avancent dans le pipeline pour résoudre ces dépendances. Pendant ces cycles, le processeur garde dans un registre interne pendant les cycles de gel le masque à utiliser pour l'instruction suivante.
+\subsection{Modification à la compilation}
+En effet, comme indiqué précédemment, toute instruction accessible par un saut ou une branche ne doit être accessible que par des instructions de saut. Une passe prend tous les blocs de base à antécédents multiples et vérifie que chacun d'eux se termine par une instruction de saut ou de branchement. Si ce n'est pas le cas, une instruction de saut est ajoutée.
+Ensuite, une passe ajoute les masques à toutes les instructions. Cette passe doit être la dernière, car elle fixe l'ordre d'exécution du programme, donc le code ne doit plus être modifié après cette passe. Cette passe est assez simple, car elle prend l'instruction précédente, génère le masque et l'applique ensuite à l'instruction courante. Le masque n'est qu'une composition de l'instruction précédente à l'aide de Sbox et de permutation, il est donc facile d'effectuer ces transformations en logiciel.
+L'utilisation d'un masque constant lors des sauts rend cette solution sensible au saut d'instruction. En effet, chaque instruction de destination JUMP possède le même masque. Ainsi, si lors d'une instruction à JUMP, un saut d'instruction est effectué et que celui-ci pointe sur une autre destination de JUMP alors le masque est valide. Il est impossible avec notre solution de détecter la faute. Bien que ce cas existe, il est en fait assez difficile à mettre en oeuvre car il faut cibler le cycle de saut précis, mais aussi déterminer une nouvelle destination de JUMP valide.
+
+
+\subsection{Implémentation}
+Pour réaliser notre solution, nous nous plaçons dans le cas d'un processeur RISC-V à 4 étages en ordre. Notre solution est donc ajoutée à l'étage de décodage du pipeline. 
+\subsubsection{Réalisation hardware}
+Le registre "Decod$\_$output" est ajouté pour stocker les signaux de sortie du décodeur, il est mis à jour à chaque cycle sauf pendant les cycles de gel. Les cycles de gel sont indiqués au processeur par le signal "freeze$\_$sig". De plus, le masque utilisé pour tous les sauts et branches est enregistré dans le "jump$\_$mask". Le choix du "jump$\_$mask" ou du "DEC$\_$mask" est déterminé par le "Jump$\_$controller". Le "Jump$\_$controller" utilise les signaux de décodage des instructions et les signaux de sortie de l'étape d'exécution pour déterminer si le "jump$\_$mask" doit être utilisé. Cela inclut les cas de saut direct et indirect, mais aussi les branches prises. 
+La solution peut être activée ou désactivée à l'aide du signal "ACT$\_$DEC$\_$mask". Dans le cas de notre implémentation, il s'agit d'un signal d'entrée du processeur. Ce signal est contrôlé par un registre, accessible par JTAG, à l'extérieur du cœur. Ce signal permet de prendre soit l'instruction entrante avec l'application du masque, soit sans l'application du masque. Le problème du premier masque à utiliser doit être résolu. En effet, la première instruction par définition n'a pas d'instruction précédente. Dans ce cas, c'est le masque de saut qui est utilisé. Il faut donc s'assurer que la première instruction exécutée est bien masquée par ce masque.
+Pour plus de possibilités d'activation, un signal de démarrage peut être ajouté. Cela ajoute un vecteur d'attaque ainsi qu'une complexité qui n'a pas trouvé d'avantage dans notre utilisation. Il faut noter que ce signal ne permet pas de désactiver la contre-mesure, il s'applique uniquement au masque ou non.
+Les deux solutions sont assez proches au niveau de l'implémentation, cependant, pour avoir la vérification de l'étage DECOD avec pré-décodeur il est nécessaire d'ajouter un encodeur et une vérification du masque, comme présenté Figure \ref{{images/SECDEC_integration.png}}, mais aussi d'ajouter les signaux manquants pour régénérer l'instruction.
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/SECDEC_integration.png}
+\caption{\label{fig:SECDEC_integration} Intégration dans le pipeline du CV32E40P.}
+\end{figure}
+\subsubsection{Surcout matériel}
+Nous avons implémenté nos architectures RTL basées sur des processeurs RISCY CV32E40P et les avons synthétisées avec la bibliothèque RVT GF22FDX (GlobalFoundries 22nm FD-SOI) Standard Cells.
+L'overhead de cette solution est assez faible d'un point de vue matériel. Seuls le registre de masques, les applications de masques avec un xor et la génération de masques sont ajoutés. Les résultats montrent que 15 295 GE ont été nécessaires pour le post-décodeur et 17 729 GE pour le pré-décodeur. Il y a respectivement 3,71\% et 16,93\% de surface supplémentaire requise et une augmentation de la consommation d'énergie totale de 4,33\% et 19,16\% par rapport au noyau RISCY original qui a une surface de 14 727 GEs.
+\subsubsection{Surcout logiciel}
+La figure donne le surcoût en taille de code mais aussi en temps d'exécution induit par les modifications apportées par le compilateur. Ces résultats ont été réalisés dans une simulation précise du cycle avec le benchmark Embench1.0. L'overhead de la taille du code est de 1,61\% et de 1,12\% pour le temps d'exécution. Ce surcoût est faible car il y a peu de modifications du compilateur et du flux d'instructions, seules les instructions de saut sont parfois ajoutées avant les destinations de saut.
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/SECDEC_software.png}
+\caption{\label{fig:SECDEC_software} Surcharge en temps d'exécution et en taille de code du benchmark Embench avec cette solution.}
+\end{figure}
+
+\subsection{Analyse de securité}
+Les avantages de notre solution sont, d'une part, sa grande légèreté, il suffit de stocker 32 bits de masques et de les xoriser à l'instruction entrante du cycle suivant. D'autre part, elle présente un surcoût très faible en termes de taille de code et de temps d'exécution. En effet, nous n'ajoutons une instruction de saut avant chaque destination de saut que lorsque cela est nécessaire. De plus, la simplicité de notre solution peut être adaptée aux compilations "just-in-time" ou aux codes auto-modifiants, la seule difficulté étant l'insertion des instructions de saut. Enfin, elle permet de se prémunir efficacement contre les sauts d'instructions. Comme l'ont souligné A. Menu et al. [1], des sauts non pas d'une, mais de plusieurs instructions peuvent se produire. Quel que soit le nombre d'instructions sautées, notre solution reste efficace, contrairement à la redondance temporelle, par exemple.
+L'une des principales difficultés des contre-mesures contre l'injection de fautes est de mesurer leur efficacité. En effet, aucune métrique ne permet de rendre compte de la sécurité d'un circuit face à toutes les possibilités offertes à l'attaquant. Cependant, notre modèle d'attaquant étant limité au chemin d'instruction, nous pouvons assimiler toutes les fautes à une modification du code machine. En effet, une faute dans la hiérarchie mémoire est effectivement une corruption des binaires, et un saut d'instruction peut être assimilé à la suppression de son instruction. Pour les fautes au niveau de l'étape IFETCH et DECOD, elles peuvent également être perçues comme des corruptions des instructions. Ainsi, il est possible dans notre cas de tester exhaustivement toutes les fautes possibles sur les binaires. Comme les erreurs se propagent de cycle en cycle, nous sommes sûrs que la faute sera détectée dans un cycle, sauf en cas de saut valide. Le taux de détection n'est donc pas pertinent mais le nombre de cycles avant une erreur de décodage nous permet de comparer les différentes méthodes de création de masque. Avec ces présupposés, une campagne de test exhaustive du temps de détection d'une instruction défectueuse peut être réalisée.
+Il est à noter qu'il n'est pas nécessaire de disposer d'une plateforme matérielle ni même d'exécuter les instructions pour vérifier le bon fonctionnement de notre solution. Seule la séquence des instructions compte. Afin d'évaluer le masque, nous avons développé un outil logiciel permettant de simuler le décodage des instructions RISC-V. Pour simplifier la création du masque, nous utilisons la solution du pré-décodeur qui ne nécessite que l'instruction pour générer le masque. Pour gagner du temps de calcul, nous exécutons les binaires générés une première fois, puis dans un second temps nous modifions exhaustivement les instructions qui seront effectivement touchées dans le code. Nous exécutons 50 tests de vérification fonctionnelle de l'architecture RISC-V pour nous assurer que tous les types d'instructions sont bien utilisés.
+Nous avons retiré de nos résultats les fautes qui conduisent à un saut valide vers une autre destination de saut. En effet, du fait de l'exhaustivité de notre campagne d'injection de fautes, ces cas sont inévitables. Il n'est pas pertinent de les prendre en compte, car ce sont des cas irréalistes du point de vue de l'attaquant.
+\subsubsection{Faute simple}
+Le premier contrôle consiste à vérifier que le masque proposé est suffisant pour une simple injection de faute. La figure \ref{fig:comparaison_1fault} compare la solution pré-décodeur (complète) avec un masque 32bit généré avec la fonction de hachage ASCON. Mais aussi avec les deux sous-masques qui la composent, celui des sboxes à blocs consécutifs (linear$\_$sbox) et celui à blocs entrelacés (mix$\_$sbox). Enfin, l'instruction sans transformation (identity).
+La première chose à prendre en compte est que la détection du cycle 0 est identique pour tous les types de masques, car celui-ci n'intervient pas encore et vu l'exhaustivité de notre méthode de test il n'y a pas de caractère aléatoire. Avec l'instruction seulement 35\% des fautes restantes sont détectées au deuxième cycle, 45\% avec seulement 1 type de sbox, 75\% du masque complet et finalement 90\% avec le hash généré par ASCON. Le tableau \ref{tab:comp_cycle} montre le nombre moyen de cycles avant qu'une faute ne conduise à une erreur de décodage. Ainsi, un hash de l'instruction permet de détecter la faute en 2 cycles, notre solution qui consiste en seulement 16 sbox matérielles permet de détecter 97\% des fautes en 2 cycles. Puisque 99\% sont détectés en moins de 3 cycles, nous pouvons raisonnablement supposer que ces fautes n'ont pas corrompu la mémoire de données, donc en désactivant le pipeline et la banque de registres le processeur est dans un état sûr.
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/comparaison_1fault.jpg}
+\caption{\label{fig:comparaison_1fault}Comparaison des différentes générations de masque pour les fautes simples}
+\end{figure}
+\subsubsection{Faute multiple}
+Les fautes multiples sont des attaques de plus en plus utilisées \cite{DBLP:conf/cardis/ColombierGVCBLC21} et permettent de contourner la sécurité mise en place contre les fautes simples. Cependant, notre solution, comme on peut le voir sur la figure \ref{fig:comparaison_4fault}, offre une meilleure protection lorsque le nombre de fautes augmente. Ainsi un attaquant n'a aucun intérêt à transmettre des fautes plus complexes sauf s'il veut modifier très précisément une instruction pour sauter vers une destination de saut valide, ce qui semble précisément hors de portée des attaques actuelles.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/comparaison_4fault.jpg}
+\caption{\label{fig:comparaison_4fault}Comparaison des différentes générations de masque pour les fautes multiples}
+\end{figure}
+
+\begin{table}
+\centering
+\begin{tabular}{l|c|c|c|c|c}
+\\hline
+                 & Identity   & linear$\_$sbox    & Mix$\_$sbox    & Complete    & ASCON\\\hline
+Average cycle detection   & 1.52  &1.20        &1.20         &0.99         & 0.81   \\\hline
+
+\end{tabular}
+\caption{\label{tab:comp_cycle}Comparaison du nombre moyen de détection pour les différentes générations.}
+\end{table}
+\subsubsection{Saut d'instruction}
+Au-delà de la modification des instructions, il est également courant que les injections de fautes provoquent des sauts d'instructions qui peuvent être uniques ou multiples, certaines solutions sont sensibles au nombre d'instructions sautées. Notre solution, comme on peut le voir sur la figure \ref{fig:comparaison_skip}, détecte les sauts en moins de 2 cycles et ce, que le saut soit de 1, 2 ou 4 instructions. Par conséquent, notre solution reste efficace contre les attaques par fautes sur l'ensemble du chemin des instructions. Plus l'attaque est complexe, avec des fautes et des sauts, plus elle est efficace.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{images/comparaison_skip.jpg}
+\caption{\label{fig:comparaison_skip}Comparaison des différentes générations de masque pour les sauts d'instruction}
+\end{figure}
+\subsubsection{Attaque par canaux auxiliaires}
+Enfin, au-delà de la protection contre les attaques par fautes, le fait d'ajouter un masque aux instructions permet de renforcer la résistance aux attaques par canaux latéraux. Cependant, il ne s'agit pas d'une contre-mesure qui empêche formellement les fuites par canaux latéraux, mais qui rend seulement plus difficile le désassemblage, qui se fait avant l'étape DECOD [3], qui est à notre connaissance la seule attaque qui cible le chemin des instructions par canaux latéraux. Même si le masque n'est pas aléatoire, il permet de réduire de nombreuses heuristiques comme les opcodes impossibles, les séquences d'instructions les plus probables et les dépendances entre opcodes, funct3 et funct7. Sans rendre ce type d'attaque impossible, notre contre-mesure les rend beaucoup plus complexes.
+
+\section{duplication/parité croisé sur les signaux de controle}
+Les registres et signaux de contrôle sont assez peut sensible aux attaques par canaux auxiliaires d'une part, car ils sont difficiles a ciblé précisément, mais aussi, car il ne contient des données ayant peu d'intégrer, car elle ne contient pas de donnée sensible. Cependant étant au centre du contrôle et de l'état du processeur elles sont une cible intéressante pour les injections de faute.
+
+\subsection{Description}
+
+Une des caractéristiques principales d'un code correcteur efficace contre les attaques par injections de faute sont ceux présentant une forte localité spatiale dans leur domaine de faute. Plus précisément il faut que deux fautes proches ne puissent pas être valides. On a donc cherché à maximiser cette distance spatiale à l'aide de la parité. En effet. La parité permet de détecter toutes les fautes impaires dans un mot ainsi en entrelaçant les parités il devient par exemple impossible d'injecter exactement deux fautes consécutives. Si on prend l'exemple de la longitudinal parity check (LPC), voir Figure \ref{fig:longitudinal_parity_check}, ainsi toutes fautes consécutives qui ne fait pas exactement 2 fois la longueur du LPC sera détecté.
+Il est ainsi facile de combiner les codes détecteurs à base de parité. Si l'on combine la longitudinal et l'horizontal parity check(HPC) on obtient un code détecteur capable de détecter toutes les fautes qui n'ont pas un schéma bien défini. On peut encore aller plus loin en prenant aussi les diagonales cependant cela commence à couter cher en mémoire, mais aussi en logique combinatoire. En effet, il faut n xor pour calculer une parité et $p\surd n$ flip flop avec n le nombre de bits du mot.
+\begin{figure}[h]
+    \begin{minipage}[c]{.46\linewidth}
+        \centering
+        \includegraphics{images/longitudinal_parity_check.png}
+        \caption{\label{fig:longitudinal_parity_check}Parité longitudinale}
+    \end{minipage}
+    \hfill%
+    \begin{minipage}[c]{.46\linewidth}
+        \centering
+        \includegraphics{images/cross_parity_check.png}
+        \caption{\label{fig:cross_parity_check} Parité croisée}
+    \end{minipage}
+\end{figure}
+
+\subsection{Avantage}
+
+Le premier avantage de cette solution est son coût restreint, du fait d'utiliser seulement de la parité, il s'agit donc en terme d'implémentation seulement de porte XOR. Nous cherchons avant tout la légèreté pour pouvoir effectuer des vérifications à toute les entrées et sorties d'étages mais aussi en au niveau des registres d'états. Enfin, si on cherche de la sureté on peut induire des la correction d'erreur monobit, du fait du croissent des deux types de parité il est possible d'obtenir les coordonnées dans la matrice de parité du bit fauté.
+En utilisant cette parité croisé on induit une dépendance spatiale entre les fautes ainsi pour faute un bit precis il faudra au minimum injecter 3 fautes a des endroits specifique pour induire une faute valide. Ainsi, contrairement au code detecteur d'erreurs qui ne sont capable que de détecter une distance minimal, ainsi le faute avec une source unique peut induire plusieurs fautes consécutive peut plus facilement induire des fautes. Dans le cas de la parité croisé des schema d; injections specifique avec de forte contrainte spatiale doivent être respecté.
+
+Ainsi si on reprends la méthodologie présenté dans la section précédente on peut comparer plusieurs méthodes de sécurité. Nous comparerons ici le HPC, LPC, CPC ainsi qu'un code BCH de paramètre (à definir)
+
+\section{Conclusion}
+Cet article propose deux solutions pour protéger le chemin des instructions contre les attaques par défaut et par canal latéral. Ces solutions proposent de générer des masques soit directement avec les instructions précédentes, soit avec les signaux de décodage de l'instruction précédente. L'avantage de ce type de contre-mesure est qu'il permet de traiter tous les problèmes d'injection de fautes sur les instructions avec un surcoût très faible. En utilisant les signaux de décodage, nous avons un overhead de 3,25\%, nous assurons la détection des fautes en 1 cycle en moyenne, mais rend la compilation dépendante des contraintes micro architecturales. En ne prenant que les informations du pré-décodeur, nous assurons la sécurité contre les attaques par injection de fautes sur le chemin des instructions au prix d'un doublement de l'étage DECOD. Mais le code source généré devient seulement dépendant du jeu d'instructions.
+L'overhead logiciel est très faible en raison des quelques modifications apportées au compilateur. En effet, nous avons un overhead de 1,61\% en taille de code et de 1,12\% en temps d'exécution.
+Cette solution propose une sécurité contre les attaques par observation et physique sur le chemin des instructions, elle est donc complémentaire à la solution de sécurité du flux de contrôle et du chemin des données.
